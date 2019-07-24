@@ -1,0 +1,85 @@
+Packages
+------------------------
+app
+	1-Main que arranca Spring
+
+persistence
+	1-Aquí las interface con el crud
+	2-Las clases repository que dependen de ellas
+api
+	2- Las llamadas Api
+		Una clase por modelo a consultar
+			User
+			DiceRoll
+			
+domain
+	1-Las entidades con sus getters y setters
+		User
+			Atributos
+				playerId, int
+				name, String
+				regDate, Date
+				isAnonymous, boolean
+				successRate, double
+				historicGames, List<DiceGame>
+			Métodos
+				getter, todos
+				setter, name-isAnonymous-successRate
+				constructor (name, isAnonymous)
+					Se generan solos el resto al instanciarlo: successRate por defecto 0 de ratio, 
+					regDate nos la da Timestamp, historicGames se inicia vacío
+				addGame (DiceGame), añade un juego a su histórico, actualizando el ratio del jugador. 
+				voidGames(), borra el histórico de jugadas del usuario					 		
+		Dice
+			Atributos
+				diceId, int
+			Métodos
+				constructor(diceId)
+				getter, todos
+				setter, todos
+				
+		DiceRoll
+			Atributos
+				diceId ,int
+				rollResult, int
+			Métodos
+				constructor(diceId), el juego al finalizar le pone el resultado de puntos. Por defecto 0.
+				getter, todos
+				setter, todos
+			
+		DiceGame
+			Constantes
+				ROLL_MAX, int
+				WIN_POINTS, int	
+			Atributos
+				dicesRolls, List<DiceRoll>
+				playerId, int
+				gameId,UUID
+				isWinner, boolean
+			Métodos
+				constructor(playerId), al instanciarlo se genera un List<DiceRolls> vacío, se le asigna un gameId, isWinner false por defecto
+							se le pone un contador de tiradas a cero y el número de tiradas de fin de juego ROLL_MAX, así como el resultado 				para ganar WIN_POINTS
+				getter, todos
+				setter, dicesRolls,playerId,isWinner (private)
+				setDiceRoll boolean isLast (DiceRoll), le añadimos una jugada al juego. Se comprueba que no se la última y se arrastra el resultado 
+							y se devuelve un false. 
+							Si es el final, seteamos isWinner dependiendo del resultado, hacemos reset de contador de jugadas
+							y subimos a BD el resultado del juego. Devolvemos un true.	
+			
+		
+aplication
+	2-Los controladores de las entidades
+dto
+	1-Los DTO de acceso a la BBDD
+tools
+	1-Manejo de excepcions
+	2-Tools que vaya a utilizar
+		UUIDGen, generador de UUID
+		RandomGen, generador de números random para la juagada del dado
+		UserIdGen, genera la Id única del jugador de tipo int
+
+DUDAS:
+**************************************
+¿Se puede volver anónimo un jugador que no lo era?
+¿Es el usuario el anónimo o el jugador antes de jugar?
+¿Si el usuario borra su histórico, desaparece de su BD?				
