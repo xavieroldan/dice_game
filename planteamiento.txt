@@ -29,7 +29,9 @@ domain
 					Se generan solos el resto al instanciarlo: successRate por defecto 0 de ratio, 
 					regDate nos la da Timestamp, historicGames se inicia vacío
 				addGame (DiceGame), añade un juego a su histórico, actualizando el ratio del jugador. 
-				voidGames(), borra el histórico de jugadas del usuario					 		
+				voidGames(), borra el histórico de jugadas del usuario	
+				playGame(), juega una tirada indicando si es anónima o no. Si no lo es, su Nick es su nombre de usuario
+				 		
 		Dice
 			Atributos
 				diceId, int
@@ -54,11 +56,13 @@ domain
 			Atributos
 				dicesRolls, List<DiceRoll>
 				playerId, int
+				gameNick,String
+				isAnonim, boolean
 				gameId,UUID
 				isWinner, boolean
 			Métodos
 				constructor(playerId), al instanciarlo se genera un List<DiceRolls> vacío, se le asigna un gameId, isWinner false por defecto
-							se le pone un contador de tiradas a cero y el número de tiradas de fin de juego ROLL_MAX, así como el resultado 				para ganar WIN_POINTS
+							se le pone un contador de tiradas a cero y el número de tiradas de fin de juego ROLL_MAX, así como el resultado 							para ganar WIN_POINTS. Por defecto es anónimo y su nick name es 
 				getter, todos
 				setter, dicesRolls,playerId,isWinner (private)
 				setDiceRoll boolean isLast (DiceRoll), le añadimos una jugada al juego. Se comprueba que no se la última y se arrastra el resultado 
@@ -80,6 +84,9 @@ tools
 
 DUDAS:
 **************************************
-¿Se puede volver anónimo un jugador que no lo era?
-¿Es el usuario el anónimo o el jugador antes de jugar?
-¿Si el usuario borra su histórico, desaparece de su BD?				
+GameFactory
+
+CUando vayas a jugasr se crea y te pregunta si quieres cambiar a anónimo la jugada
+	Si es así, va a usuario y lo cambia	
+
+Pulir PlayGame de playFactory para que no haya que repeit 2 veces el lanzamiento con 2 dados, sino que sea el mismo dado en un bucle que dependa de la constante de juagadas a realizar		

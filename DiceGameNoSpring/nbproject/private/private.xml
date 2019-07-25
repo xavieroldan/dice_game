@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Lenovo10/Documents/JAVA/NetBeansProjects/DiceGameNoSpring/src/com/dicegame/domain/Dice.java</file>
-            <file>file:/C:/Users/Lenovo10/Documents/JAVA/NetBeansProjects/DiceGameNoSpring/src/com/dicegame/app/tools/RandomRollGen.java</file>
-            <file>file:/C:/Users/Lenovo10/Documents/JAVA/NetBeansProjects/DiceGameNoSpring/src/com/dicegame/app/tools/TimeStamp.java</file>
-            <file>file:/C:/Users/Lenovo10/Documents/JAVA/NetBeansProjects/DiceGameNoSpring/src/com/dicegame/domain/DiceGame.java</file>
-            <file>file:/C:/Users/Lenovo10/Documents/JAVA/NetBeansProjects/DiceGameNoSpring/src/com/dicegame/app/tools/UserIdGen.java</file>
-            <file>file:/C:/Users/Lenovo10/Documents/JAVA/NetBeansProjects/DiceGameNoSpring/src/com/dicegame/app/Main.java</file>
-            <file>file:/C:/Users/Lenovo10/Documents/JAVA/NetBeansProjects/DiceGameNoSpring/src/com/dicegame/domain/User.java</file>
-            <file>file:/C:/Users/Lenovo10/Documents/JAVA/NetBeansProjects/DiceGameNoSpring/src/com/dicegame/domain/DiceRoll.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

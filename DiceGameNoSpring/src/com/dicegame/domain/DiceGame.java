@@ -10,33 +10,40 @@ import java.util.List;
 public class DiceGame
 {
 
-    private static final int ROLL_MAX = 2;
-    private static final int WIN_POINTS = 7;
+    private static int gameCount;
+    private final int ROLL_MAX = 2;
+    private final int WIN_POINTS = 7;
 
     private List<DiceRoll> dicesRolls;
     private int playerId; // TODO: change type of playerId to UUID?
-    private int gameId; // TODO: change type of gameId to UUID?
+    private String gameNick;
+    private boolean isAnonim;
+    private int gameId;
     private boolean isWinner;
     private int rollCount;
     private int gameResult;
 
     public DiceGame(int playerId)
     {
+        gameCount++;
+
         List<DiceRoll> dicesRolls = new ArrayList<>();
         this.dicesRolls = dicesRolls;
-        this.gameId = 1; //TODO: generate news gameId;
+        this.gameId = gameCount;
+        this.gameNick = "ANÒNIM";
+        this.isAnonim = true;
         this.playerId = playerId;
-        this.rollCount = 0;
+        this.rollCount = 1;
         this.isWinner = false;
         this.gameResult = 0;
     }
 
-    public static int getROLL_MAX()
+    public int getROLL_MAX()
     {
         return ROLL_MAX;
     }
 
-    public static int getWIN_POINTS()
+    public int getWIN_POINTS()
     {
         return WIN_POINTS;
     }
@@ -56,7 +63,7 @@ public class DiceGame
         return gameId;
     }
 
-    public boolean isIsWinner()
+    public boolean getIsWinner()
     {
         return isWinner;
     }
@@ -86,12 +93,16 @@ public class DiceGame
         this.isWinner = isWinner;
     }
 
-    /*
-setDiceRoll boolean isLast (DiceRoll), le añadimos una jugada al juego. 
-    Se comprueba que no se la última y se arrastra el resultado y se devuelve un false.
-    Si es el final, seteamos isWinner dependiendo del resultado, hacemos reset de contador de jugadas
-	y subimos a BD el resultado del juego. Devolvemos un true.
-     */
+    public void setGameNick(String gameNick)
+    {
+        this.gameNick = gameNick;
+    }
+
+    public void setIsAnonim(boolean isAnonim)
+    {
+        this.isAnonim = isAnonim;
+    }
+
     public boolean setDiceRoll(DiceRoll diceRoll)
     {
         dicesRolls.add(diceRoll);
@@ -113,8 +124,19 @@ setDiceRoll boolean isLast (DiceRoll), le añadimos una jugada al juego.
             {
                 isWinner = false;
             }
-            //TODO: update the DB with the roll and the result 
+//TODO: update the DB with the roll and the result 
             return isWinner;
         }
     }
+
+    @Override
+    public String toString()
+    {
+        return "DiceGame{" + "dicesRolls=" //+ dicesRolls.
+                + ", playerId=" + playerId + ", gameNick="
+                + gameNick + ", isAnonim=" + isAnonim
+                + ", gameId=" + gameId + ", isWinner=" + isWinner
+                + ", rollCount=" + rollCount + ", gameResult=" + gameResult + '}';
+    }
+
 }

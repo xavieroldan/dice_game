@@ -11,20 +11,20 @@ import java.util.List;
  */
 public class User
 {
+    private static int countUser; // TODO: delete when exist the UUID user
 
     private int playerId;
     private String name;
     private Date regDate;
-    private boolean isAnonymous;
     private double successRate;
     private List<DiceGame> historicGames;
 
-    public User(String name, boolean isAnonymous)
+    public User(String name)
     {
-        this.playerId = 1; // TODO: generate the UUID 
+        countUser++;
+        this.playerId = countUser; // TODO: generate the UUID 
         this.name = name;
         this.regDate = TimeStamp.getDate();
-        this.isAnonymous = isAnonymous;
         this.successRate = 0;
         List<DiceGame> diceGame = new ArrayList<>();
         this.historicGames = diceGame;
@@ -45,11 +45,6 @@ public class User
         return regDate;
     }
 
-    public boolean isIsAnonymous()
-    {
-        return isAnonymous;
-    }
-
     public double getSuccessRate()
     {
         return successRate;
@@ -65,11 +60,6 @@ public class User
         this.name = name;
     }
 
-    public void setIsAnonymous(boolean isAnonymous)
-    {
-        this.isAnonymous = isAnonymous;
-    }
-
     public void setSuccessRate(double successRate)
     {
         this.successRate = successRate;
@@ -77,7 +67,19 @@ public class User
 
     public void addGame(DiceGame diceGame)
     {
-        //	addGame (DiceGame), añade un juego a su histórico, actualizando el ratio del jugador. 
+        //add the Game to the user historic
+        historicGames.add(diceGame);
+        double games = historicGames.size();
+        double winGames = 0;
+        for (DiceGame historicGame : historicGames)
+        {
+            if (historicGame.getIsWinner())
+            {
+                winGames++;
+            }
+        }
+        double rate = Math.round((winGames / games) * 100); //round the result to show %
+        successRate = rate; // update the success rate value in the user
     }
 
     public void voidGames()
@@ -85,4 +87,11 @@ public class User
 
 //	voidGames(), borra el histórico de jugadas del usuario	
     }
+
+    @Override
+    public String toString()
+    {
+        return "User{" + "playerId=" + playerId + ", name=" + name + ", regDate=" + regDate + ", successRate=" + successRate + ", historicGames=" + historicGames + '}';
+    }
+
 }

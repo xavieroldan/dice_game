@@ -10,6 +10,10 @@ public class DiceRoll
     private int diceId;
     private int rollResult;
 
+    public DiceRoll()
+    {
+    }
+
     public DiceRoll(int diceId)
     {
         this.diceId = diceId;
