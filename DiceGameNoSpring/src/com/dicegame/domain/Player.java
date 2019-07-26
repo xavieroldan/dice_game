@@ -1,37 +1,40 @@
 package com.dicegame.domain;
 
+import com.dicegame.app.factory.PlayerFactory;
 import com.dicegame.app.tools.TimeStamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
  * @author Xavier Roldán <info@xavierroldan.com>
  */
-public class User
+public class Player
 {
     private static int countUser; // TODO: delete when exist the UUID user
 
-    private int playerId;
+    private String playerId;
     private String name;
     private Date regDate;
     private double successRate;
     private List<DiceGame> historicGames;
 
-    public User(String name)
+    public Player(String name, PlayerFactory playerFactory) throws Exception
     {
         countUser++;
-        this.playerId = countUser; // TODO: generate the UUID 
+        this.playerId = UUID.randomUUID().toString().replace("-", "");
         this.name = name;
         this.regDate = TimeStamp.getDate();
         this.successRate = 0;
         List<DiceGame> diceGame = new ArrayList<>();
         this.historicGames = diceGame;
         //add the adding to the db in the constructor
+        playerFactory.create(this);
     }
 
-    public int getPlayerId()
+    public String getPlayerId()
     {
         return playerId;
     }

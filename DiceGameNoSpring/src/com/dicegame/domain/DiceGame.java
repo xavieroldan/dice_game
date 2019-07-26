@@ -18,7 +18,7 @@ public class DiceGame
     };
 
     private List<DiceRoll> dicesRolls;
-    private int playerId; // TODO: change type of playerId to UUID String?
+    private String playerId;
     private String gameNick;
     private boolean isAnonim;
     private int gameId;
@@ -26,7 +26,7 @@ public class DiceGame
     private int rollCount;
     private int gameResult;
 
-    public DiceGame(int playerId)
+    public DiceGame(String playerId)
     {
         gameCount++;
 
@@ -55,7 +55,7 @@ public class DiceGame
         return dicesRolls;
     }
 
-    public int getPlayerId()
+    public String getPlayerId()
     {
         return playerId;
     }
@@ -85,7 +85,7 @@ public class DiceGame
         this.dicesRolls = dicesRolls;
     }
 
-    private void setPlayerId(int playerId)
+    private void setPlayerId(String playerId)
     {
         this.playerId = playerId;
     }

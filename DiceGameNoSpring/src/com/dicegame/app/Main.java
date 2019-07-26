@@ -1,8 +1,8 @@
 package com.dicegame.app;
 
 import com.dicegame.app.factory.GameFactory;
-import com.dicegame.app.tools.RandomRollGen;
-import com.dicegame.domain.User;
+import com.dicegame.app.factory.PlayerFactory;
+import com.dicegame.domain.Player;
 
 /**
  *
@@ -10,9 +10,10 @@ import com.dicegame.domain.User;
  */
 public class Main
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
-        User pepeUser = new User("Pepe");
+        PlayerFactory playerFactory = new PlayerFactory();
+        Player pepeUser = new Player("Pepe", playerFactory);
         GameFactory pepeFactory = new GameFactory(pepeUser, true);
         for (int i = 0; i < 10; i++)
         {

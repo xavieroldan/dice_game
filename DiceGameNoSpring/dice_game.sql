@@ -24,7 +24,7 @@ USE `dice_game` ;
 DROP TABLE IF EXISTS `dice_game`.`players` ;
 
 CREATE TABLE IF NOT EXISTS `dice_game`.`players` (
-  `idplayers` INT NOT NULL,
+  `idplayers` VARCHAR(45) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `reg_date` DATE NOT NULL,
   PRIMARY KEY (`idplayers`))
@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS `dice_game`.`dice_rolls` ;
 
 CREATE TABLE IF NOT EXISTS `dice_game`.`dice_rolls` (
   `id_roll` INT NOT NULL,
-  `players_idplayers` INT NOT NULL,
+  `players_idplayers` VARCHAR(45) NOT NULL,
   `is_winner` TINYINT(1) NOT NULL DEFAULT 0,
   `is_anonim` TINYINT(1) NOT NULL DEFAULT 1,
   INDEX `fk_dice_rolls_players_idx` (`players_idplayers` ASC) ,

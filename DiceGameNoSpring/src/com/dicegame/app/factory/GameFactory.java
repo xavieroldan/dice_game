@@ -4,7 +4,7 @@ import com.dicegame.app.tools.RandomRollGen;
 import com.dicegame.domain.Dice;
 import com.dicegame.domain.DiceGame;
 import com.dicegame.domain.DiceRoll;
-import com.dicegame.domain.User;
+import com.dicegame.domain.Player;
 
 /**
  *
@@ -13,10 +13,10 @@ import com.dicegame.domain.User;
 public class GameFactory
 {
 
-    private User user;
+    private Player user;
     private boolean isAnonim;
 
-    public GameFactory(User user, boolean isAnonim)
+    public GameFactory(Player user, boolean isAnonim)
     {
         this.user = user;
         this.isAnonim = isAnonim;
@@ -24,7 +24,7 @@ public class GameFactory
 
     public void playGame()
     {
-        int playerId = user.getPlayerId();
+        String playerId = user.getPlayerId();
         String name = user.getName();
 
         DiceGame diceGame = new DiceGame(playerId);
@@ -56,7 +56,7 @@ public class GameFactory
         {
             System.out.println("Perdiste");
         }
-        //add to the player historic
+        //add to the player historic 
         user.addGame(diceGame);
 
     }
