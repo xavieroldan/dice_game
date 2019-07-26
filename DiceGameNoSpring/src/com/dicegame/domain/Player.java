@@ -13,8 +13,6 @@ import java.util.UUID;
  */
 public class Player
 {
-    private static int countUser; // TODO: delete when exist the UUID user
-
     private String playerId;
     private String name;
     private Date regDate;
@@ -23,7 +21,6 @@ public class Player
 
     public Player(String name, PlayerFactory playerFactory) throws Exception
     {
-        countUser++;
         this.playerId = UUID.randomUUID().toString().replace("-", "");
         this.name = name;
         this.regDate = TimeStamp.getDate();

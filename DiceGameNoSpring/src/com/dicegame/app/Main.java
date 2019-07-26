@@ -18,7 +18,7 @@ public class Main
         {
             Scanner sc = new Scanner(System.in);
             System.out.println("Indica un nombre de jugador o exit para salir");
-            String name = sc.nextLine();
+            String name = sc.next();
             switch (name)
             {
                 case "exit":
@@ -27,14 +27,18 @@ public class Main
                 default:
 
                     PlayerFactory playerFactory = new PlayerFactory();
-                    Player pepeUser = new Player(name, playerFactory);
-                    GameFactory pepeFactory = new GameFactory(pepeUser, false);
-                    for (int i = 0; i < 10; i++)
-                    {
-                        pepeFactory.playGame();
-                    }
-                    System.out.println("\nPorcentaje de acierto: " + pepeUser.getSuccessRate() + "\n");
-                    pepeUser.getHistoricGames();
+                    Player player = new Player(name, playerFactory);
+                    GameFactory gameFactory = new GameFactory(player, false);
+//                    for (int i = 0; i < 1; i++)
+//                    {
+//                        gameFactory.playGame();
+//                    }
+//                    System.out.println("\nPorcentaje de acierto: " + player.getSuccessRate() + "\n");
+//                    player.getHistoricGames();
+                    System.out.println("Cambia el nombre a " + player.getName());
+                    name = sc.next();
+                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+                    playerFactory.edit(player, name);
             }
         }
 

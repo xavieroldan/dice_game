@@ -48,6 +48,7 @@ public class DiceGame
 
     public List<DiceRoll> getDicesRolls()
     {
+        //TODO: Change to get from the DB?
         for (DiceRoll dicesRoll : dicesRolls)
         {
             System.out.println("    \nidRoll: " + gameId + dicesRoll.toString());

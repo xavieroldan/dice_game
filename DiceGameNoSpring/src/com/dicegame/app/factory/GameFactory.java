@@ -31,7 +31,7 @@ public class GameFactory
         if (!isAnonim) // is not anonim set the Dice Game parameters
         {
             //set no anonimous parámeters
-            diceGame.setIsAnonim(isAnonim);
+            diceGame.setIsAnonim(false);
             diceGame.setGameNick(name);
         }
         //if is anonim, the constructor makes the work
