@@ -1,4 +1,3 @@
-
 package com.dicegame.models;
 
 import java.io.Serializable;
@@ -25,18 +24,19 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "dice_rolls")
 @XmlRootElement
 @NamedQueries(
+        {
+            @NamedQuery(name = "DiceRolls.findAll", query = "SELECT d FROM DiceRolls d")
+            , @NamedQuery(name = "DiceRolls.findByIdRoll", query = "SELECT d FROM DiceRolls d WHERE d.idRoll = :idRoll")
+            , @NamedQuery(name = "DiceRolls.findByIsWinner", query = "SELECT d FROM DiceRolls d WHERE d.isWinner = :isWinner")
+            , @NamedQuery(name = "DiceRolls.findByIsAnonim", query = "SELECT d FROM DiceRolls d WHERE d.isAnonim = :isAnonim")
+        })
+public class DiceRolls implements Serializable
 {
-    @NamedQuery(name = "DiceRolls.findAll", query = "SELECT d FROM DiceRolls d")
-    , @NamedQuery(name = "DiceRolls.findByIdRoll", query = "SELECT d FROM DiceRolls d WHERE d.idRoll = :idRoll")
-    , @NamedQuery(name = "DiceRolls.findByIsWinner", query = "SELECT d FROM DiceRolls d WHERE d.isWinner = :isWinner")
-    , @NamedQuery(name = "DiceRolls.findByIsAnonim", query = "SELECT d FROM DiceRolls d WHERE d.isAnonim = :isAnonim")
-})
-public class DiceRolls implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "id_roll")
-    private Integer idRoll;
+    private String idRoll;
     @Basic(optional = false)
     @Column(name = "is_winner")
     private boolean isWinner;
@@ -53,24 +53,24 @@ public class DiceRolls implements Serializable {
     {
     }
 
-    public DiceRolls(Integer idRoll)
+    public DiceRolls(String idRoll)
     {
         this.idRoll = idRoll;
     }
 
-    public DiceRolls(Integer idRoll, boolean isWinner, boolean isAnonim)
+    public DiceRolls(String idRoll, boolean isWinner, boolean isAnonim)
     {
         this.idRoll = idRoll;
         this.isWinner = isWinner;
         this.isAnonim = isAnonim;
     }
 
-    public Integer getIdRoll()
+    public String getIdRoll()
     {
         return idRoll;
     }
 
-    public void setIdRoll(Integer idRoll)
+    public void setIdRoll(String idRoll)
     {
         this.idRoll = idRoll;
     }
@@ -127,7 +127,6 @@ public class DiceRolls implements Serializable {
     @Override
     public boolean equals(Object object)
     {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof DiceRolls))
         {
             return false;

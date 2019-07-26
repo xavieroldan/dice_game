@@ -37,7 +37,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `dice_game`.`dice_rolls` ;
 
 CREATE TABLE IF NOT EXISTS `dice_game`.`dice_rolls` (
-  `id_roll` INT NOT NULL,
+  `id_roll` VARCHAR(45) NOT NULL,
   `players_idplayers` VARCHAR(45) NOT NULL,
   `is_winner` TINYINT(1) NOT NULL DEFAULT 0,
   `is_anonim` TINYINT(1) NOT NULL DEFAULT 1,
@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS `dice_game`.`dice_results` ;
 CREATE TABLE IF NOT EXISTS `dice_game`.`dice_results` (
   `id_dice` INT NOT NULL,
   `roll_result` INT NOT NULL,
-  `dice_rolls_id_roll` INT NOT NULL,
+  `dice_rolls_id_roll` VARCHAR(45) NOT NULL,
   INDEX `fk_dice_results_dice_rolls1_idx` (`dice_rolls_id_roll` ASC) ,
   PRIMARY KEY (`id_dice`, `dice_rolls_id_roll`),
   CONSTRAINT `fk_dice_results_dice_rolls1`

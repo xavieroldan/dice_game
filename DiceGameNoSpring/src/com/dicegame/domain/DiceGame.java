@@ -2,6 +2,7 @@ package com.dicegame.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -9,8 +10,6 @@ import java.util.List;
  */
 public class DiceGame
 {
-
-    private static int gameCount;
     private final int ROLL_MAX = 2;
     private final int WIN_RESULTS[] =
     {
@@ -21,18 +20,16 @@ public class DiceGame
     private String playerId;
     private String gameNick;
     private boolean isAnonim;
-    private int gameId;
+    private String idGame;
     private boolean isWinner;
     private int rollCount;
     private int gameResult;
 
     public DiceGame(String playerId)
     {
-        gameCount++;
-
         List<DiceRoll> dicesRolls = new ArrayList<>();
         this.dicesRolls = dicesRolls;
-        this.gameId = gameCount;
+        this.idGame = UUID.randomUUID().toString().replace("-", "");
         this.gameNick = "ANÒNIM";
         this.isAnonim = true;
         this.playerId = playerId;
@@ -51,7 +48,7 @@ public class DiceGame
         //TODO: Change to get from the DB?
         for (DiceRoll dicesRoll : dicesRolls)
         {
-            System.out.println("    \nidRoll: " + gameId + dicesRoll.toString());
+            System.out.println("    \nidRoll: " + idGame + dicesRoll.toString());
         }
         return dicesRolls;
     }
@@ -61,9 +58,9 @@ public class DiceGame
         return playerId;
     }
 
-    public int getGameId()
+    public String getGameId()
     {
-        return gameId;
+        return idGame;
     }
 
     public boolean getIsWinner()
@@ -155,7 +152,7 @@ public class DiceGame
             diceRollString += "\nDado: " + dicesRoll.getDiceId()
                     + " Puntos: " + dicesRoll.getRollResult();
         }
-        return "gameId: " + gameId + " result: " + result + diceRollString + "\n";
+        return "gameId: " + idGame + " result: " + result + diceRollString + "\n";
     }
 
 }

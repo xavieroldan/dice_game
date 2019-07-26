@@ -1,4 +1,3 @@
-
 package com.dicegame.models;
 
 import java.io.Serializable;
@@ -11,7 +10,8 @@ import javax.persistence.Embeddable;
  * @author Xavier Roldán <info@xavierroldan.com>
  */
 @Embeddable
-public class DiceResultsPK implements Serializable {
+public class DiceResultsPK implements Serializable
+{
     @Basic(optional = false)
     @Column(name = "id_dice")
     private int idDice;
@@ -61,7 +61,6 @@ public class DiceResultsPK implements Serializable {
     @Override
     public boolean equals(Object object)
     {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof DiceResultsPK))
         {
             return false;

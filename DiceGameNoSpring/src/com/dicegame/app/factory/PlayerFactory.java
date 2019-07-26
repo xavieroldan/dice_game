@@ -29,7 +29,7 @@ public class PlayerFactory
         {
             throw new FieldVoidException("El nombre no puede estar vacío");
         }
-        //first verify if exists
+        //first verify if exists 
         List<Players> listPlayers = playerControl.findPlayersEntities();
         for (Players listPlayer : listPlayers)
         {
@@ -39,7 +39,7 @@ public class PlayerFactory
                         + "Nombre de jugador ya existente: no se permiten duplicados");
             }
         }
-        //not exist at the DB
+        //not exist at the DB: lest create it
         String playerId = input.getPlayerId();
         String name = input.getName();
         Date regDate = input.getRegDate();

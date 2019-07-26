@@ -1,4 +1,3 @@
-
 package com.dicegame.models;
 
 import java.io.Serializable;
@@ -21,13 +20,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "dice_results")
 @XmlRootElement
 @NamedQueries(
+        {
+            @NamedQuery(name = "DiceResults.findAll", query = "SELECT d FROM DiceResults d")
+            , @NamedQuery(name = "DiceResults.findByIdDice", query = "SELECT d FROM DiceResults d WHERE d.diceResultsPK.idDice = :idDice")
+            , @NamedQuery(name = "DiceResults.findByRollResult", query = "SELECT d FROM DiceResults d WHERE d.rollResult = :rollResult")
+            , @NamedQuery(name = "DiceResults.findByDiceRollsIdRoll", query = "SELECT d FROM DiceResults d WHERE d.diceResultsPK.diceRollsIdRoll = :diceRollsIdRoll")
+        })
+public class DiceResults implements Serializable
 {
-    @NamedQuery(name = "DiceResults.findAll", query = "SELECT d FROM DiceResults d")
-    , @NamedQuery(name = "DiceResults.findByIdDice", query = "SELECT d FROM DiceResults d WHERE d.diceResultsPK.idDice = :idDice")
-    , @NamedQuery(name = "DiceResults.findByRollResult", query = "SELECT d FROM DiceResults d WHERE d.rollResult = :rollResult")
-    , @NamedQuery(name = "DiceResults.findByDiceRollsIdRoll", query = "SELECT d FROM DiceResults d WHERE d.diceResultsPK.diceRollsIdRoll = :diceRollsIdRoll")
-})
-public class DiceResults implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected DiceResultsPK diceResultsPK;
@@ -99,7 +99,6 @@ public class DiceResults implements Serializable {
     @Override
     public boolean equals(Object object)
     {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof DiceResults))
         {
             return false;

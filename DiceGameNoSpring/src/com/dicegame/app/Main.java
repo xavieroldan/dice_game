@@ -28,23 +28,23 @@ public class Main
 
                     PlayerFactory playerFactory = new PlayerFactory();
                     Player player = new Player(name, playerFactory);
-                    GameFactory gameFactory = new GameFactory(player, false);
-//                    for (int i = 0; i < 1; i++)
-//                    {
-//                        gameFactory.playGame();
-//                    }
-//                    System.out.println("\nPorcentaje de acierto: " + player.getSuccessRate() + "\n");
-//                    player.getHistoricGames();
-                    System.out.println("Cambia el nombre a " + player.getName());
-                    name = sc.next();
-                    System.out.println("Cambiamos " + player.getName() + " x " + name);
-                    playerFactory.edit(player, name);
-                    System.out.println("Ecribe algo y enter para destruirlo");
-                    name = sc.next();
-                    playerFactory.delete(player);
-                    System.out.println("Destruido!");
-                //TODO: destroy the player's game                    
+                    GameFactory gameFactory = new GameFactory(player, true); //Is anonim
+                    for (int i = 0; i < 10; i++)
+                    {
+                        gameFactory.playGame();
+                    }
+                    System.out.println("\nPorcentaje de acierto: " + player.getSuccessRate() + "\n");
+                    player.getHistoricGames();
 
+//                    System.out.println("Cambia el nombre a " + player.getName());
+//                    name = sc.next();
+//                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+//                    playerFactory.edit(player, name);
+//                    System.out.println("Ecribe algo y enter para destruirlo");
+//                    name = sc.next();
+//                    playerFactory.delete(player);
+//                    System.out.println("Destruido!");
+                //TODO: destroy the player's game  ???                  
             }
         }
 
