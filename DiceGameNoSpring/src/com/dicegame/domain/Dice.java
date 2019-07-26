@@ -6,13 +6,11 @@ package com.dicegame.domain;
  */
 public class Dice
 {
-    private static int diceCount;
     private int diceId;
 
-    public Dice()
+    public Dice(int i)
     {
-        diceCount++;
-        this.diceId = diceCount;
+        this.diceId = i;
     }
 
     public int getDiceId()

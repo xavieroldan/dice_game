@@ -40,5 +40,9 @@ public class DiceRoll
         this.rollResult = rollResult;
     }
 
-    //TODO: make the game get a random result
+    @Override
+    public String toString()
+    {
+        return "        \nDiceRoll{" + "diceId=" + diceId + ", rollResult=" + rollResult + '}';
+    }
 }

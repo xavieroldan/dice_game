@@ -15,7 +15,7 @@ public class DiceGame
     private final int WIN_POINTS = 7;
 
     private List<DiceRoll> dicesRolls;
-    private int playerId; // TODO: change type of playerId to UUID?
+    private int playerId; // TODO: change type of playerId to UUID String?
     private String gameNick;
     private boolean isAnonim;
     private int gameId;
@@ -50,6 +50,10 @@ public class DiceGame
 
     public List<DiceRoll> getDicesRolls()
     {
+        for (DiceRoll dicesRoll : dicesRolls)
+        {
+            System.out.println("    \nidRoll: " + gameId + dicesRoll.toString());
+        }
         return dicesRolls;
     }
 
@@ -103,14 +107,14 @@ public class DiceGame
         this.isAnonim = isAnonim;
     }
 
-    public boolean setDiceRoll(DiceRoll diceRoll)
+    public void setDiceRoll(DiceRoll diceRoll)
     {
+
         dicesRolls.add(diceRoll);
         if (rollCount != ROLL_MAX) // Isn´t the last roll
         {
             rollCount++;
             gameResult += diceRoll.getRollResult();
-            return false;
         }
         else // Is the last roll
         {
@@ -124,19 +128,31 @@ public class DiceGame
             {
                 isWinner = false;
             }
-//TODO: update the DB with the roll and the result 
-            return isWinner;
+//TODO: update the DB adding the roll and the result 
         }
     }
 
     @Override
     public String toString()
+
     {
-        return "DiceGame{" + "dicesRolls=" //+ dicesRolls.
-                + ", playerId=" + playerId + ", gameNick="
-                + gameNick + ", isAnonim=" + isAnonim
-                + ", gameId=" + gameId + ", isWinner=" + isWinner
-                + ", rollCount=" + rollCount + ", gameResult=" + gameResult + '}';
+        String result = ""; // get the result of the game 
+        if (isWinner)
+        {
+            result = "Win";
+        }
+        else
+        {
+            result = "Lost";
+        }
+
+        String diceRollString = "";//get the rolls results       
+        for (DiceRoll dicesRoll : dicesRolls)
+        {
+            diceRollString += "\nDado: " + dicesRoll.getDiceId()
+                    + " Puntos: " + dicesRoll.getRollResult();
+        }
+        return "gameId: " + gameId + " result: " + result + diceRollString + "\n";
     }
 
 }

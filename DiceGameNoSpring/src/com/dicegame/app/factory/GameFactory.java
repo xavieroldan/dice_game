@@ -35,28 +35,17 @@ public class GameFactory
             diceGame.setGameNick(name);
         }
         //is anonim, the constructor makes the work
-        //Lets play
+        //Lets play ;D
 
-        for (int i = 0; i < diceGame.getROLL_MAX(); i++)
+        for (int i = 1; i < diceGame.getROLL_MAX() + 1; i++)
         {
             //Here the loop 
-            //Intentaré no crear los dados a mano 
-            //Si sale bien sacar las constante de ROLL_MAX y WIN_POINTS fuera de la clase
-
+            DiceRoll diceRoll = new DiceRoll(); //Create the dice roll
+            Dice dice = new Dice(i); //Create the dice
+            diceRoll.setDiceId(dice.getDiceId()); //Launch the dice
+            diceRoll.setRollResult(RandomRollGen.getRandomRoll()); // get the result of the play dice 1       
+            diceGame.setDiceRoll(diceRoll);//set dice roll in the game 
         }
-        //Create the dices
-        Dice dice1 = new Dice();
-        Dice dice2 = new Dice();
-        //Create the dice roll
-        DiceRoll diceRoll = new DiceRoll();
-        //Launch the dice 1        
-        diceRoll.setDiceId(dice1.getDiceId());
-        diceRoll.setRollResult(RandomRollGen.getRandomRoll()); // get the result of the play dice 1       
-        diceGame.setDiceRoll(diceRoll); //set dice roll in the game
-        //Launch the dice 2          
-        diceRoll.setDiceId(dice2.getDiceId());
-        diceRoll.setRollResult(RandomRollGen.getRandomRoll()); // get the result of the play dice 1        
-        diceGame.setDiceRoll(diceRoll); //set dice roll in the game
 
         System.out.println("Jugada acabada:" + diceGame.getGameResult());
         if (diceGame.getIsWinner())

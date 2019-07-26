@@ -52,6 +52,13 @@ public class User
 
     public List<DiceGame> getHistoricGames()
     {
+
+        System.out.println("Histórico de jugadas"
+                + "\n--------------------");
+        for (DiceGame historicGame : historicGames)
+        {
+            System.out.println(historicGame.toString());
+        }
         return historicGames;
     }
 

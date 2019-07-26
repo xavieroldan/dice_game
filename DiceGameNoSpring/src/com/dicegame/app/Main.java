@@ -14,16 +14,12 @@ public class Main
     {
         User pepeUser = new User("Pepe");
         GameFactory pepeFactory = new GameFactory(pepeUser, true);
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 10; i++)
         {
             pepeFactory.playGame();
         }
-
-        for (int i = 0; i < pepeUser.getHistoricGames().size(); i++)
-        {
-            System.out.println(pepeUser.getHistoricGames().get(i).toString());
-
-        }
+        System.out.println("\nPorcentaje de acierto: " + pepeUser.getSuccessRate() + "\n");
+        pepeUser.getHistoricGames();
 
     }
 
