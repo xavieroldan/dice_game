@@ -84,6 +84,7 @@ tools
 
 DUDAS:
 **************************************
-User :
-	en el constructor incluyo la llamada a la bd
+Cazar excepciones:
+	User: si el nombre lo damos vacío
+		si el nombre ya está en BD el no
 

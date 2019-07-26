@@ -1,6 +1,8 @@
 package com.dicegame.app.factory;
 
 import com.dicegame.control.PlayersJpaController;
+import com.dicegame.control.exceptions.FieldVoidException;
+import com.dicegame.control.exceptions.IllegalOrphanException;
 import com.dicegame.control.exceptions.PreexistingEntityException;
 import com.dicegame.domain.Player;
 import com.dicegame.models.Players;
@@ -23,25 +25,27 @@ public class PlayerFactory
     public boolean create(Player input) throws Exception
     {
         boolean isAdded = false;
+        if (input.getName().isEmpty())
+        {
+            throw new FieldVoidException("El nombre no puede estar vacío");
+        }
         //first verify if exists
         List<Players> listPlayers = playerControl.findPlayersEntities();
-        List<String> namePlayers = new ArrayList<>();
         for (Players listPlayer : listPlayers)
         {
-            namePlayers.add(listPlayer.getName());
+            if (listPlayer.getName().equalsIgnoreCase(input.getName()))//exit at database ignoreCase
+            {
+                throw new PreexistingEntityException(""
+                        + "Nombre de jugador ya existente: no se permiten duplicados");
+            }
         }
-
-        if (!namePlayers.contains(input.getName()))
-        {
-            //not exist at the DB
-            String playerId = input.getPlayerId();
-            String name = input.getName();
-            Date regDate = input.getRegDate();
-            Players player = new Players(playerId, name, regDate);
-            playerControl.create(player);
-            isAdded = true;
-            return isAdded;
-        }
-        throw new PreexistingEntityException("Nombre de jugador ya existente: no se permiten duplicados");
+        //not exist at the DB
+        String playerId = input.getPlayerId();
+        String name = input.getName();
+        Date regDate = input.getRegDate();
+        Players player = new Players(playerId, name, regDate);
+        playerControl.create(player);
+        isAdded = true;
+        return isAdded;
     }
 }

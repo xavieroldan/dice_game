@@ -130,16 +130,6 @@ public class DiceGame
                 }
 
             }
-
-//            //
-//            if (gameResult == WIN_POINTS) // Winner game
-//            {
-//                isWinner = true;
-//            }
-//            else //Lose game
-//            {
-//                isWinner = false;
-//            }
 //TODO: update the DB adding the roll and the result 
         }
     }
