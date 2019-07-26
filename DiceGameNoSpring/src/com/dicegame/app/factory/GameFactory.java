@@ -34,7 +34,7 @@ public class GameFactory
             diceGame.setIsAnonim(isAnonim);
             diceGame.setGameNick(name);
         }
-        //is anonim, the constructor makes the work
+        //if is anonim, the constructor makes the work
         //Lets play ;D
 
         for (int i = 1; i < diceGame.getROLL_MAX() + 1; i++)

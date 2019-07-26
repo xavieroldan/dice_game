@@ -12,7 +12,10 @@ public class DiceGame
 
     private static int gameCount;
     private final int ROLL_MAX = 2;
-    private final int WIN_POINTS = 7;
+    private final int WIN_RESULTS[] =
+    {
+        7
+    };
 
     private List<DiceRoll> dicesRolls;
     private int playerId; // TODO: change type of playerId to UUID String?
@@ -41,11 +44,6 @@ public class DiceGame
     public int getROLL_MAX()
     {
         return ROLL_MAX;
-    }
-
-    public int getWIN_POINTS()
-    {
-        return WIN_POINTS;
     }
 
     public List<DiceRoll> getDicesRolls()
@@ -120,14 +118,28 @@ public class DiceGame
         {
             gameResult += diceRoll.getRollResult();
             rollCount = 0;
-            if (gameResult == WIN_POINTS) // Winner game
+            for (int i : WIN_RESULTS)
             {
-                isWinner = true;
+                if (gameResult == i) // Winner game
+                {
+                    isWinner = true;
+                }
+                else //Lose game
+                {
+                    isWinner = false;
+                }
+
             }
-            else //Lose game
-            {
-                isWinner = false;
-            }
+
+//            //
+//            if (gameResult == WIN_POINTS) // Winner game
+//            {
+//                isWinner = true;
+//            }
+//            else //Lose game
+//            {
+//                isWinner = false;
+//            }
 //TODO: update the DB adding the roll and the result 
         }
     }

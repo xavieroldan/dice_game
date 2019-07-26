@@ -28,6 +28,7 @@ public class User
         this.successRate = 0;
         List<DiceGame> diceGame = new ArrayList<>();
         this.historicGames = diceGame;
+        //add the adding to the db in the constructor
     }
 
     public int getPlayerId()

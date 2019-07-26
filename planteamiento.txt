@@ -84,9 +84,6 @@ tools
 
 DUDAS:
 **************************************
-GameFactory
+User :
+	en el constructor incluyo la llamada a la bd
 
-CUando vayas a jugasr se crea y te pregunta si quieres cambiar a anónimo la jugada
-	Si es así, va a usuario y lo cambia	
-
-Pulir PlayGame de playFactory para que no haya que repeit 2 veces el lanzamiento con 2 dados, sino que sea el mismo dado en un bucle que dependa de la constante de juagadas a realizar		
