@@ -2,6 +2,8 @@ package com.dicegame.app.factory;
 
 import com.dicegame.control.PlayersJpaController;
 import com.dicegame.control.exceptions.FieldVoidException;
+import com.dicegame.control.exceptions.IllegalOrphanException;
+import com.dicegame.control.exceptions.NonexistentEntityException;
 import com.dicegame.control.exceptions.PreexistingEntityException;
 import com.dicegame.domain.Player;
 import com.dicegame.models.Players;
@@ -54,12 +56,22 @@ public class PlayerFactory
         {
             throw new FieldVoidException("El nombre no puede estar vacío");
         }
-        input.setName(newName); //change in memory
-        //and add to the database
+
+        //edit on database
         Players player = playerControl.findPlayers(input.getPlayerId());
         player.setName(newName);
         playerControl.edit(player);
+        input.setName(newName); //change in object
+        isEdited = true;
         return isEdited;
+    }
+
+    public boolean delete(Player input) throws IllegalOrphanException, NonexistentEntityException
+    {
+        boolean isDeleted = false;
+        playerControl.destroy(input.getPlayerId());
+        isDeleted = true;
+        return isDeleted;
     }
 
 }

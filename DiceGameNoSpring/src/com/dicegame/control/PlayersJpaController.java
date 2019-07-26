@@ -154,7 +154,7 @@ public class PlayersJpaController implements Serializable
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException
     {
         EntityManager em = null;
         try

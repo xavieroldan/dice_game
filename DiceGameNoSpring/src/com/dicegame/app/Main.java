@@ -39,6 +39,12 @@ public class Main
                     name = sc.next();
                     System.out.println("Cambiamos " + player.getName() + " x " + name);
                     playerFactory.edit(player, name);
+                    System.out.println("Ecribe algo y enter para destruirlo");
+                    name = sc.next();
+                    playerFactory.delete(player);
+                    System.out.println("Destruido!");
+                //TODO: destroy the player's game                    
+
             }
         }
 
