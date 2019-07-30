@@ -8,7 +8,7 @@ import java.util.UUID;
  *
  * @author Xavier Roldán <info@xavierroldan.com>
  */
-public class DiceGame
+public class DiceGameController
 {
     private final int ROLL_MAX = 2;
     private final int WIN_RESULTS[] =
@@ -16,7 +16,7 @@ public class DiceGame
         7
     };
 
-    private List<DiceRoll> dicesRolls;
+    private List<DiceRollController> dicesRolls;
     private String playerId;
     private String gameNick;
     private boolean isAnonim;
@@ -25,9 +25,9 @@ public class DiceGame
     private int rollCount;
     private int gameResult;
 
-    public DiceGame(String playerId)
+    public DiceGameController(String playerId)
     {
-        List<DiceRoll> dicesRolls = new ArrayList<>();
+        List<DiceRollController> dicesRolls = new ArrayList<>();
         this.dicesRolls = dicesRolls;
         this.idGame = UUID.randomUUID().toString().replace("-", "");
         this.gameNick = "ANÒNIM";
@@ -43,10 +43,10 @@ public class DiceGame
         return ROLL_MAX;
     }
 
-    public List<DiceRoll> getDicesRolls()
+    public List<DiceRollController> getDicesRolls()
     {
         //TODO: Change to get from the DB?
-        for (DiceRoll dicesRoll : dicesRolls)
+        for (DiceRollController dicesRoll : dicesRolls)
         {
             System.out.println("    \nidRoll: " + idGame + dicesRoll.toString());
         }
@@ -78,7 +78,7 @@ public class DiceGame
         return gameResult;
     }
 
-    private void setDicesRolls(List<DiceRoll> dicesRolls)
+    private void setDicesRolls(List<DiceRollController> dicesRolls)
     {
         this.dicesRolls = dicesRolls;
     }
@@ -103,7 +103,7 @@ public class DiceGame
         this.isAnonim = isAnonim;
     }
 
-    public void setDiceRoll(DiceRoll diceRoll)
+    public void setDiceRoll(DiceRollController diceRoll)
     {
 
         dicesRolls.add(diceRoll);
@@ -147,7 +147,7 @@ public class DiceGame
         }
 
         String diceRollString = "";//get the rolls results       
-        for (DiceRoll dicesRoll : dicesRolls)
+        for (DiceRollController dicesRoll : dicesRolls)
         {
             diceRollString += "\nDado: " + dicesRoll.getDiceId()
                     + " Puntos: " + dicesRoll.getRollResult();

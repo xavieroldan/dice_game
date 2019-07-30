@@ -17,7 +17,7 @@ public class PlayerController
     private String name;
     private Date regDate;
     private double successRate;
-    private List<DiceGame> historicGames;
+    private List<DiceGameController> historicGames;
 
     public PlayerController(String name, PlayerFactory playerFactory) throws Exception
     {
@@ -25,7 +25,7 @@ public class PlayerController
         this.name = name;
         this.regDate = TimeStamp.getDate();
         this.successRate = 0;
-        List<DiceGame> diceGame = new ArrayList<>();
+        List<DiceGameController> diceGame = new ArrayList<>();
         this.historicGames = diceGame;
         //add the adding to the db in the constructor
         playerFactory.create(this);
@@ -51,12 +51,12 @@ public class PlayerController
         return successRate;
     }
 
-    public List<DiceGame> getHistoricGames()
+    public List<DiceGameController> getHistoricGames()
     {
 
         System.out.println("Histórico de jugadas"
                 + "\n--------------------");
-        for (DiceGame historicGame : historicGames)
+        for (DiceGameController historicGame : historicGames)
         {
             System.out.println(historicGame.toString());
         }
@@ -73,13 +73,13 @@ public class PlayerController
         this.successRate = successRate;
     }
 
-    public void addGame(DiceGame diceGame)
+    public void addGame(DiceGameController diceGame)
     {
         //add the Game to the user historic
         historicGames.add(diceGame);
         double games = historicGames.size();
         double winGames = 0;
-        for (DiceGame historicGame : historicGames)
+        for (DiceGameController historicGame : historicGames)
         {
             if (historicGame.getIsWinner())
             {

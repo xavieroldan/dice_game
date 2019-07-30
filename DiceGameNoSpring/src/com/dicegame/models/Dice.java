@@ -1,4 +1,4 @@
-package com.dicegame.controllers;
+package com.dicegame.models;
 
 /**
  *

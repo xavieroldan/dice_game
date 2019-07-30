@@ -4,9 +4,9 @@ import com.dicegame.app.tools.RandomRollGen;
 import com.dicegame.control.DiceRollsJpaController;
 import com.dicegame.control.PlayersJpaController;
 import com.dicegame.exceptions.NonexistentEntityException;
-import com.dicegame.controllers.Dice;
-import com.dicegame.controllers.DiceGame;
-import com.dicegame.controllers.DiceRoll;
+import com.dicegame.models.Dice;
+import com.dicegame.controllers.DiceGameController;
+import com.dicegame.controllers.DiceRollController;
 import com.dicegame.controllers.PlayerController;
 import com.dicegame.models.DiceRolls;
 import com.dicegame.models.Players;
@@ -36,7 +36,7 @@ public class GameFactory
     {
         String playerId = user.getPlayerId();
         String name = user.getName();
-        DiceGame diceGame = new DiceGame(playerId);
+        DiceGameController diceGame = new DiceGameController(playerId);
 
         if (!isAnonim) // is not anonim set the Dice Game parameters
         {
@@ -52,7 +52,7 @@ public class GameFactory
         for (int i = 1; i < diceGame.getROLL_MAX() + 1; i++)
         {
             //Here the loop 
-            DiceRoll diceRoll = new DiceRoll(); //Create the dice roll
+            DiceRollController diceRoll = new DiceRollController(); //Create the dice roll
             Dice dice = new Dice(i); //Create the dice
             diceRoll.setDiceId(dice.getDiceId()); //Launch the dice
             diceRoll.setRollResult(RandomRollGen.getRandomRoll()); // get the result of the play dice 1       
@@ -77,13 +77,12 @@ public class GameFactory
         user.addGame(diceGame);
     }
 
-    public boolean createDiceRoll(DiceGame input) throws Exception
+    public boolean createDiceRoll(DiceGameController input) throws Exception
     {
         boolean isAdded = false;
 
         String idRoll = input.getGameId();
         boolean isAnonim = this.isAnonim;
-        String idPlayer = this.user.getPlayerId();
 
         DiceRolls diceRolls = new DiceRolls(idRoll);//Create the entity and set id
 
@@ -96,7 +95,7 @@ public class GameFactory
         return isAdded;
     }
 
-    public boolean addDiceRoll(DiceGame input) throws NonexistentEntityException, Exception
+    public boolean addDiceRoll(DiceGameController input) throws NonexistentEntityException, Exception
     {
         //TODO: add the result to the DB
         boolean isAdded = false;

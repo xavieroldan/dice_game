@@ -1,20 +1,24 @@
 package com.dicegame.controllers;
 
+import com.dicegame.control.DiceRollsJpaController;
+import com.dicegame.control.PlayersJpaController;
+import javax.persistence.EntityManagerFactory;
+
 /**
  *
  * @author Xavier Roldán <info@xavierroldan.com>
  */
-public class DiceRoll
+public class DiceRollController
 {
 
     private int diceId;
     private int rollResult;
 
-    public DiceRoll()
+    public DiceRollController()
     {
     }
 
-    public DiceRoll(int diceId)
+    public DiceRollController(int diceId)
     {
         this.diceId = diceId;
         this.rollResult = 0; //default at instantiate 0 points
