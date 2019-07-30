@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `dice_game`.`dice_rolls` (
   `players_idplayers` VARCHAR(45) NOT NULL,
   `is_winner` TINYINT(1) NOT NULL DEFAULT 0,
   `is_anonim` TINYINT(1) NOT NULL DEFAULT 1,
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
   INDEX `fk_dice_rolls_players_idx` (`players_idplayers` ASC) ,
   PRIMARY KEY (`id_roll`),
   CONSTRAINT `fk_dice_rolls_players`
