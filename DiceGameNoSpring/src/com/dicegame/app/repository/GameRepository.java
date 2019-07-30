@@ -136,7 +136,9 @@ public class GameRepository
 
     public void deleteListGames()
     {
+        //delete the dice rolls
 
+        //delete the dice games
     }
 
 }
