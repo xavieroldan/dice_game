@@ -66,12 +66,12 @@ public class PlayerRepository
         return isEdited;
     }
 
-    public boolean delete(PlayerController input) throws IllegalOrphanException, NonexistentEntityException
+    public boolean delete(PlayerController input)
+            throws IllegalOrphanException, NonexistentEntityException
     {
         boolean isDeleted = false;
         playerControl.destroy(input.getIdPlayer());
         isDeleted = true;
         return isDeleted;
     }
-
 }

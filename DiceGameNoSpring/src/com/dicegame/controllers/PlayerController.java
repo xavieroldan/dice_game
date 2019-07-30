@@ -18,66 +18,67 @@ public class PlayerController
     private Date regDate;
     private double successRate;
     private List<DiceGameController> listGames;
-    
-    public PlayerController(String name, PlayerRepository playerFactory) throws Exception
+    private PlayerRepository playerRepository;
+
+    public PlayerController(String name, PlayerRepository playerRepo) throws Exception
     {
         this.IdPlayer = UUID.randomUUID().toString().replace("-", "");
-        this.setName(name);
+        this.name = name;
         this.regDate = TimeStamp.getDate();
         this.successRate = 0;
         List<DiceGameController> diceGame = new ArrayList<>();
         this.setListGames(diceGame);
         //add the adding to the db in the constructor
-        playerFactory.create(this);
+        this.setPlayerRepository(playerRepo);
+        playerRepository.create(this);
     }
-    
+
     public String getIdPlayer()
     {
         return IdPlayer;
     }
-    
+
     public String getName()
     {
         return name;
     }
-    
+
     public Date getRegDate()
     {
         return regDate;
     }
-    
+
     public double getSuccessRate()
     {
         return successRate;
     }
-    
-    public List<DiceGameController> getListGames()
-    {
-        
-        System.out.println("Histórico de jugadas"
-                + "\n--------------------");
-        for (DiceGameController historicGame : listGames)
-        {
-            System.out.println(historicGame.toString());
-        }
-        return listGames;
-    }
-    
-    public void setName(String name)
+
+    public void setName(String name) throws Exception
     {
         this.name = name;
+        playerRepository.edit(this, name);
     }
-    
+
     public void setSuccessRate(double successRate)
     {
         this.successRate = successRate;
     }
-    
+
     public void setListGames(List<DiceGameController> listGames)
     {
         this.listGames = listGames;
-    }    
-    
+    }
+
+    public PlayerRepository getPlayerRepository()
+    {
+        return playerRepository;
+    }
+
+    public void setPlayerRepository(PlayerRepository playerRepository)
+    {
+        this.playerRepository = playerRepository;
+    }
+
     public void addListGame(DiceGameController diceGame)
     {
         //add the Game to the user historic
@@ -94,17 +95,17 @@ public class PlayerController
         double rate = Math.round((winGames / games) * 100); //round the result to show %
         successRate = rate; // update the success rate value in the user
     }
-    
+
     public void voidGames()
     {
 
 //	voidGames(), borra el histórico de jugadas del usuario	
     }
-    
+
     @Override
     public String toString()
     {
         return "User{" + "playerId=" + IdPlayer + ", name=" + name + ", regDate=" + regDate + ", successRate=" + successRate + ", historicGames=" + listGames + '}';
     }
-    
+
 }
