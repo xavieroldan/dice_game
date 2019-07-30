@@ -17,13 +17,13 @@ public class DiceResultsPK implements Serializable
     private int idDice;
     @Basic(optional = false)
     @Column(name = "dice_rolls_id_roll")
-    private int diceRollsIdRoll;
+    private String diceRollsIdRoll;
 
     public DiceResultsPK()
     {
     }
 
-    public DiceResultsPK(int idDice, int diceRollsIdRoll)
+    public DiceResultsPK(int idDice, String diceRollsIdRoll)
     {
         this.idDice = idDice;
         this.diceRollsIdRoll = diceRollsIdRoll;
@@ -39,25 +39,24 @@ public class DiceResultsPK implements Serializable
         this.idDice = idDice;
     }
 
-    public int getDiceRollsIdRoll()
+    public String getDiceRollsIdRoll()
     {
         return diceRollsIdRoll;
     }
 
-    public void setDiceRollsIdRoll(int diceRollsIdRoll)
+    public void setDiceRollsIdRoll(String diceRollsIdRoll)
     {
         this.diceRollsIdRoll = diceRollsIdRoll;
     }
 
-    @Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (int) idDice;
-        hash += (int) diceRollsIdRoll;
-        return hash;
-    }
-
+//    @Override
+//    public int hashCode()
+//    {
+//        String hash = "";
+//        hash += idDice;
+//        hash += diceRollsIdRoll;
+//        return hash;
+//    }
     @Override
     public boolean equals(Object object)
     {

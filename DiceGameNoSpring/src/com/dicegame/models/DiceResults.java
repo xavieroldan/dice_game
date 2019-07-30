@@ -53,7 +53,7 @@ public class DiceResults implements Serializable
         this.rollResult = rollResult;
     }
 
-    public DiceResults(int idDice, int diceRollsIdRoll)
+    public DiceResults(int idDice, String diceRollsIdRoll)
     {
         this.diceResultsPK = new DiceResultsPK(idDice, diceRollsIdRoll);
     }

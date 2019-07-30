@@ -1,6 +1,7 @@
 package com.dicegame.app.factory;
 
 import com.dicegame.app.tools.RandomRollGen;
+import com.dicegame.control.DiceResultsJpaController;
 import com.dicegame.control.DiceRollsJpaController;
 import com.dicegame.control.PlayersJpaController;
 import com.dicegame.exceptions.NonexistentEntityException;
@@ -8,6 +9,8 @@ import com.dicegame.models.Dice;
 import com.dicegame.controllers.DiceGameController;
 import com.dicegame.controllers.DiceRollController;
 import com.dicegame.controllers.PlayerController;
+import com.dicegame.models.DiceResults;
+import com.dicegame.models.DiceResultsPK;
 import com.dicegame.models.DiceRolls;
 import com.dicegame.models.Players;
 import javax.persistence.EntityManagerFactory;
@@ -25,6 +28,7 @@ public class GameFactory
             createEntityManagerFactory("DiceGameNoSpringPU");
     private DiceRollsJpaController diceRollControl = new DiceRollsJpaController(emf);
     private PlayersJpaController playerControl = new PlayersJpaController(emf);
+    private DiceResultsJpaController diceResultController = new DiceResultsJpaController(emf);
 
     public GameFactory(PlayerController user, boolean isAnonim)
     {
@@ -48,15 +52,27 @@ public class GameFactory
         //if is anonim, the constructor makes the work
         //Lets play ;D
         //Create the roll in the DB
-        createDiceRoll(diceGame);
+        DiceRolls diceRolls = createDiceRoll(diceGame);
         for (int i = 1; i < diceGame.getROLL_MAX() + 1; i++)
         {
             //Here the loop 
             DiceRollController diceRoll = new DiceRollController(); //Create the dice roll
             Dice dice = new Dice(i); //Create the dice
             diceRoll.setDiceId(dice.getDiceId()); //Launch the dice
-            diceRoll.setRollResult(RandomRollGen.getRandomRoll()); // get the result of the play dice 1       
+            int result = RandomRollGen.getRandomRoll();
+            diceRoll.setRollResult(result); // get the result of the play dice 1       
             diceGame.setDiceRoll(diceRoll);//set dice roll in the game  
+            //TODO: save on the DB    
+            //Save on the drPK
+            DiceResultsPK diceRPK = new DiceResultsPK();
+            diceRPK.setIdDice(i);
+            diceRPK.setDiceRollsIdRoll(playerId);
+            //Now save on an DiceResults
+            DiceResults diceResult = new DiceResults(diceRPK, result);
+            diceResult.setDiceRolls(diceRolls);//save the DiceRolls entity 
+            System.out.println("Tirada antes de guardar en BD");
+            //create in the DB
+            diceResultController.create(diceResult);
         }
 
         //TODO:To delete vvvvvvvvvvv
@@ -77,7 +93,7 @@ public class GameFactory
         user.addGame(diceGame);
     }
 
-    public boolean createDiceRoll(DiceGameController input) throws Exception
+    public DiceRolls createDiceRoll(DiceGameController input) throws Exception
     {
         boolean isAdded = false;
 
@@ -92,7 +108,7 @@ public class GameFactory
         diceRolls.setPlayersIdplayers(player);
         diceRollControl.create(diceRolls);//create in the db        
         isAdded = true;
-        return isAdded;
+        return diceRolls;
     }
 
     public boolean addDiceRoll(DiceGameController input) throws NonexistentEntityException, Exception
@@ -107,6 +123,11 @@ public class GameFactory
 
         isAdded = true;
         return isAdded;
+    }
+
+    public boolean addDice()
+    {
+        return false;
     }
 
     public boolean createDiceGame(PlayerController input) throws Exception
