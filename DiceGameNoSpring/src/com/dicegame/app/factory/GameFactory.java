@@ -87,7 +87,7 @@ public class GameFactory
         }
         //TODO:To delete ^^^^^^^^^^^^
 
-        //TODO: add the Game to the DB
+        //Add the Game to the DB
         addDiceRoll(diceGame);
         //add to the player historic 
         user.addGame(diceGame);
@@ -113,14 +113,12 @@ public class GameFactory
 
     public boolean addDiceRoll(DiceGameController input) throws NonexistentEntityException, Exception
     {
-        //TODO: add the result to the DB
         boolean isAdded = false;
         //Search in the db and update the isWinner
         //edit on database
         DiceRolls diceRoll = diceRollControl.findDiceRolls(input.getGameId());
         diceRoll.setIsWinner(input.getIsWinner());
         diceRollControl.edit(diceRoll);
-
         isAdded = true;
         return isAdded;
     }

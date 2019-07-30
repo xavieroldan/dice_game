@@ -29,7 +29,7 @@ public class Main
                     PlayerFactory playerFactory = new PlayerFactory();
                     PlayerController player = new PlayerController(name, playerFactory);
                     GameFactory gameFactory = new GameFactory(player, true); //Is anonim
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 1; i++)
                     {
                         gameFactory.playGame();
                     }

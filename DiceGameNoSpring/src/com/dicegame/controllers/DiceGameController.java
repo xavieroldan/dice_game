@@ -128,7 +128,6 @@ public class DiceGameController
                 }
 
             }
-//TODO: update the DB adding the roll and the result 
         }
     }
 

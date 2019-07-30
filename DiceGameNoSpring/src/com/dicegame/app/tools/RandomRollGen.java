@@ -19,6 +19,4 @@ public class RandomRollGen
 
         return output;
     }
-
-    //TODO: random gameId generator   
 }
