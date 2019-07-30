@@ -13,6 +13,8 @@ import com.dicegame.models.DiceResults;
 import com.dicegame.models.DiceResultsPK;
 import com.dicegame.models.DiceRolls;
 import com.dicegame.models.Players;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 
 /**
@@ -117,5 +119,24 @@ public class GameRepository
         return isAdded;
     }
 
-    //TODO: Get historic games here?
+    public List<DiceRolls> getListGame()
+    {
+        String idPlayer = playerController.getIdPlayer();
+        List<DiceRolls> listDiceRolls = new ArrayList<>();
+
+        for (DiceRolls diceRoll : diceRollControl.findDiceRollsEntities())
+        {
+            if (diceRoll.getPlayersIdplayers().getIdplayers().equals(idPlayer))
+            {
+                listDiceRolls.add(diceRoll);
+            }
+        }
+        return listDiceRolls;
+    }
+
+    public void deleteListGames()
+    {
+
+    }
+
 }

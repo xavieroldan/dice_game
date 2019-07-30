@@ -3,6 +3,7 @@ package com.dicegame.app;
 import com.dicegame.app.repository.GameRepository;
 import com.dicegame.app.repository.PlayerRepository;
 import com.dicegame.controllers.PlayerController;
+import com.dicegame.models.DiceRolls;
 import java.util.Scanner;
 
 /**
@@ -26,16 +27,23 @@ public class Main
                     break;
                 default:
 
-                    PlayerRepository playerFactory = new PlayerRepository();
-                    PlayerController player = new PlayerController(name, playerFactory);
-                    GameRepository gameFactory = new GameRepository(player, true); //Is anonim
-                    for (int i = 0; i < 1; i++)
+                    PlayerRepository playerRepository = new PlayerRepository();
+                    PlayerController playerController = new PlayerController(name, playerRepository);
+                    GameRepository gameRepository = new GameRepository(playerController, true); //Is anonim
+                    for (int i = 0; i < 5; i++)
                     {
-                        gameFactory.createGame();
+                        gameRepository.createGame();
                     }
-                    System.out.println("\nPorcentaje de acierto: " + player.getSuccessRate() + "\n");
-                    player.getListGames();
+                    System.out.println("\nPorcentaje de acierto: " + playerController.getSuccessRate() + "\n");
 
+//                    System.out.println(gameRepository.getListGame());
+                    for (DiceRolls game : gameRepository.getListGame())
+                    {
+                        System.out.println("Lista de juegos");
+                        System.out.println("--------------------");
+                        System.out.println(game.toString());
+                    }
+//                    playerController.getListGames();
 //                    System.out.println("Cambia el nombre a " + player.getName());
 //                    name = sc.next();
 //                    System.out.println("Cambiamos " + player.getName() + " x " + name);

@@ -142,7 +142,9 @@ public class DiceRolls implements Serializable
     @Override
     public String toString()
     {
-        return "com.dicegame.models.DiceRolls[ idRoll=" + idRoll + " ]";
+        return "idRoll=" + idRoll + " ]"
+                + " is Winner=" + isWinner
+                + " is Anonim=" + isAnonim;
     }
 
 }
