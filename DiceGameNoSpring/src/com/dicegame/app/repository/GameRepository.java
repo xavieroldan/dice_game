@@ -119,24 +119,39 @@ public class GameRepository
         return isAdded;
     }
 
-    public List<DiceRolls> getListGame()
+    public List<DiceRolls> getListGames()
     {
         String idPlayer = playerController.getIdPlayer();
         List<DiceRolls> listDiceRolls = new ArrayList<>();
 
         for (DiceRolls diceRoll : diceRollControl.findDiceRollsEntities())
         {
-            if (diceRoll.getPlayersIdplayers().getIdplayers().equals(idPlayer))
+            if (diceRoll.getPlayersIdplayers().getIdplayers().equals(idPlayer)
+                    && diceRoll.getIsDeleted() == false) //is not deleted
             {
                 listDiceRolls.add(diceRoll);
             }
         }
         return listDiceRolls;
+
+        //TODO: return object with the resulta and the dice rolls
     }
 
-    public void deleteListGames()
+    public void deleteListGames() throws NonexistentEntityException, Exception
     {
-
+        //delete the dice rolls
+        //from the objet        
+        playerController.voidGames();
+        //now from the db the dice rolls        
+        for (DiceRolls diceRoll : diceRollControl.findDiceRollsEntities())
+        {
+            if (diceRoll.getPlayersIdplayers().getIdplayers()
+                    == playerController.getIdPlayer())
+            {
+                diceRoll.setIsDeleted(true);
+                diceRollControl.edit(diceRoll);
+            }
+        }
     }
 
 }

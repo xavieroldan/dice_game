@@ -43,6 +43,8 @@ public class DiceRolls implements Serializable
     @Basic(optional = false)
     @Column(name = "is_anonim")
     private boolean isAnonim;
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
     @JoinColumn(name = "players_idplayers", referencedColumnName = "idplayers")
     @ManyToOne(optional = false)
     private Players playersIdplayers;
@@ -58,11 +60,12 @@ public class DiceRolls implements Serializable
         this.idRoll = idRoll;
     }
 
-    public DiceRolls(String idRoll, boolean isWinner, boolean isAnonim)
+    public DiceRolls(String idRoll, boolean isWinner, boolean isAnonim, boolean isDeleted)
     {
         this.idRoll = idRoll;
         this.isWinner = isWinner;
         this.isAnonim = isAnonim;
+        this.isDeleted = isDeleted;
     }
 
     public String getIdRoll()
@@ -88,6 +91,16 @@ public class DiceRolls implements Serializable
     public boolean getIsAnonim()
     {
         return isAnonim;
+    }
+
+    public boolean getIsDeleted()
+    {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted)
+    {
+        this.isDeleted = isDeleted;
     }
 
     public void setIsAnonim(boolean isAnonim)

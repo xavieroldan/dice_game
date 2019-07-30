@@ -98,8 +98,7 @@ public class PlayerController
 
     public void voidGames()
     {
-
-//	voidGames(), borra el histórico de jugadas del usuario	
+        listGames.clear();
     }
 
     @Override

@@ -35,12 +35,24 @@ public class Main
                         gameRepository.createGame();
                     }
                     System.out.println("\nPorcentaje de acierto: " + playerController.getSuccessRate() + "\n");
-
-//                    System.out.println(gameRepository.getListGame());
-                    for (DiceRolls game : gameRepository.getListGame())
+                    System.out.println("Lista de juegos");
+                    System.out.println("--------------------");
+                    for (DiceRolls game : gameRepository.getListGames())
                     {
-                        System.out.println("Lista de juegos");
-                        System.out.println("--------------------");
+
+                        System.out.println(game.toString());
+                    }
+
+                    System.out.println("Eliminando histórico al pulsar enter");
+                    String stop = sc.next();
+                    gameRepository.deleteListGames();
+
+                    System.out.println("Saco la lista de nuevo de BD");
+                    System.out.println("Lista de juegos");
+                    System.out.println("--------------------");
+                    for (DiceRolls game : gameRepository.getListGames())
+                    {
+
                         System.out.println(game.toString());
                     }
 //                    playerController.getListGames();
