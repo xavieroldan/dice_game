@@ -1,6 +1,6 @@
-package com.dicegame.app.factory;
+package com.dicegame.app.repository;
 
-import com.dicegame.control.PlayersJpaController;
+import com.dicegame.jpa.control.PlayersJpaController;
 import com.dicegame.exceptions.FieldVoidException;
 import com.dicegame.exceptions.IllegalOrphanException;
 import com.dicegame.exceptions.NonexistentEntityException;
@@ -15,7 +15,7 @@ import javax.persistence.EntityManagerFactory;
  *
  * @author Xavier Roldán <info@xavierroldan.com>
  */
-public class PlayerFactory
+public class PlayerRepository
 {
 
     private EntityManagerFactory emf = javax.persistence.Persistence.

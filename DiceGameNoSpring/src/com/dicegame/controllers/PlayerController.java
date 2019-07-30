@@ -1,6 +1,6 @@
 package com.dicegame.controllers;
 
-import com.dicegame.app.factory.PlayerFactory;
+import com.dicegame.app.repository.PlayerRepository;
 import com.dicegame.app.tools.TimeStamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,69 +17,74 @@ public class PlayerController
     private String name;
     private Date regDate;
     private double successRate;
-    private List<DiceGameController> historicGames;
-
-    public PlayerController(String name, PlayerFactory playerFactory) throws Exception
+    private List<DiceGameController> listGames;
+    
+    public PlayerController(String name, PlayerRepository playerFactory) throws Exception
     {
         this.IdPlayer = UUID.randomUUID().toString().replace("-", "");
-        this.name = name;
+        this.setName(name);
         this.regDate = TimeStamp.getDate();
         this.successRate = 0;
         List<DiceGameController> diceGame = new ArrayList<>();
-        this.historicGames = diceGame;
+        this.setListGames(diceGame);
         //add the adding to the db in the constructor
         playerFactory.create(this);
     }
-
+    
     public String getIdPlayer()
     {
         return IdPlayer;
     }
-
+    
     public String getName()
     {
         return name;
     }
-
+    
     public Date getRegDate()
     {
         return regDate;
     }
-
+    
     public double getSuccessRate()
     {
         return successRate;
     }
-
-    public List<DiceGameController> getHistoricGames()
+    
+    public List<DiceGameController> getListGames()
     {
-
+        
         System.out.println("Histórico de jugadas"
                 + "\n--------------------");
-        for (DiceGameController historicGame : historicGames)
+        for (DiceGameController historicGame : listGames)
         {
             System.out.println(historicGame.toString());
         }
-        return historicGames;
+        return listGames;
     }
-
+    
     public void setName(String name)
     {
         this.name = name;
     }
-
+    
     public void setSuccessRate(double successRate)
     {
         this.successRate = successRate;
     }
-
-    public void addGame(DiceGameController diceGame)
+    
+    public void setListGames(List<DiceGameController> listGames)
+    {
+        this.listGames = listGames;
+    }    
+    
+    public void addListGame(DiceGameController diceGame)
     {
         //add the Game to the user historic
-        historicGames.add(diceGame);
-        double games = historicGames.size();
+        listGames.add(diceGame);
+        double games = listGames.size();
         double winGames = 0;
-        for (DiceGameController historicGame : historicGames)
+        for (DiceGameController historicGame : listGames)
         {
             if (historicGame.getIsWinner())
             {
@@ -89,17 +94,17 @@ public class PlayerController
         double rate = Math.round((winGames / games) * 100); //round the result to show %
         successRate = rate; // update the success rate value in the user
     }
-
+    
     public void voidGames()
     {
 
 //	voidGames(), borra el histórico de jugadas del usuario	
     }
-
+    
     @Override
     public String toString()
     {
-        return "User{" + "playerId=" + IdPlayer + ", name=" + name + ", regDate=" + regDate + ", successRate=" + successRate + ", historicGames=" + historicGames + '}';
+        return "User{" + "playerId=" + IdPlayer + ", name=" + name + ", regDate=" + regDate + ", successRate=" + successRate + ", historicGames=" + listGames + '}';
     }
-
+    
 }

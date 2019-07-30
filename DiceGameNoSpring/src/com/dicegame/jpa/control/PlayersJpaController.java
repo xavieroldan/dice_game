@@ -1,4 +1,4 @@
-package com.dicegame.control;
+package com.dicegame.jpa.control;
 
 import com.dicegame.exceptions.IllegalOrphanException;
 import com.dicegame.exceptions.NonexistentEntityException;

@@ -1,7 +1,7 @@
 package com.dicegame.app;
 
-import com.dicegame.app.factory.GameFactory;
-import com.dicegame.app.factory.PlayerFactory;
+import com.dicegame.app.repository.GameRepository;
+import com.dicegame.app.repository.PlayerRepository;
 import com.dicegame.controllers.PlayerController;
 import java.util.Scanner;
 
@@ -26,16 +26,70 @@ public class Main
                     break;
                 default:
 
-                    PlayerFactory playerFactory = new PlayerFactory();
+                    PlayerRepository playerFactory = new PlayerRepository();
                     PlayerController player = new PlayerController(name, playerFactory);
-                    GameFactory gameFactory = new GameFactory(player, true); //Is anonim
+                    GameRepository gameFactory = new GameRepository(player, true); //Is anonim
                     for (int i = 0; i < 1; i++)
                     {
-                        gameFactory.playGame();
+                        gameFactory.createGame();
                     }
                     System.out.println("\nPorcentaje de acierto: " + player.getSuccessRate() + "\n");
-                    player.getHistoricGames();
+                    player.getListGames();
 
+//                    System.out.println("Cambia el nombre a " + player.getName());
+//                    name = sc.next();
+//                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+//                    playerFactory.edit(player, name);
+//                    System.out.println("Ecribe algo y enter para destruirlo");
+//                    name = sc.next();
+//                    playerFactory.delete(player);
+//                    System.out.println("Destruido!");
+                //TODO: destroy the player's game  ???                  
+//                    System.out.println("Cambia el nombre a " + player.getName());
+//                    name = sc.next();
+//                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+//                    playerFactory.edit(player, name);
+//                    System.out.println("Ecribe algo y enter para destruirlo");
+//                    name = sc.next();
+//                    playerFactory.delete(player);
+//                    System.out.println("Destruido!");
+                //TODO: destroy the player's game  ???                  
+//                    System.out.println("Cambia el nombre a " + player.getName());
+//                    name = sc.next();
+//                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+//                    playerFactory.edit(player, name);
+//                    System.out.println("Ecribe algo y enter para destruirlo");
+//                    name = sc.next();
+//                    playerFactory.delete(player);
+//                    System.out.println("Destruido!");
+                //TODO: destroy the player's game  ???                  
+//                    System.out.println("Cambia el nombre a " + player.getName());
+//                    name = sc.next();
+//                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+//                    playerFactory.edit(player, name);
+//                    System.out.println("Ecribe algo y enter para destruirlo");
+//                    name = sc.next();
+//                    playerFactory.delete(player);
+//                    System.out.println("Destruido!");
+                //TODO: destroy the player's game  ???                  
+//                    System.out.println("Cambia el nombre a " + player.getName());
+//                    name = sc.next();
+//                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+//                    playerFactory.edit(player, name);
+//                    System.out.println("Ecribe algo y enter para destruirlo");
+//                    name = sc.next();
+//                    playerFactory.delete(player);
+//                    System.out.println("Destruido!");
+                //TODO: destroy the player's game  ???                  
+//                    System.out.println("Cambia el nombre a " + player.getName());
+//                    name = sc.next();
+//                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+//                    playerFactory.edit(player, name);
+//                    System.out.println("Ecribe algo y enter para destruirlo");
+//                    name = sc.next();
+//                    playerFactory.delete(player);
+//                    System.out.println("Destruido!");
+                //TODO: destroy the player's game  ???                  
 //                    System.out.println("Cambia el nombre a " + player.getName());
 //                    name = sc.next();
 //                    System.out.println("Cambiamos " + player.getName() + " x " + name);

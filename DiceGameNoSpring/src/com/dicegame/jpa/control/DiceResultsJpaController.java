@@ -1,8 +1,8 @@
 
-package com.dicegame.control;
+package com.dicegame.jpa.control;
 
-import com.dicegame.control.exceptions.NonexistentEntityException;
-import com.dicegame.control.exceptions.PreexistingEntityException;
+import com.dicegame.jpa.exceptions.NonexistentEntityException;
+import com.dicegame.jpa.exceptions.PreexistingEntityException;
 import com.dicegame.models.DiceResults;
 import com.dicegame.models.DiceResultsPK;
 import java.io.Serializable;

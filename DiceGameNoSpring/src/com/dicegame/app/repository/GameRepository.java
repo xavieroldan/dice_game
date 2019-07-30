@@ -1,9 +1,9 @@
-package com.dicegame.app.factory;
+package com.dicegame.app.repository;
 
 import com.dicegame.app.tools.RandomRollGen;
-import com.dicegame.control.DiceResultsJpaController;
-import com.dicegame.control.DiceRollsJpaController;
-import com.dicegame.control.PlayersJpaController;
+import com.dicegame.jpa.control.DiceResultsJpaController;
+import com.dicegame.jpa.control.DiceRollsJpaController;
+import com.dicegame.jpa.control.PlayersJpaController;
 import com.dicegame.exceptions.NonexistentEntityException;
 import com.dicegame.models.Dice;
 import com.dicegame.controllers.DiceGameController;
@@ -19,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
  *
  * @author Xavier Roldán <info@xavierroldan.com>
  */
-public class GameFactory
+public class GameRepository
 {
 
     private PlayerController playerController;
@@ -30,13 +30,13 @@ public class GameFactory
     private PlayersJpaController playerControl = new PlayersJpaController(emf);
     private DiceResultsJpaController diceResultController = new DiceResultsJpaController(emf);
 
-    public GameFactory(PlayerController playerController, boolean isAnonim)
+    public GameRepository(PlayerController playerController, boolean isAnonim)
     {
         this.playerController = playerController;
         this.isAnonim = isAnonim;
     }
 
-    public void playGame() throws Exception
+    public void createGame() throws Exception
     {
         String playerId = playerController.getIdPlayer();
         String name = playerController.getName();
@@ -69,7 +69,6 @@ public class GameFactory
             //Now save in a DiceResults
             DiceResults diceResult = new DiceResults(diceRPK, result);
             diceResult.setDiceRolls(diceRolls);//save the DiceRolls entity 
-            System.out.println("Tirada antes de guardar en BD");
             //Add the dice roll to the DB
             diceResultController.create(diceResult);
         }
@@ -86,30 +85,27 @@ public class GameFactory
         }
         //TODO:To delete ^^^^^^^^^^^^
         //Add the Game to the DB
-        addDiceRoll(diceGame);
+        addFinishedDiceRoll(diceGame);
         //add to the player historic 
-        playerController.addGame(diceGame);
+        playerController.addListGame(diceGame);
     }
 
     public DiceRolls createDiceRoll(DiceGameController input) throws Exception
     {
-        boolean isAdded = false;
-
         String idRoll = input.getGameId();
         boolean isAnonim = this.isAnonim;
 
         DiceRolls diceRolls = new DiceRolls(idRoll);//Create the entity and set id
-
         diceRolls.setIsAnonim(isAnonim);//set is anonim
 
         Players player = playerControl.findPlayers(input.getPlayerId());
         diceRolls.setPlayersIdplayers(player);
         diceRollControl.create(diceRolls);//create in the db        
-        isAdded = true;
+
         return diceRolls;
     }
 
-    public boolean addDiceRoll(DiceGameController input) throws NonexistentEntityException, Exception
+    public boolean addFinishedDiceRoll(DiceGameController input) throws NonexistentEntityException, Exception
     {
         boolean isAdded = false;
         //Search in the db and update the isWinner
@@ -119,26 +115,6 @@ public class GameFactory
         diceRollControl.edit(diceRoll);
         isAdded = true;
         return isAdded;
-    }
-
-    public boolean addDice()
-    {
-        return false;
-    }
-
-    public boolean createDiceGame(PlayerController input) throws Exception
-    {
-        return false;
-    }
-
-    public boolean updateDiceGame(PlayerController input) throws Exception
-    {
-        return false;
-    }
-
-    public boolean deleteGames(PlayerController input) throws Exception
-    {
-        return false;
     }
 
     //TODO: Get historic games here?
