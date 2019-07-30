@@ -40,7 +40,7 @@ public class PlayerFactory
             }
         }
         //not exist at the DB: lest create it
-        String playerId = input.getPlayerId();
+        String playerId = input.getIdPlayer();
         String name = input.getName();
         Date regDate = input.getRegDate();
         Players player = new Players(playerId, name, regDate);
@@ -58,7 +58,7 @@ public class PlayerFactory
         }
 
         //edit on database
-        Players player = playerControl.findPlayers(input.getPlayerId());
+        Players player = playerControl.findPlayers(input.getIdPlayer());
         player.setName(newName);
         playerControl.edit(player);
         input.setName(newName); //change in object
@@ -69,7 +69,7 @@ public class PlayerFactory
     public boolean delete(PlayerController input) throws IllegalOrphanException, NonexistentEntityException
     {
         boolean isDeleted = false;
-        playerControl.destroy(input.getPlayerId());
+        playerControl.destroy(input.getIdPlayer());
         isDeleted = true;
         return isDeleted;
     }

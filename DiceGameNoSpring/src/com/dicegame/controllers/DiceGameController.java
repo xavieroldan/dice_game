@@ -17,7 +17,7 @@ public class DiceGameController
     };
 
     private List<DiceRollController> dicesRolls;
-    private String playerId;
+    private String idPlayer;
     private String gameNick;
     private boolean isAnonim;
     private String idGame;
@@ -32,7 +32,7 @@ public class DiceGameController
         this.idGame = UUID.randomUUID().toString().replace("-", "");
         this.gameNick = "ANÒNIM";
         this.isAnonim = true;
-        this.playerId = playerId;
+        this.idPlayer = playerId;
         this.rollCount = 1;
         this.isWinner = false;
         this.gameResult = 0;
@@ -55,7 +55,7 @@ public class DiceGameController
 
     public String getPlayerId()
     {
-        return playerId;
+        return idPlayer;
     }
 
     public String getGameId()
@@ -85,7 +85,7 @@ public class DiceGameController
 
     private void setPlayerId(String playerId)
     {
-        this.playerId = playerId;
+        this.idPlayer = playerId;
     }
 
     private void setIsWinner(boolean isWinner)
@@ -148,7 +148,7 @@ public class DiceGameController
         String diceRollString = "";//get the rolls results       
         for (DiceRollController dicesRoll : dicesRolls)
         {
-            diceRollString += "\nDado: " + dicesRoll.getDiceId()
+            diceRollString += "\nDado: " + dicesRoll.getIdDice()
                     + " Puntos: " + dicesRoll.getRollResult();
         }
         return "gameId: " + idGame + " result: " + result + diceRollString + "\n";

@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class PlayerController
 {
-    private String playerId;
+    private String IdPlayer;
     private String name;
     private Date regDate;
     private double successRate;
@@ -21,7 +21,7 @@ public class PlayerController
 
     public PlayerController(String name, PlayerFactory playerFactory) throws Exception
     {
-        this.playerId = UUID.randomUUID().toString().replace("-", "");
+        this.IdPlayer = UUID.randomUUID().toString().replace("-", "");
         this.name = name;
         this.regDate = TimeStamp.getDate();
         this.successRate = 0;
@@ -31,9 +31,9 @@ public class PlayerController
         playerFactory.create(this);
     }
 
-    public String getPlayerId()
+    public String getIdPlayer()
     {
-        return playerId;
+        return IdPlayer;
     }
 
     public String getName()
@@ -99,7 +99,7 @@ public class PlayerController
     @Override
     public String toString()
     {
-        return "User{" + "playerId=" + playerId + ", name=" + name + ", regDate=" + regDate + ", successRate=" + successRate + ", historicGames=" + historicGames + '}';
+        return "User{" + "playerId=" + IdPlayer + ", name=" + name + ", regDate=" + regDate + ", successRate=" + successRate + ", historicGames=" + historicGames + '}';
     }
 
 }

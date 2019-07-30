@@ -6,20 +6,20 @@ package com.dicegame.models;
  */
 public class Dice
 {
-    private int diceId;
+    private int idDice;
 
     public Dice(int i)
     {
-        this.diceId = i;
+        this.idDice = i;
     }
 
     public int getDiceId()
     {
-        return diceId;
+        return idDice;
     }
 
-    public void setDiceId(int diceId)
+    public void setIdDice(int diceId)
     {
-        this.diceId = diceId;
+        this.idDice = diceId;
     }
 }

@@ -11,7 +11,7 @@ import javax.persistence.EntityManagerFactory;
 public class DiceRollController
 {
 
-    private int diceId;
+    private int idDice;
     private int rollResult;
 
     public DiceRollController()
@@ -20,18 +20,18 @@ public class DiceRollController
 
     public DiceRollController(int diceId)
     {
-        this.diceId = diceId;
+        this.idDice = diceId;
         this.rollResult = 0; //default at instantiate 0 points
     }
 
-    public int getDiceId()
+    public int getIdDice()
     {
-        return diceId;
+        return idDice;
     }
 
-    public void setDiceId(int diceId)
+    public void setIdDice(int diceId)
     {
-        this.diceId = diceId;
+        this.idDice = diceId;
     }
 
     public int getRollResult()
@@ -47,6 +47,6 @@ public class DiceRollController
     @Override
     public String toString()
     {
-        return "        \nDiceRoll{" + "diceId=" + diceId + ", rollResult=" + rollResult + '}';
+        return "        \nDiceRoll{" + "diceId=" + idDice + ", rollResult=" + rollResult + '}';
     }
 }
