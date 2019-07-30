@@ -1,11 +1,11 @@
 package com.dicegame.app.factory;
 
 import com.dicegame.control.PlayersJpaController;
-import com.dicegame.control.exceptions.FieldVoidException;
-import com.dicegame.control.exceptions.IllegalOrphanException;
-import com.dicegame.control.exceptions.NonexistentEntityException;
-import com.dicegame.control.exceptions.PreexistingEntityException;
-import com.dicegame.domain.Player;
+import com.dicegame.exceptions.FieldVoidException;
+import com.dicegame.exceptions.IllegalOrphanException;
+import com.dicegame.exceptions.NonexistentEntityException;
+import com.dicegame.exceptions.PreexistingEntityException;
+import com.dicegame.controllers.PlayerController;
 import com.dicegame.models.Players;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +22,7 @@ public class PlayerFactory
             createEntityManagerFactory("DiceGameNoSpringPU");
     private PlayersJpaController playerControl = new PlayersJpaController(emf);
 
-    public boolean create(Player input) throws Exception
+    public boolean create(PlayerController input) throws Exception
     {
         boolean isAdded = false;
         if (input.getName().isEmpty())
@@ -49,7 +49,7 @@ public class PlayerFactory
         return isAdded;
     }
 
-    public boolean edit(Player input, String newName) throws Exception
+    public boolean edit(PlayerController input, String newName) throws Exception
     {
         boolean isEdited = false;
         if (input.getName().isEmpty())
@@ -66,7 +66,7 @@ public class PlayerFactory
         return isEdited;
     }
 
-    public boolean delete(Player input) throws IllegalOrphanException, NonexistentEntityException
+    public boolean delete(PlayerController input) throws IllegalOrphanException, NonexistentEntityException
     {
         boolean isDeleted = false;
         playerControl.destroy(input.getPlayerId());

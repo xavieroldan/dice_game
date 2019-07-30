@@ -1,4 +1,4 @@
-package com.dicegame.domain;
+package com.dicegame.controllers;
 
 import java.util.ArrayList;
 import java.util.List;

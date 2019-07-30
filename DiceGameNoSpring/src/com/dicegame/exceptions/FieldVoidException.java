@@ -1,4 +1,4 @@
-package com.dicegame.control.exceptions;
+package com.dicegame.exceptions;
 
 public class FieldVoidException extends Exception {
     public FieldVoidException(String message, Throwable cause) {

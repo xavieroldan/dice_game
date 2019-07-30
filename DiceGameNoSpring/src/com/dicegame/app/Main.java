@@ -2,7 +2,7 @@ package com.dicegame.app;
 
 import com.dicegame.app.factory.GameFactory;
 import com.dicegame.app.factory.PlayerFactory;
-import com.dicegame.domain.Player;
+import com.dicegame.controllers.PlayerController;
 import java.util.Scanner;
 
 /**
@@ -27,7 +27,7 @@ public class Main
                 default:
 
                     PlayerFactory playerFactory = new PlayerFactory();
-                    Player player = new Player(name, playerFactory);
+                    PlayerController player = new PlayerController(name, playerFactory);
                     GameFactory gameFactory = new GameFactory(player, true); //Is anonim
                     for (int i = 0; i < 10; i++)
                     {
@@ -36,6 +36,15 @@ public class Main
                     System.out.println("\nPorcentaje de acierto: " + player.getSuccessRate() + "\n");
                     player.getHistoricGames();
 
+//                    System.out.println("Cambia el nombre a " + player.getName());
+//                    name = sc.next();
+//                    System.out.println("Cambiamos " + player.getName() + " x " + name);
+//                    playerFactory.edit(player, name);
+//                    System.out.println("Ecribe algo y enter para destruirlo");
+//                    name = sc.next();
+//                    playerFactory.delete(player);
+//                    System.out.println("Destruido!");
+                //TODO: destroy the player's game  ???                  
 //                    System.out.println("Cambia el nombre a " + player.getName());
 //                    name = sc.next();
 //                    System.out.println("Cambiamos " + player.getName() + " x " + name);

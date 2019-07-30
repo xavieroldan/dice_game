@@ -1,8 +1,8 @@
 package com.dicegame.control;
 
-import com.dicegame.control.exceptions.IllegalOrphanException;
-import com.dicegame.control.exceptions.NonexistentEntityException;
-import com.dicegame.control.exceptions.PreexistingEntityException;
+import com.dicegame.exceptions.IllegalOrphanException;
+import com.dicegame.exceptions.NonexistentEntityException;
+import com.dicegame.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;

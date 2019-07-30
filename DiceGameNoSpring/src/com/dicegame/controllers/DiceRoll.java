@@ -1,4 +1,4 @@
-package com.dicegame.domain;
+package com.dicegame.controllers;
 
 /**
  *

@@ -1,4 +1,4 @@
-package com.dicegame.control.exceptions;
+package com.dicegame.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

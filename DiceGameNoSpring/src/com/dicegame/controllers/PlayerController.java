@@ -1,4 +1,4 @@
-package com.dicegame.domain;
+package com.dicegame.controllers;
 
 import com.dicegame.app.factory.PlayerFactory;
 import com.dicegame.app.tools.TimeStamp;
@@ -11,7 +11,7 @@ import java.util.UUID;
  *
  * @author Xavier Roldán <info@xavierroldan.com>
  */
-public class Player
+public class PlayerController
 {
     private String playerId;
     private String name;
@@ -19,7 +19,7 @@ public class Player
     private double successRate;
     private List<DiceGame> historicGames;
 
-    public Player(String name, PlayerFactory playerFactory) throws Exception
+    public PlayerController(String name, PlayerFactory playerFactory) throws Exception
     {
         this.playerId = UUID.randomUUID().toString().replace("-", "");
         this.name = name;

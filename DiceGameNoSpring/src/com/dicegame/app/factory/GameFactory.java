@@ -3,11 +3,11 @@ package com.dicegame.app.factory;
 import com.dicegame.app.tools.RandomRollGen;
 import com.dicegame.control.DiceRollsJpaController;
 import com.dicegame.control.PlayersJpaController;
-import com.dicegame.control.exceptions.NonexistentEntityException;
-import com.dicegame.domain.Dice;
-import com.dicegame.domain.DiceGame;
-import com.dicegame.domain.DiceRoll;
-import com.dicegame.domain.Player;
+import com.dicegame.exceptions.NonexistentEntityException;
+import com.dicegame.controllers.Dice;
+import com.dicegame.controllers.DiceGame;
+import com.dicegame.controllers.DiceRoll;
+import com.dicegame.controllers.PlayerController;
 import com.dicegame.models.DiceRolls;
 import com.dicegame.models.Players;
 import javax.persistence.EntityManagerFactory;
@@ -19,14 +19,14 @@ import javax.persistence.EntityManagerFactory;
 public class GameFactory
 {
 
-    private Player user;
+    private PlayerController user;
     private boolean isAnonim;
     private EntityManagerFactory emf = javax.persistence.Persistence.
             createEntityManagerFactory("DiceGameNoSpringPU");
     private DiceRollsJpaController diceRollControl = new DiceRollsJpaController(emf);
     private PlayersJpaController playerControl = new PlayersJpaController(emf);
 
-    public GameFactory(Player user, boolean isAnonim)
+    public GameFactory(PlayerController user, boolean isAnonim)
     {
         this.user = user;
         this.isAnonim = isAnonim;
@@ -110,17 +110,17 @@ public class GameFactory
         return isAdded;
     }
 
-    public boolean createDiceGame(Player input) throws Exception
+    public boolean createDiceGame(PlayerController input) throws Exception
     {
         return false;
     }
 
-    public boolean updateDiceGame(Player input) throws Exception
+    public boolean updateDiceGame(PlayerController input) throws Exception
     {
         return false;
     }
 
-    public boolean deleteGames(Player input) throws Exception
+    public boolean deleteGames(PlayerController input) throws Exception
     {
         return false;
     }
