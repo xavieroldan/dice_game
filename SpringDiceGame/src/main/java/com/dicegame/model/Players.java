@@ -7,7 +7,9 @@ package com.dicegame.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +34,19 @@ public class Players implements Serializable
 // TODO: define relation table
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "playersIdplayers")
 //    private List<DiceRolls> diceRollsList;
+
+    @OneToMany(mappedBy = "players")
+    private Set<DiceRolls> diceRolls;
+
+    public Set<DiceRolls> getDiceRolls()
+    {
+        return diceRolls;
+    }
+
+    public void setDiceRolls(Set<DiceRolls> diceRolls)
+    {
+        this.diceRolls = diceRolls;
+    }
 
     public String getIdplayers()
     {

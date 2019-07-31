@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,10 +28,23 @@ public class DiceRolls
     private boolean isWinner;
     private boolean isAnonim;
     private boolean isDeleted;
-    private Players playersIdplayers;
-    //TODO: define the relation of the table
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diceRolls")
-//    private List<DiceResults> diceResultsList;
+    @ManyToOne
+    @JoinColumn(name = "idplayers ", nullable = false)
+    private Players players;
+
+    public DiceRolls()
+    {
+    }
+
+    public Players getPlayers()
+    {
+        return players;
+    }
+
+    public void setPlayers(Players players)
+    {
+        this.players = players;
+    }
 
     public String getIdRoll()
     {
@@ -69,16 +84,6 @@ public class DiceRolls
     public void setIsDeleted(boolean isDeleted)
     {
         this.isDeleted = isDeleted;
-    }
-
-    public Players getPlayersIdplayers()
-    {
-        return playersIdplayers;
-    }
-
-    public void setPlayersIdplayers(Players playersIdplayers)
-    {
-        this.playersIdplayers = playersIdplayers;
     }
 
 }
