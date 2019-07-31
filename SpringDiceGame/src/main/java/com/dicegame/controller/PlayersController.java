@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PlayersController
 {
-
     @Autowired
     private PlayersRepository repository;
 

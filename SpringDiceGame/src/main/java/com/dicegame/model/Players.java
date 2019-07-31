@@ -31,9 +31,6 @@ public class Players implements Serializable
     private String idplayers;
     private String name;
     private Date regDate;
-// TODO: define relation table
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "playersIdplayers")
-//    private List<DiceRolls> diceRollsList;
 
     @OneToMany(mappedBy = "players")
     private Set<DiceRolls> diceRolls;

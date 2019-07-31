@@ -2,6 +2,8 @@ package com.dicegame.model;
 
 import java.io.Serializable;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -21,6 +23,9 @@ public class DiceResultsIdentity implements Serializable
     @Size(max = 20)
     private String rollId;
 
+//    @ManyToOne
+//    @JoinColumn(name = "id_roll", nullable = false)
+//    private DiceRolls diceRolls;
     public DiceResultsIdentity(String diceId, String rollId)
     {
         this.diceId = diceId;
