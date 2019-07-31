@@ -16,7 +16,7 @@ public class DiceResultsController
     @Autowired
     private DiceResultsRepository repository;
 
-    @GetMapping
+    @GetMapping("/dicegames")
     public List<DiceResults> getAllDiceResults()
     {
         return repository.findAll();
