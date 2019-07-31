@@ -1,16 +1,17 @@
-package com.dicegame.model;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import javax.persistence.EmbeddedId;
+package com.dicegame.model;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -20,46 +21,53 @@ import javax.validation.constraints.NotNull;
 @Table(name = "dice_results")
 public class DiceResults
 {
-    @EmbeddedId
-    private DiceResultsIdentity diceResultsIdentity;
-    @NotNull
-    private int rollResult;
-//    @ManyToOne
-//    @JoinColumn(name = "id_roll", nullable = false)
-//    private DiceRolls diceRolls;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String idResults;
+    private int idDice;
+    private int result;
+    @ManyToOne
+    @JoinColumn(name = "id_games", nullable = false)
+    private DiceGames diceGames;
 
-    public DiceResults(DiceResultsIdentity diceResultsIdentity, int rollResult)
+    public String getId()
     {
-        this.diceResultsIdentity = diceResultsIdentity;
-        this.rollResult = rollResult;
+        return idResults;
     }
 
-//    public DiceRolls getDiceRolls()
-//    {
-//        return diceRolls;
-//    }
-//
-//    public void setDiceRolls(DiceRolls diceRolls)
-//    {
-//        this.diceRolls = diceRolls;
-//    }
-    public DiceResultsIdentity getDiceResultsIdentity()
+    public void setId(String idResults)
     {
-        return diceResultsIdentity;
+        this.idResults = idResults;
     }
 
-    public void setDiceResultsIdentity(DiceResultsIdentity diceResultsIdentity)
+    public int getIdDice()
     {
-        this.diceResultsIdentity = diceResultsIdentity;
+        return idDice;
     }
 
-    public int getRollResult()
+    public void setIdDice(int idDice)
     {
-        return rollResult;
+        this.idDice = idDice;
     }
 
-    public void setRollResult(int rollResult)
+    public int getResult()
     {
-        this.rollResult = rollResult;
+        return result;
     }
+
+    public void setResult(int result)
+    {
+        this.result = result;
+    }
+
+    public DiceGames getDiceGames()
+    {
+        return diceGames;
+    }
+
+    public void setDiceGames(DiceGames diceGames)
+    {
+        this.diceGames = diceGames;
+    }
+
 }

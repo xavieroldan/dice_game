@@ -5,7 +5,7 @@
  */
 package com.dicegame.repository;
 
-import com.dicegame.model.DiceRolls;
+import com.dicegame.model.DiceGames;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author Xavier Roldán <info@xavierroldan.com>
  */
 @Repository
-public interface DiceRollsRepository extends JpaRepository<DiceRolls, Long>
+public interface DiceGamesRepository extends JpaRepository<DiceGames, Long>
 {
 
 }
