@@ -8,9 +8,6 @@ package com.dicegame.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,31 +25,31 @@ public class Players implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String idplayers;
+    private String idPlayers;
     private String name;
     private Date regDate;
 
-    @OneToMany(mappedBy = "players")
-    private Set<DiceRolls> diceRolls;
+    @OneToMany(mappedBy = "players") //cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    private Set<DiceGames> diceGames;
 
-    public Set<DiceRolls> getDiceRolls()
+    public Set<DiceGames> getDiceRolls()
     {
-        return diceRolls;
+        return diceGames;
     }
 
-    public void setDiceRolls(Set<DiceRolls> diceRolls)
+    public void setDiceRolls(Set<DiceGames> diceGames)
     {
-        this.diceRolls = diceRolls;
+        this.diceGames = diceGames;
     }
 
-    public String getIdplayers()
+    public String getIdPlayers()
     {
-        return idplayers;
+        return idPlayers;
     }
 
-    public void setIdplayers(String idplayers)
+    public void setIdPlayers(String id)
     {
-        this.idplayers = idplayers;
+        this.idPlayers = idPlayers;
     }
 
     public String getName()
@@ -73,6 +70,16 @@ public class Players implements Serializable
     public void setRegDate(Date regDate)
     {
         this.regDate = regDate;
+    }
+
+    public Set<DiceGames> getDiceGames()
+    {
+        return diceGames;
+    }
+
+    public void setDiceGames(Set<DiceGames> diceGames)
+    {
+        this.diceGames = diceGames;
     }
 
 }
