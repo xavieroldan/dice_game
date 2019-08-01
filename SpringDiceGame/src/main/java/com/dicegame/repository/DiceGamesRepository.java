@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @author Xavier Roldán <info@xavierroldan.com>
  */
 @Repository
-public interface DiceGamesRepository extends JpaRepository<DiceGames, Long>
+public interface DiceGamesRepository extends JpaRepository<DiceGames, String>
 {
 
 }

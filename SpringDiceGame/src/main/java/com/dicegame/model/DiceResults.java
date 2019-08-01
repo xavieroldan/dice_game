@@ -17,13 +17,17 @@ import javax.persistence.Table;
 public class DiceResults
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String idResults;
     private int idDice;
     private int result;
     @ManyToOne
-    @JoinColumn(name = "id_games", nullable = false)
+    @JoinColumn(name = "id_games", nullable = true)
     private DiceGames diceGames;
+
+    public DiceResults()
+    {
+    }
 
     public String getId()
     {

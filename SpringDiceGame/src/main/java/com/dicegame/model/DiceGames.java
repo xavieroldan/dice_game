@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class DiceGames
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String idGames;
     private boolean isWinner;
     private boolean isAnonim;
@@ -28,7 +28,7 @@ public class DiceGames
     private Set<DiceResults> diceResults;
 
     @ManyToOne
-    @JoinColumn(name = "id_players", nullable = false)
+    @JoinColumn(name = "id_players", nullable = true)
     private Players players;
 
     public DiceGames()
