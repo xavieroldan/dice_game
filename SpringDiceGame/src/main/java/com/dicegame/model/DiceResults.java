@@ -1,8 +1,8 @@
 package com.dicegame.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,11 +17,10 @@ import javax.persistence.Table;
 public class DiceResults
 {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String idResults;
     private int idDice;
-    private int result;
-    @ManyToOne
+    private int results;
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_games", nullable = true)
     private DiceGames diceGames;
 
@@ -59,12 +58,12 @@ public class DiceResults
 
     public int getResult()
     {
-        return result;
+        return results;
     }
 
     public void setResult(int result)
     {
-        this.result = result;
+        this.results = result;
     }
 
     public DiceGames getDiceGames()
@@ -80,7 +79,7 @@ public class DiceResults
     @Override
     public String toString()
     {
-        return "DiceResults{" + "idResults=" + idResults + ", idDice=" + idDice + ", result=" + result + ", diceGames=" + diceGames + '}';
+        return "DiceResults{" + "idResults=" + idResults + ", idDice=" + idDice + ", result=" + results + ", diceGames=" + diceGames + '}';
     }
 
 }

@@ -23,7 +23,7 @@ public class GameSimulator
         player.setRegDate(TimeStamp.getDate());
         for (int i = 0; i < 20; i++)
         {
-            System.out.println(GameFactory.playGame(player));
+//            System.out.println(GameFactory.playGame(player));
 
         }
 

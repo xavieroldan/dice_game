@@ -1,11 +1,13 @@
 package com.dicegame.tools;
 
+import com.dicegame.controller.DiceResultsController;
 import com.dicegame.model.DiceGames;
 import com.dicegame.model.DiceResults;
 import com.dicegame.model.Players;
+import com.dicegame.repository.DiceResultsRepository;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -13,16 +15,18 @@ import java.util.UUID;
  */
 public class GameFactory
 {
-    
+
     private static final int ROLL_MAX = 2;
     private static final int WIN_RESULTS[] =
     {
         7
     };
-    private DiceGames dicegame;
-    private DiceResults diceResult;
-    
-    public static DiceGames playGame(Players player)
+//    private DiceGames dicegame;
+//    private DiceResults diceResult;
+    @Autowired
+    private DiceResultsRepository repository;
+
+    public DiceGames playGame(Players player)
     {
         String RandomID = UUID.randomUUID().toString().replace("-", "");
         //create the dice game
@@ -38,6 +42,8 @@ public class GameFactory
             DiceResults diceResult
                     = new DiceResults(RandomID, i, result);
             diceResult.setDiceGames(diceGame);
+            DiceResultsController controler = new DiceResultsController();
+            controler.saveDiceResult(diceResult);
             diceGame.getDiceResults().add(diceResult);
             totalResult += result;
         }
@@ -56,25 +62,24 @@ public class GameFactory
         }
         return diceGame;
     }
-    
-    public DiceGames getDicegame()
-    {
-        return dicegame;
-    }
-    
-    public void setDicegame(DiceGames dicegame)
-    {
-        this.dicegame = dicegame;
-    }
-    
-    public DiceResults getDiceResult()
-    {
-        return diceResult;
-    }
-    
-    public void setDiceResult(DiceResults diceResult)
-    {
-        this.diceResult = diceResult;
-    }
-    
+
+//    public DiceGames getDicegame()
+//    {
+//        return dicegame;
+//    }
+//
+//    public void setDicegame(DiceGames dicegame)
+//    {
+//        this.dicegame = dicegame;
+//    }
+//
+//    public DiceResults getDiceResult()
+//    {
+//        return diceResult;
+//    }
+//
+//    public void setDiceResult(DiceResults diceResult)
+//    {
+//        this.diceResult = diceResult;
+//    }
 }

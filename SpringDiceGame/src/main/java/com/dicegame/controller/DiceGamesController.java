@@ -27,8 +27,6 @@ public class DiceGamesController
     private DiceGamesRepository diceRepo;
     @Autowired
     private PlayersRepository playerRepo;
-    @Autowired
-    private DiceResultsRepository resultRepo;
 
     @GetMapping("/dicerolls")
     public List<DiceGames> getAlldiceRolls()
@@ -43,13 +41,9 @@ public class DiceGamesController
     {
         DiceGames diceGame = new DiceGames();
         //crear una jugada
-        diceGame = GameFactory.playGame(playerRepo.findById(idPlayer).get());
-        //guardar la jugada
-        for (DiceResults diceResult : diceGame.getDiceResults())
-        {
-            System.out.println(diceResult.toString());
-            resultRepo.save(diceResult);
-        }
+        GameFactory gameFactory = new GameFactory();
+        diceGame = gameFactory.playGame(playerRepo.findById(idPlayer).get());
+        //guardar la jugada  
         diceRepo.save(diceGame);
         return ResponseEntity.ok().build();
     }

@@ -1,9 +1,8 @@
 package com.dicegame.model;
 
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,12 +18,12 @@ import javax.persistence.Table;
 public class DiceGames
 {
     @Id
-//   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String idGames;
     private boolean isWinner;
     private boolean isAnonim;
     private boolean isDeleted;
-    @OneToMany //Aquí el fallo
+    @OneToMany
+    @Column(nullable = true)
     private Set<DiceResults> diceResults;
 
     @ManyToOne
