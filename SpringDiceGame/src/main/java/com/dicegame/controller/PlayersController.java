@@ -21,15 +21,6 @@ public class PlayersController
     @Autowired
     private PlayersRepository repository;
 
-    //GET /players/: retorna el llistat de tots els jugadors del sistema 
-    //amb el seu percentatge mig d’èxits
-    @GetMapping("/players")
-    public List<Players> getAllPlayers()
-    {
-//        return repository.findAll();
-        return repository.findAll();
-    }
-
     //POST: /players : crea un jugador
     @RequestMapping(value = "/players", headers = "content-type=application/json")
     @ResponseBody
@@ -46,8 +37,15 @@ public class PlayersController
         Optional<Players> playerToUpdate = repository.findById(idPlayer);
         playerToUpdate.get().setName(idPlayer);
         Players playerUpdated = repository.save(playerToUpdate.get());
-
         return playerUpdated;
+    }
+
+    //GET /players/: retorna el llistat de tots els jugadors del sistema 
+    //amb el seu percentatge mig d’èxits
+    @GetMapping("/players")
+    public List<Players> getAllPlayers()
+    {
+        return repository.findAll();
     }
 
     //DELETE /players/{id} elimina el jugador.
