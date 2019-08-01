@@ -5,8 +5,8 @@
  */
 package com.dicegame.tools;
 
-import com.dicegame.model.Players;
-import com.google.gson.Gson;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,21 +16,21 @@ import java.util.UUID;
  */
 public class JsonPlayerGenerator
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws ParseException
     {
         getPlayerJson("Manolo");
     }
 
-    public static String getPlayerJson(String name)
+    public static String getPlayerJson(String name) throws ParseException
     {
 
         String id = UUID.randomUUID().toString().replace("-", "");
-        Date date = TimeStamp.getDate();
+        String date = TimeStamp.getJsonDate();
         String output = "{\"idPlayers\": \"" + id
                 + "\",\"name\": \"" + name
                 + "\",\"regDate\": \"" + date
                 + "\"}";
-        System.out.println("Sacando json: " + output);
+        System.out.println(output);
         return output;
     }
 

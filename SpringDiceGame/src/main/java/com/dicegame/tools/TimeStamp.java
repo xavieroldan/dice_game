@@ -26,4 +26,18 @@ public class TimeStamp
         return date;
     }
 
+    public static Date getAllDate()
+    {
+        Date date = new Date();
+        return date;
+    }
+
+    public static String getJsonDate()
+    {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        return date;
+    }
+
 }
