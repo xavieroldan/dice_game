@@ -29,12 +29,20 @@ public class DiceResults
     {
     }
 
-    public String getId()
+    public DiceResults(String idResults, int idDice, int result)
+    {
+        this.setIdResults(idResults);
+        this.setIdDice(idDice);
+        this.setResult(result);
+
+    }
+
+    public String getIdResults()
     {
         return idResults;
     }
 
-    public void setId(String idResults)
+    public void setIdResults(String idResults)
     {
         this.idResults = idResults;
     }

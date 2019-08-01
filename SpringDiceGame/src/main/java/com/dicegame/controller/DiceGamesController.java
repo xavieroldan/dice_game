@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.dicegame.repository.DiceGamesRepository;
 import com.dicegame.repository.PlayersRepository;
+import com.dicegame.tools.GameFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,12 +35,16 @@ public class DiceGamesController
     //TODO: POST /players/{id}/games/ : un jugador específic realitza una tirada dels daus.
     @RequestMapping(value = "/players{id}/games", headers = "content-type=application/json")
     @ResponseBody
-    public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") String idPlayer)
+    public ResponseEntity<?> playGame(@PathVariable(value = "id") String idPlayer)
     {
-        //crear una jugada
+        System.out.println("Id del jugador: " + idPlayer);//
+        System.out.println("Jugador: " + playerRepo.findById(idPlayer).get().getName());//
 
+        DiceGames diceGame = new DiceGames();
+        //crear una jugada
+        diceGame = GameFactory.playGame(playerRepo.findById(idPlayer).get());
         //guardar la jugada
-        DiceGames diceGame = new DiceGames(); // to delete
+        // to delete
 //        Optional<Players> player = repository.findById(idPlayer);
 //        repository.delete(player.get());
         diceRepo.save(diceGame);

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.dicegame</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>diceGame</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SpringDiceGame</name>
 	<description>Dice game project for ItAcademy</description>

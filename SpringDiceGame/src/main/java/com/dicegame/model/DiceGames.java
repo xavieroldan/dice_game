@@ -55,7 +55,7 @@ public class DiceGames
         this.idGames = idGames;
     }
 
-    public boolean isIsWinner()
+    public boolean getIsWinner()
     {
         return isWinner;
     }
@@ -93,6 +93,12 @@ public class DiceGames
     public void setPlayers(Players players)
     {
         this.players = players;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "DiceGames{" + "idGames=" + idGames + ", isWinner=" + isWinner + ", isAnonim=" + isAnonim + ", isDeleted=" + isDeleted + ", diceResults=" + diceResults + ", players=" + players + '}';
     }
 
 }
