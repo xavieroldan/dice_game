@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class GameFactory
 {
-
+    
     private static final int ROLL_MAX = 2;
     private static final int WIN_RESULTS[] =
     {
@@ -21,7 +21,7 @@ public class GameFactory
     };
     private DiceGames dicegame;
     private DiceResults diceResult;
-
+    
     public static DiceGames playGame(Players player)
     {
         String RandomID = UUID.randomUUID().toString().replace("-", "");
@@ -37,6 +37,7 @@ public class GameFactory
             int result = RandomRollGen.getRandomRoll();
             DiceResults diceResult
                     = new DiceResults(RandomID, i, result);
+            diceResult.setDiceGames(diceGame);
             diceGame.getDiceResults().add(diceResult);
             totalResult += result;
         }
@@ -55,25 +56,25 @@ public class GameFactory
         }
         return diceGame;
     }
-
+    
     public DiceGames getDicegame()
     {
         return dicegame;
     }
-
+    
     public void setDicegame(DiceGames dicegame)
     {
         this.dicegame = dicegame;
     }
-
+    
     public DiceResults getDiceResult()
     {
         return diceResult;
     }
-
+    
     public void setDiceResult(DiceResults diceResult)
     {
         this.diceResult = diceResult;
     }
-
+    
 }

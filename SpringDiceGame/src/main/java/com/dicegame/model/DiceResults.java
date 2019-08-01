@@ -77,4 +77,10 @@ public class DiceResults
         this.diceGames = diceGames;
     }
 
+    @Override
+    public String toString()
+    {
+        return "DiceResults{" + "idResults=" + idResults + ", idDice=" + idDice + ", result=" + result + ", diceGames=" + diceGames + '}';
+    }
+
 }
