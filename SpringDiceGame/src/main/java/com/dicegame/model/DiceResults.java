@@ -17,11 +17,13 @@ import javax.persistence.Table;
 public class DiceResults
 {
     @Id
+    @Column(name = "id_results")
     private String idResults;
     private int idDice;
     private int results;
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "id_games", nullable = true)
+    @ManyToOne
+    @JoinColumn(name = "id_games")
+//    @JoinColumn(name = "id_games", nullable = true)
     private DiceGames diceGames;
 
     public DiceResults()

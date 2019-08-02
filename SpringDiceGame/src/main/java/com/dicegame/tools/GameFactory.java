@@ -26,43 +26,42 @@ public class GameFactory
     @Autowired
     private DiceResultsRepository repository;
 
-    public DiceGames playGame(Players player)
-    {
-        String RandomID = UUID.randomUUID().toString().replace("-", "");
-        //create the dice game
-        DiceGames diceGame = new DiceGames();
-        diceGame.setPlayers(player);
-        diceGame.setIdGames(RandomID);
-        diceGame.setDiceResults(new HashSet<DiceResults>());
-        //lets play!
-        int totalResult = 0;
-        for (int i = 1; i < ROLL_MAX + 1; i++)
-        {
-            int result = RandomRollGen.getRandomRoll();
-            DiceResults diceResult
-                    = new DiceResults(RandomID, i, result);
-            diceResult.setDiceGames(diceGame);
-            DiceResultsController controler = new DiceResultsController();
-            controler.saveDiceResult(diceResult);
-            diceGame.getDiceResults().add(diceResult);
-            totalResult += result;
-        }
-        //getting the result
-        for (int i : WIN_RESULTS)
-        {
-            if (totalResult == i)
-            {
-                diceGame.setIsWinner(true);
-            }
-            else
-            {
-                diceGame.setIsWinner(false);
-            }
-            System.out.println("Resultado: " + totalResult + " Winner: " + diceGame.getIsWinner());
-        }
-        return diceGame;
-    }
-
+//    public DiceGames playGame(Players player)
+//    {
+//        String RandomID = UUID.randomUUID().toString().replace("-", "");
+//        //create the dice game
+//        DiceGames diceGame = new DiceGames();
+//        diceGame.setPlayers(player);
+//        diceGame.setIdGames(RandomID);
+//        diceGame.setDiceResults(new HashSet<DiceResults>());
+//        //lets play!
+//        int totalResult = 0;
+//        for (int i = 1; i < ROLL_MAX + 1; i++)
+//        {
+//            int result = RandomRollGen.getRandomRoll();
+//            DiceResults diceResult
+//                    = new DiceResults(RandomID, i, result);
+//            diceResult.setDiceGames(diceGame);
+//            DiceResultsController controler = new DiceResultsController();
+//            controler.saveDiceResult(diceResult);
+//            diceGame.getDiceResults().add(diceResult);
+//            totalResult += result;
+//        }
+//        //getting the result
+//        for (int i : WIN_RESULTS)
+//        {
+//            if (totalResult == i)
+//            {
+//                diceGame.setIsWinner(true);
+//            }
+//            else
+//            {
+//                diceGame.setIsWinner(false);
+//            }
+//            System.out.println("Resultado: " + totalResult + " Winner: " + diceGame.getIsWinner());
+//        }
+//        return diceGame;
+//    }
 //    public DiceGames getDicegame()
 //    {
 //        return dicegame;

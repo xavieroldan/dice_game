@@ -27,7 +27,7 @@ public class DiceResultsController
         return repository.findAll();
     }
 
-    @RequestMapping(value = "/save", headers = "content-type=application/json")
+    @RequestMapping(value = "/saveresult", headers = "content-type=application/json")
     @ResponseBody
     public DiceResults saveDiceResult(@RequestBody DiceResults diceResult)
     {

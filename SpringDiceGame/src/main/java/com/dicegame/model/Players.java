@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,7 +23,8 @@ public class Players implements Serializable
     private String name;
     private Date regDate;
 
-    @OneToMany(mappedBy = "players") //cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+//    @OneToMany(mappedBy = "players", cascade = CascadeType.ALL) //cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    @OneToMany(targetEntity = DiceGames.class, fetch = FetchType.EAGER)
     @Column(nullable = true)
     private Set<DiceGames> diceGames;
 
