@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlayersController
 {
     @Autowired
-    private PlayersRepository repository;
+    private PlayersRepository playerRepo;
 
     //POST: /players : crea un jugador
     @RequestMapping(value = "/players", headers = "content-type=application/json")
     @ResponseBody
     public Players createPlayers(@RequestBody Players player)
     {
-        return repository.save(player);
+        return playerRepo.save(player);
     }
 
     //PUT /players : modifica el nom del jugador
@@ -34,9 +34,9 @@ public class PlayersController
     public Players updatePlayers(@RequestBody Players player)
     {
         String idPlayer = player.getIdPlayers();
-        Optional<Players> playerToUpdate = repository.findById(idPlayer);
+        Optional<Players> playerToUpdate = playerRepo.findById(idPlayer);
         playerToUpdate.get().setName(idPlayer);
-        Players playerUpdated = repository.save(playerToUpdate.get());
+        Players playerUpdated = playerRepo.save(playerToUpdate.get());
         return playerUpdated;
     }
 
@@ -45,15 +45,15 @@ public class PlayersController
     @GetMapping("/players")
     public List<Players> getAllPlayers()
     {
-        return repository.findAll();
+        return playerRepo.findAll();
     }
 
     //DELETE /players/{id} elimina el jugador.
     @DeleteMapping("/players/{id}")
     public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") String idPlayer)
     {
-        Optional<Players> player = repository.findById(idPlayer);
-        repository.delete(player.get());
+        Optional<Players> player = playerRepo.findById(idPlayer);
+        playerRepo.delete(player.get());
         return ResponseEntity.ok().build();
     }
 

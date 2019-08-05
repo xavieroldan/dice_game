@@ -38,8 +38,6 @@ public class DiceResultsController
     @ResponseBody
     public DiceResults saveDiceResult(@RequestBody DiceResults diceResult)
     {
-        DiceGames diceGame = new DiceGames();
-        diceResult.setDiceGames(diceGame);
 //Fallo al guardar por la id del game
         //java.sql.SQLException: Field 'dice_games_id' doesn't have a default value
         System.out.println("Voy a guardar el diceResult " + diceResult.toString());
@@ -59,5 +57,11 @@ public class DiceResultsController
         System.out.println("Voy a guardar esta jugada: " + diceResults.toString());
         System.out.println("De este juego: " + diceGame.get().toString());
         return repository.save(diceResults);
+    }
+
+    public DiceResults saveResult(DiceGames diceGame, DiceResults diceResult)
+    {
+        diceResult.setDiceGames(diceGame);
+        return repository.save(diceResult);
     }
 }
