@@ -1,8 +1,8 @@
 package com.dicegame.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,13 +17,12 @@ import javax.persistence.Table;
 public class DiceResults
 {
     @Id
-    @Column(name = "id_results")
     private String idResults;
     private int idDice;
     private int results;
-    @ManyToOne
-    @JoinColumn(name = "id_games")
-//    @JoinColumn(name = "id_games", nullable = true)
+    @ManyToOne(targetEntity = DiceGames.class, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_games", nullable = true)
+    @JsonIgnore
     private DiceGames diceGames;
 
     public DiceResults()
@@ -35,7 +34,6 @@ public class DiceResults
         this.setIdResults(idResults);
         this.setIdDice(idDice);
         this.setResult(result);
-
     }
 
     public String getIdResults()

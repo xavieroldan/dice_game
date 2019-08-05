@@ -23,7 +23,6 @@ public class Players implements Serializable
     private String name;
     private Date regDate;
 
-//    @OneToMany(mappedBy = "players", cascade = CascadeType.ALL) //cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
     @OneToMany(targetEntity = DiceGames.class, fetch = FetchType.EAGER)
     @Column(nullable = true)
     private Set<DiceGames> diceGames;

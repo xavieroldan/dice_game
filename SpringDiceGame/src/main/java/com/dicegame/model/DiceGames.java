@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -19,33 +20,34 @@ import javax.persistence.Table;
 public class DiceGames
 {
     @Id
-    @Column(name = "id_games")
     private String idGames;
     private boolean isWinner;
     private boolean isAnonim;
     private boolean isDeleted;
-    //    @OneToMany
-//    @Column(nullable = true)
-//    private Set<DiceResults> diceResults;
 
     @ManyToOne(targetEntity = Players.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_players", nullable = true)
     @JsonIgnore
     private Players players;
 
+    @OneToMany(targetEntity = DiceResults.class, fetch = FetchType.EAGER)
+    @Column(nullable = true)
+    private Set<DiceResults> diceResults;
+
     public DiceGames()
     {
     }
 
-//    public Set<DiceResults> getDiceResults()
-//    {
-//        return diceResults;
-//    }
-//
-//    public void setDiceResults(Set<DiceResults> diceResults)
-//    {
-//        this.diceResults = diceResults;
-//    }
+    public Set<DiceResults> getDiceResults()
+    {
+        return diceResults;
+    }
+
+    public void setDiceResults(Set<DiceResults> diceResults)
+    {
+        this.diceResults = diceResults;
+    }
+
     public String getIdGames()
     {
         return idGames;

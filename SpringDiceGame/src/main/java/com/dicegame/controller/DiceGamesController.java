@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.dicegame.repository.DiceGamesRepository;
 import com.dicegame.repository.PlayersRepository;
-import com.dicegame.tools.GameFactory;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,16 +69,14 @@ public class DiceGamesController
         Set<DiceGames> diceGames = new HashSet<>();
         DiceGames diceGame = new DiceGames();
         Optional<Players> player = playerRepo.findById("ed55edff1997406da1be45c99517871e");
-        diceGame.setIdGames("kjhkjhkjhkjh");
+        diceGame.setIdGames(UUID.randomUUID().toString().replace("-", ""));
         diceGame.setIsAnonim(true);
         diceGame.setIsDeleted(false);
         diceGame.setIsWinner(false);
         diceGame.setPlayers(player.get());
-//        diceGame.setDiceResults(diceResults);
         player.get().setDiceGames(diceGames);
         System.out.println("Voy a guardar este juego: " + diceGame.toString());
         System.out.println("De este jugador: " + player.get().toString());
-//        return null;
         return diceRepo.save(diceGame);
     }
 }
