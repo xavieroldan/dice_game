@@ -42,7 +42,6 @@ public class DiceGamesController
     @ResponseBody
     public DiceGames playNewGame(@PathVariable String id)
     {
-        System.out.println("Me ha llegado esta id: " + id);
         DiceGames diceGame = new DiceGames();
         //create a new game
         GameMaker gameMaker = new GameMaker();
