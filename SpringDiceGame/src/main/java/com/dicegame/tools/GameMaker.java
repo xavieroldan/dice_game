@@ -21,8 +21,6 @@ public class GameMaker
     {
         7
     };
-    private DiceGames dicegame;
-    private DiceResults diceResult;
 
     public DiceGames playGame(Players player)
     {
@@ -36,12 +34,10 @@ public class GameMaker
         int totalResult = 0;
         for (int i = 1; i < ROLL_MAX + 1; i++)
         {
+            String resultRandomID = UUID.randomUUID().toString().replace("-", "");
             int result = RandomRollGen.getRandomRoll();
-            DiceResults diceResult
-                    = new DiceResults(RandomID, i, result);
+            DiceResults diceResult = new DiceResults(resultRandomID, i, result);
             diceResult.setDiceGames(diceGame);
-            DiceResultsController controler = new DiceResultsController();
-            controler.saveDiceResult(diceResult); // save the result un DB / dice_results aquí el error
             diceGame.getDiceResults().add(diceResult); //save the result
             totalResult += result;
         }
@@ -56,28 +52,8 @@ public class GameMaker
             {
                 diceGame.setIsWinner(false);
             }
-            System.out.println("Resultado: " + totalResult + " Winner: " + diceGame.getIsWinner());
         }
         return diceGame;
     }
 
-    public DiceGames getDicegame()
-    {
-        return dicegame;
-    }
-
-    public void setDicegame(DiceGames dicegame)
-    {
-        this.dicegame = dicegame;
-    }
-
-    public DiceResults getDiceResult()
-    {
-        return diceResult;
-    }
-
-    public void setDiceResult(DiceResults diceResult)
-    {
-        this.diceResult = diceResult;
-    }
 }

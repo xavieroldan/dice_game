@@ -2,6 +2,7 @@ package com.dicegame.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +31,7 @@ public class DiceGames
     @JsonIgnore
     private Players players;
 
-    @OneToMany(targetEntity = DiceResults.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = DiceResults.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(nullable = true)
     private Set<DiceResults> diceResults;
 

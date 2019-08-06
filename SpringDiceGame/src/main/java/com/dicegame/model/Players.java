@@ -3,6 +3,7 @@ package com.dicegame.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ public class Players implements Serializable
     private String name;
     private Date regDate;
 
-    @OneToMany(targetEntity = DiceGames.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = DiceGames.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(nullable = true)
     private Set<DiceGames> diceGames;
 

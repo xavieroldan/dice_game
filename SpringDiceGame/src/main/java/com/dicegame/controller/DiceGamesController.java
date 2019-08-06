@@ -7,14 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.dicegame.repository.DiceGamesRepository;
+import com.dicegame.repository.DiceResultsRepository;
 import com.dicegame.repository.PlayersRepository;
 import com.dicegame.tools.GameMaker;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +28,8 @@ public class DiceGamesController
     @Autowired
     private DiceGamesRepository diceRepo;
     @Autowired
+    private DiceResultsRepository reultRepo;
+    @Autowired
     private PlayersRepository playerRepo;
 
     @GetMapping("/dicerolls")
@@ -42,16 +43,10 @@ public class DiceGamesController
     @ResponseBody
     public DiceGames playGame(@RequestBody Players player)
     {
-        System.out.println("Estoy en playGame de DiceGames Controller");
         DiceGames diceGame = new DiceGames();
         //crear una jugada
         GameMaker gameMaker = new GameMaker();
         diceGame = gameMaker.playGame(playerRepo.findById(player.getIdPlayers()).get());
-        System.out.println("Voy a guardar la juagada: "
-                + diceGame.toString());
-        //guardar la jugada  
-//        diceRepo.save(diceGame);
-//        return ResponseEntity.ok().build();
         return diceRepo.save(diceGame);
 
     }
