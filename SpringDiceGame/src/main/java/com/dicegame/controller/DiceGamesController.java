@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,8 +29,6 @@ public class DiceGamesController
     @Autowired
     private DiceGamesRepository diceRepo;
     @Autowired
-    private DiceResultsRepository reultRepo;
-    @Autowired
     private PlayersRepository playerRepo;
 
     @GetMapping("/dicerolls")
@@ -39,16 +38,16 @@ public class DiceGamesController
     }
 
     //TODO: POST /players/{id}/games/ : un jugador específic realitza una tirada dels daus.
-    @RequestMapping(value = "/players/games", headers = "content-type=application/json")
+    @RequestMapping(value = "/players/{id}/games/", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public DiceGames playGame(@RequestBody Players player)
+    public DiceGames playNewGame(@PathVariable String id)
     {
+        System.out.println("Me ha llegado esta id: " + id);
         DiceGames diceGame = new DiceGames();
-        //crear una jugada
+        //create a new game
         GameMaker gameMaker = new GameMaker();
-        diceGame = gameMaker.playGame(playerRepo.findById(player.getIdPlayers()).get());
-        return diceRepo.save(diceGame);
-
+        diceGame = gameMaker.playGame(playerRepo.findById(id).get());
+        return diceRepo.save(diceGame); //save the game
     }
 
     @RequestMapping(value = "/savegame", headers = "content-type=application/json")
