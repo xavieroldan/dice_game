@@ -99,15 +99,9 @@ public class DiceGames
         this.players = players;
     }
 
-//    @Override
-//    public String toString()
-//    {
-//        return "DiceGames{" + "idGames=" + idGames + ", isWinner=" + isWinner + ", isAnonim=" + isAnonim + ", isDeleted=" + isDeleted + ", diceResults=" + diceResults + ", players=" + players + '}';
-//    }
     @Override
     public String toString()
     {
         return "DiceGames{" + "idGames=" + idGames + ", isWinner=" + isWinner + ", isAnonim=" + isAnonim + ", isDeleted=" + isDeleted + ", players=" + players + '}';
     }
-
 }

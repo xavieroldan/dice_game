@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.dicegame.repository.DiceGamesRepository;
-import com.dicegame.repository.DiceResultsRepository;
 import com.dicegame.repository.PlayersRepository;
 import com.dicegame.tools.GameMaker;
 import java.util.HashSet;
@@ -40,7 +39,7 @@ public class DiceGamesController
     //TODO: POST /players/{id}/games/ : un jugador específic realitza una tirada dels daus.
     @RequestMapping(value = "/players/{id}/games/", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public DiceGames playNewGame(@PathVariable String id)
+    public DiceGames playNewGame(@PathVariable UUID id)
     {
         DiceGames diceGame = new DiceGames();
         //create a new game
@@ -56,22 +55,22 @@ public class DiceGamesController
         System.out.println("Voy a guardar el diceGame " + diceGame.toString());
         return diceRepo.save(diceGame);
     }
-
-    @RequestMapping(value = "/savegamenodata")
-    @ResponseBody
-    public DiceGames saveNoData(String id)
-    {
-        Set<DiceGames> diceGames = new HashSet<>();
-        DiceGames diceGame = new DiceGames();
-        Optional<Players> player = playerRepo.findById("ed55edff1997406da1be45c99517871e");
-        diceGame.setIdGames(UUID.randomUUID().toString().replace("-", ""));
-        diceGame.setIsAnonim(true);
-        diceGame.setIsDeleted(false);
-        diceGame.setIsWinner(false);
-        diceGame.setPlayers(player.get());
-        player.get().setDiceGames(diceGames);
-        System.out.println("Voy a guardar este juego: " + diceGame.toString());
-        System.out.println("De este jugador: " + player.get().toString());
-        return diceRepo.save(diceGame);
-    }
+//TODO: delete
+//    @RequestMapping(value = "/savegamenodata")
+//    @ResponseBody
+//    public DiceGames saveNoData(String id)
+//    {
+//        Set<DiceGames> diceGames = new HashSet<>();
+//        DiceGames diceGame = new DiceGames();
+//        Optional<Players> player = playerRepo.findById("ed55edff1997406da1be45c99517871e");
+//        diceGame.setIdGames(UUID.randomUUID().toString().replace("-", ""));
+//        diceGame.setIsAnonim(true);
+//        diceGame.setIsDeleted(false);
+//        diceGame.setIsWinner(false);
+//        diceGame.setPlayers(player.get());
+//        player.get().setDiceGames(diceGames);
+//        System.out.println("Voy a guardar este juego: " + diceGame.toString());
+//        System.out.println("De este jugador: " + player.get().toString());
+//        return diceRepo.save(diceGame);
+//    }
 }

@@ -4,6 +4,7 @@ import com.dicegame.model.Players;
 import com.dicegame.repository.PlayersRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,9 +34,9 @@ public class PlayersController
     @PutMapping("/players")
     public Players updatePlayers(@RequestBody Players player)
     {
-        String idPlayer = player.getIdPlayers();
+        UUID idPlayer = player.getIdPlayers();
         Optional<Players> playerToUpdate = playerRepo.findById(idPlayer);
-        playerToUpdate.get().setName(idPlayer);
+        playerToUpdate.get().setName(player.getName());
         Players playerUpdated = playerRepo.save(playerToUpdate.get());
         return playerUpdated;
     }
@@ -50,7 +51,7 @@ public class PlayersController
 
     //DELETE /players/{id} elimina el jugador.
     @DeleteMapping("/players/{id}")
-    public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") String idPlayer)
+    public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") UUID idPlayer)
     {
         Optional<Players> player = playerRepo.findById(idPlayer);
         playerRepo.delete(player.get());

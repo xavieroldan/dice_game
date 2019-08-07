@@ -81,5 +81,4 @@ public class DiceResults
     {
         return "DiceResults{" + "idResults=" + idResults + ", idDice=" + idDice + ", result=" + results + ", diceGames=" + diceGames + '}';
     }
-
 }

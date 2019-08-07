@@ -1,13 +1,10 @@
 package com.dicegame.tools;
 
-import com.dicegame.controller.DiceResultsController;
 import com.dicegame.model.DiceGames;
 import com.dicegame.model.DiceResults;
 import com.dicegame.model.Players;
-import com.dicegame.repository.DiceResultsRepository;
 import java.util.HashSet;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -35,6 +32,7 @@ public class GameMaker
         for (int i = 1; i < ROLL_MAX + 1; i++)
         {
             String resultRandomID = UUID.randomUUID().toString().replace("-", "");
+            //launch the dice
             int result = RandomRollGen.getRandomRoll();
             DiceResults diceResult = new DiceResults(resultRandomID, i, result);
             diceResult.setDiceGames(diceGame);
@@ -55,5 +53,4 @@ public class GameMaker
         }
         return diceGame;
     }
-
 }
