@@ -5,7 +5,7 @@
  */
 package com.dicegame.tools;
 
-import com.dicegame.model.Players;
+import com.dicegame.model.Player;
 
 /**
  *
@@ -17,8 +17,8 @@ public class GameSimulator
     {
         System.out.println("Tirada de dados");
         System.out.println("---------------");
-        Players player = new Players();
-        player.setIdPlayers("ljkljkljlkj");
+        Player player = new Player();
+        player.setIdPlayer("ljkljkljlkj");
         player.setName("Jugón");
         player.setRegDate(TimeStamp.getDate());
         for (int i = 0; i < 20; i++)

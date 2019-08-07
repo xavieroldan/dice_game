@@ -17,73 +17,73 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "players")
-public class Players implements Serializable
+public class Player implements Serializable
 {
     @Id
-    private String idPlayers;
+    private String idPlayer;
     private String name;
     private Date regDate;
-
-    @OneToMany(targetEntity = DiceGames.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    
+    @OneToMany(targetEntity = DiceGame.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(nullable = true)
-    private Set<DiceGames> diceGames;
-
-    public Players()
+    private Set<DiceGame> diceGame;
+    
+    public Player()
     {
     }
-
-    public Players(String idPlayers, String name, Date regDate, Set<DiceGames> diceGames)
+    
+    public Player(String idPlayer, String name, Date regDate, Set<DiceGame> diceGame)
     {
-        this.idPlayers = idPlayers;
-        this.name = name;
-        this.regDate = regDate;
-        this.diceGames = diceGames;
+        this.setIdPlayer(idPlayer);
+        this.setName(name);
+        this.setRegDate(regDate);
+        this.setDiceGame(diceGame);
     }
-
-    public String getIdPlayers()
+    
+    public String getIdPlayer()
     {
-        return idPlayers;
+        return idPlayer;
     }
-
-    public void setIdPlayers(String id)
+    
+    public void setIdPlayer(String id)
     {
-        this.idPlayers = id;
+        this.idPlayer = id;
     }
-
+    
     public String getName()
     {
         return name;
     }
-
+    
     public void setName(String name)
     {
         this.name = name;
     }
-
+    
     public Date getRegDate()
     {
         return regDate;
     }
-
+    
     public void setRegDate(Date regDate)
     {
         this.regDate = regDate;
     }
-
-    public Set<DiceGames> getDiceGames()
+    
+    public Set<DiceGame> getDiceGame()
     {
-        return diceGames;
+        return diceGame;
     }
-
-    public void setDiceGames(Set<DiceGames> diceGames)
+    
+    public void setDiceGame(Set<DiceGame> diceGame)
     {
-        this.diceGames = diceGames;
+        this.diceGame = diceGame;
     }
-
+    
     @Override
     public String toString()
     {
-        return "Players{" + "idPlayers=" + idPlayers + ", name=" + name + ", regDate=" + regDate + ", diceGames=" + diceGames + '}';
+        return "Player{" + "idPlayer=" + idPlayer + ", name=" + name + ", regDate=" + regDate + ", diceGame=" + diceGame + '}';
     }
-
+    
 }

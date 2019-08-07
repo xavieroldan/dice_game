@@ -1,7 +1,6 @@
 package com.dicegame.controller;
 
-import com.dicegame.model.Players;
-import com.dicegame.repository.PlayersRepository;
+import com.dicegame.model.Player;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,36 +13,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.dicegame.repository.PlayerRepository;
 
 @RestController
-public class PlayersController
+public class PlayerRestController
 {
     @Autowired
-    private PlayersRepository playerRepo;
+    private PlayerRepository playerRepo;
 
     //POST: /players : crea un jugador
     @RequestMapping(value = "/players", headers = "content-type=application/json")
     @ResponseBody
-    public Players createPlayers(@RequestBody Players player)
+    public Player createPlayer(@RequestBody Player player)
     {
         return playerRepo.save(player);
     }
 
     //PUT /players : modifica el nom del jugador
     @PutMapping("/players")
-    public Players updatePlayers(@RequestBody Players player)
+    public Player updatePlayer(@RequestBody Player player)
     {
-        String idPlayer = player.getIdPlayers();
-        Optional<Players> playerToUpdate = playerRepo.findById(idPlayer);
+        String idPlayer = player.getIdPlayer();
+        Optional<Player> playerToUpdate = playerRepo.findById(idPlayer);
         playerToUpdate.get().setName(idPlayer);
-        Players playerUpdated = playerRepo.save(playerToUpdate.get());
+        Player playerUpdated = playerRepo.save(playerToUpdate.get());
         return playerUpdated;
     }
 
     //GET /players/: retorna el llistat de tots els jugadors del sistema 
     //amb el seu percentatge mig d’èxits
     @GetMapping("/players")
-    public List<Players> getAllPlayers()
+    public List<Player> getAllPlayers()
     {
         return playerRepo.findAll();
     }
@@ -52,7 +52,7 @@ public class PlayersController
     @DeleteMapping("/players/{id}")
     public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") String idPlayer)
     {
-        Optional<Players> player = playerRepo.findById(idPlayer);
+        Optional<Player> player = playerRepo.findById(idPlayer);
         playerRepo.delete(player.get());
         return ResponseEntity.ok().build();
     }

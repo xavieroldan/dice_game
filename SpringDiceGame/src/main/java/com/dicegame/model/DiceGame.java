@@ -18,45 +18,45 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "dice_games")
-public class DiceGames
+public class DiceGame
 {
     @Id
-    private String idGames;
+    private String idGame;
     private boolean isWinner;
     private boolean isAnonim;
     private boolean isDeleted;
 
-    @ManyToOne(targetEntity = Players.class, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(targetEntity = Player.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_players", nullable = true)
     @JsonIgnore
-    private Players players;
+    private Player player;
 
-    @OneToMany(targetEntity = DiceResults.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = DiceResult.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(nullable = true)
-    private Set<DiceResults> diceResults;
+    private Set<DiceResult> diceResult;
 
-    public DiceGames()
+    public DiceGame()
     {
     }
 
-    public Set<DiceResults> getDiceResults()
+    public Set<DiceResult> getDiceResult()
     {
-        return diceResults;
+        return diceResult;
     }
 
-    public void setDiceResults(Set<DiceResults> diceResults)
+    public void setDiceResult(Set<DiceResult> diceResult)
     {
-        this.diceResults = diceResults;
+        this.diceResult = diceResult;
     }
 
-    public String getIdGames()
+    public String getIdGame()
     {
-        return idGames;
+        return idGame;
     }
 
-    public void setIdGames(String id)
+    public void setIdGame(String id)
     {
-        this.idGames = id;
+        this.idGame = id;
     }
 
     public boolean getIsWinner()
@@ -89,25 +89,20 @@ public class DiceGames
         this.isDeleted = isDeleted;
     }
 
-    public Players getPlayers()
+    public Player getPlayer()
     {
-        return players;
+        return player;
     }
 
-    public void setPlayers(Players players)
+    public void setPlayer(Player player)
     {
-        this.players = players;
+        this.player = player;
     }
 
-//    @Override
-//    public String toString()
-//    {
-//        return "DiceGames{" + "idGames=" + idGames + ", isWinner=" + isWinner + ", isAnonim=" + isAnonim + ", isDeleted=" + isDeleted + ", diceResults=" + diceResults + ", players=" + players + '}';
-//    }
     @Override
     public String toString()
     {
-        return "DiceGames{" + "idGames=" + idGames + ", isWinner=" + isWinner + ", isAnonim=" + isAnonim + ", isDeleted=" + isDeleted + ", players=" + players + '}';
+        return "DiceGame{" + "idGame=" + idGame + ", isWinner=" + isWinner + ", isAnonim=" + isAnonim + ", isDeleted=" + isDeleted + ", player=" + player + '}';
     }
 
 }

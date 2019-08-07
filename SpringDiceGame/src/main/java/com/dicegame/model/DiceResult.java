@@ -14,36 +14,36 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "dice_results")
-public class DiceResults
+public class DiceResult
 {
     @Id
-    private String idResults;
+    private String idResult;
     private int idDice;
     private int results;
-    @ManyToOne(targetEntity = DiceGames.class, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(targetEntity = DiceGame.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_games", nullable = true)
     @JsonIgnore
-    private DiceGames diceGames;
+    private DiceGame diceGame;
 
-    public DiceResults()
+    public DiceResult()
     {
     }
 
-    public DiceResults(String idResults, int idDice, int result)
+    public DiceResult(String idResult, int idDice, int result)
     {
-        this.setIdResults(idResults);
+        this.setIdResult(idResult);
         this.setIdDice(idDice);
         this.setResult(result);
     }
 
-    public String getIdResults()
+    public String getIdResult()
     {
-        return idResults;
+        return idResult;
     }
 
-    public void setIdResults(String idResults)
+    public void setIdResult(String idResult)
     {
-        this.idResults = idResults;
+        this.idResult = idResult;
     }
 
     public int getIdDice()
@@ -66,20 +66,20 @@ public class DiceResults
         this.results = result;
     }
 
-    public DiceGames getDiceGames()
+    public DiceGame getDiceGames()
     {
-        return diceGames;
+        return diceGame;
     }
 
-    public void setDiceGames(DiceGames diceGames)
+    public void setDiceGame(DiceGame diceGame)
     {
-        this.diceGames = diceGames;
+        this.diceGame = diceGame;
     }
 
     @Override
     public String toString()
     {
-        return "DiceResults{" + "idResults=" + idResults + ", idDice=" + idDice + ", result=" + results + ", diceGames=" + diceGames + '}';
+        return "DiceResult{" + "idResult=" + idResult + ", idDice=" + idDice + ", result=" + results + ", diceGame=" + diceGame + '}';
     }
 
 }
