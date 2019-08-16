@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.dice</groupId>
-	<artifactId>dice</artifactId>
+	<artifactId>DiceGame</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dice</name>
-	<description>Dice project for Spring Boot</description>
+	<name>DiceGame</name>
+	<description>Spring Boot dice project It Academy</description>
 
 	<properties>
 		<java.version>1.8</java.version>
