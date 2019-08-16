@@ -10,9 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +23,7 @@ public class PlayersController
     private PlayersRepository playerRepo;
 
     //POST: /players : crea un jugador
-    @RequestMapping(value = "/players", headers = "content-type=application/json")
+    @PostMapping(value = "/players", headers = "content-type=application/json")
     @ResponseBody
     public Players createPlayers(@RequestBody Players player)
     {
@@ -43,7 +43,7 @@ public class PlayersController
 
     //GET /players/: retorna el llistat de tots els jugadors del sistema 
     //amb el seu percentatge mig d’èxits
-    @GetMapping("/players")
+    @GetMapping(value = "/players", produces = "application/json;charset=UTF-8")
     public List<Players> getAllPlayers()
     {
         return playerRepo.findAll();

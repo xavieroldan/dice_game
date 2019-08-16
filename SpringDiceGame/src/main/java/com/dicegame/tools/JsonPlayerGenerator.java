@@ -22,7 +22,8 @@ public class JsonPlayerGenerator
     public static String getPlayerJson(String name) throws ParseException
     {
 
-        String id = UUID.randomUUID().toString().replace("-", "");
+        String id = UUID.randomUUID().toString();
+//        String id = UUID.randomUUID().toString().replace("-", "");
         String date = TimeStamp.getJsonDate();
         String output = "{\"idPlayers\": \"" + id
                 + "\",\"name\": \"" + name

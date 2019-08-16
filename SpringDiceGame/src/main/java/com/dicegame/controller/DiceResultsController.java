@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import static sun.audio.AudioPlayer.player;
 
 /**
  *
@@ -48,7 +47,7 @@ public class DiceResultsController
     {
         DiceResults diceResults = new DiceResults();
         Optional<DiceGames> diceGame = gamesRepo.findById("64bb48a7004c4e2bb1e8d13c04b3b340");
-        diceResults.setIdResults(UUID.randomUUID().toString().replace("-", ""));
+        diceResults.setIdResults(UUID.randomUUID());
         diceResults.setDiceGames(diceGame.get());
         diceResults.setIdDice(1);
         diceResults.setResult(3);

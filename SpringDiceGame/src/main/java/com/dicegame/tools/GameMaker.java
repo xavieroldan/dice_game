@@ -31,10 +31,9 @@ public class GameMaker
         int totalResult = 0;
         for (int i = 1; i < ROLL_MAX + 1; i++)
         {
-            String resultRandomID = UUID.randomUUID().toString().replace("-", "");
             //launch the dice
             int result = RandomRollGen.getRandomRoll();
-            DiceResults diceResult = new DiceResults(resultRandomID, i, result);
+            DiceResults diceResult = new DiceResults(UUID.randomUUID(), i, result);
             diceResult.setDiceGames(diceGame);
             diceGame.getDiceResults().add(diceResult); //save the result
             totalResult += result;

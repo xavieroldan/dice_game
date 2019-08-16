@@ -1,8 +1,11 @@
 package com.dicegame.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +20,8 @@ import javax.persistence.Table;
 public class DiceResults
 {
     @Id
-    private String idResults;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID idResults;
     private int idDice;
     private int results;
     @ManyToOne(targetEntity = DiceGames.class, fetch = FetchType.LAZY, optional = false)
@@ -29,19 +33,19 @@ public class DiceResults
     {
     }
 
-    public DiceResults(String idResults, int idDice, int result)
+    public DiceResults(UUID idResults, int idDice, int result)
     {
         this.setIdResults(idResults);
         this.setIdDice(idDice);
         this.setResult(result);
     }
 
-    public String getIdResults()
+    public UUID getIdResults()
     {
         return idResults;
     }
 
-    public void setIdResults(String idResults)
+    public void setIdResults(UUID idResults)
     {
         this.idResults = idResults;
     }
