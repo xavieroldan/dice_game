@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * @author Xavier Roldán <info@xavierroldan.com>
  */
 @Entity
-@Table(name = "result")
+@Table(name = "diceresult")
 public class DiceResult
 {
     @Id
@@ -25,7 +25,7 @@ public class DiceResult
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idDiceResult;
 
-    @Column(name = "result")
+    @Column(name = "result", nullable = false)
     private int result;
 
     @ManyToOne(
