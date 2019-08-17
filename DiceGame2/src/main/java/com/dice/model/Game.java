@@ -1,7 +1,9 @@
 package com.dice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -55,6 +58,13 @@ public class Game
             nullable = true)
     @JsonIgnore
     private Player player;
+
+    @OneToMany(
+            targetEntity = DiceResult.class,
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @Column(nullable = true)
+    private List<DiceResult> listDiceResult;
 
     public Game()
     {
@@ -118,9 +128,19 @@ public class Game
         this.player = player;
     }
 
+    public List<DiceResult> getListDiceResult()
+    {
+        return listDiceResult;
+    }
+
+    public void setListDiceResult(List<DiceResult> listDiceResult)
+    {
+        this.listDiceResult = listDiceResult;
+    }
+
     @Override
     public String toString()
     {
-        return "Game{" + "idGame=" + idGame + ", isAnonim=" + isAnonim + ", isWinner=" + isWinner + ", isDeleted=" + isDeleted + ", player=" + player + '}';
+        return "Game{" + "idGame=" + idGame + ", isAnonim=" + isAnonim + ", isWinner=" + isWinner + ", isDeleted=" + isDeleted + ", player=" + player + ", listDiceResult=" + listDiceResult + '}';
     }
 }
