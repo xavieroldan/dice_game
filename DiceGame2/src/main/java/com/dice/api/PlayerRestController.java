@@ -1,4 +1,4 @@
-package com.dice.apiRest;
+package com.dice.api;
 
 import com.dice.model.Player;
 import com.dice.repository.PlayerRepository;
@@ -19,6 +19,7 @@ public class PlayerRestController
     @Autowired
     PlayerRepository playerRepo;
 
+    //TODO: delete
     //POST: create a player
     /*(Only needs the name)
     localhost:8080/new    
@@ -28,18 +29,36 @@ public class PlayerRestController
      */
     @PostMapping("/new")
     @ResponseBody
+    public Player testCreatePlayer(@RequestBody Player player)
+    {
+        return playerRepo.save(player);
+    }
+
+    //TODO: delete
+    //GET: TEST List all Players
+    /*
+    localhost:8080/getall
+     */
+    @GetMapping("/getall")
+    public Iterable<Player> testGetAllPlayer()
+    {
+        return playerRepo.findAll();
+    }
+
+    /*
+    POST: /players : crea un jugador
+    {    
+    "name": "Foo"
+    }    
+     */
+    @PostMapping("/players")
+    @ResponseBody
     public Player createPlayer(@RequestBody Player player)
     {
         return playerRepo.save(player);
     }
 
-    //GET: List all Players
     /*
-    localhost:8080/getall
+    PUT /players : modifica el nom del jugador
      */
-    @GetMapping("/getall")
-    public Iterable<Player> getAllPlayer()
-    {
-        return playerRepo.findAll();
-    }
 }

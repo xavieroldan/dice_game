@@ -1,4 +1,4 @@
-package com.dice.apiRest;
+package com.dice.api;
 
 import com.dice.model.Game;
 import com.dice.model.Player;
