@@ -51,10 +51,8 @@ public class GameMaker
         }
         if (player.getListGame() == null)
         {
-            System.out.println("Creo una lista de juegos vacía");
             player.setListGame(new ArrayList<>());
         }
-        System.out.println("Añado el nuevo juego");
         player.getListGame().add(game);
         return player;
     }

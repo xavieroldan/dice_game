@@ -5,13 +5,17 @@ import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import com.dice.tool.GameMaker;
 import java.util.Optional;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
+import static sun.audio.AudioPlayer.player;
 
 /**
  *
@@ -77,19 +81,20 @@ public class PlayerRestController
 
     /*
     POST /players/{id}/games/ : un jugador específic realitza una tirada dels daus.
+    localhost:8080/players/150db883-c08b-4a0d-aa0c-c8607f3f2c93/games/
      */
-    @PostMapping("/players/play")
+    @RequestMapping(value = "/players/{id}/games/", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Player playGame(@RequestBody Player player) throws ErrorValueException
+    public Player playGame(@PathVariable UUID id) throws ErrorValueException
     {
-        if (player == null)
+        if (id == null)
         {
             throw new ErrorValueException();
         }
         try
         {
             //Verify if player exists
-            Optional<Player> playerToPlay = playerRepo.findById(player.getIdPlayer());
+            Optional<Player> playerToPlay = playerRepo.findById(id);
             //play and save the game
             GameMaker game = new GameMaker();
             return playerRepo.save(game.playGame(playerToPlay.get()));
