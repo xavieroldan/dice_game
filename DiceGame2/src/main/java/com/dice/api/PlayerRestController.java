@@ -3,6 +3,7 @@ package com.dice.api;
 import com.dice.model.Player;
 import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorValueException;
+import com.dice.tool.GameMaker;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,9 +75,37 @@ public class PlayerRestController
         }
     }
 
-    //TODO: delete
-    //POST: create a player
-    /*(Only needs the name)
+    /*
+    POST /players/{id}/games/ : un jugador específic realitza una tirada dels daus.
+     */
+    @PostMapping("/players/play")
+    @ResponseBody
+    public Player playGame(@RequestBody Player player) throws ErrorValueException
+    {
+        if (player == null)
+        {
+            throw new ErrorValueException();
+        }
+        try
+        {
+            //Verify if player exists
+            Optional<Player> playerToPlay = playerRepo.findById(player.getIdPlayer());
+            //play and save the game
+            GameMaker game = new GameMaker();
+            return playerRepo.save(game.playGame(playerToPlay.get()));
+        }
+        catch (Exception e)
+        {
+            throw new ErrorValueException();
+        }
+    }
+
+    /*
+    TODO: delete
+    *******************************************************************************************
+    
+    POST: create a player    
+    (Only needs the name)
     localhost:8080/new    
     {    
     "name": "Foo"
