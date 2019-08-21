@@ -2,6 +2,8 @@ package com.dice.api;
 
 import com.dice.model.Player;
 import com.dice.repository.PlayerRepository;
+import com.dice.tool.InvalidParamException;
+import com.dice.tool.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,12 +55,23 @@ public class PlayerRestController
      */
     @PostMapping("/players")
     @ResponseBody
-    public Player createPlayer(@RequestBody Player player)
+    public Player createPlayer(@RequestBody Player player) throws InvalidParamException
     {
-        return playerRepo.save(player);
+        if (player == null)
+        {
+            throw new InvalidParamException();
+        }
+        try
+        {
+            return playerRepo.save(player);
+        }
+        catch (Exception e)
+        {
+            throw new InvalidParamException();
+        }
     }
-
-    /*
-    PUT /players : modifica el nom del jugador
-     */
 }
+
+/*
+    PUT /players : modifica el nom del jugador
+ */
