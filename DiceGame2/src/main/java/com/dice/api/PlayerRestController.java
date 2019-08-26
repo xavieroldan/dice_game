@@ -340,17 +340,12 @@ public class PlayerRestController
     }
 
     /*
-     **************************************************************************
-     TODO: delete //GET: TEST List all Players /* localhost:8080/getall
-     */
-    @GetMapping("/getall")
-    public Iterable<Player> testGetAllPlayer()
-    {
-        return playerRepo.findAll();
-    }
-
-    /*
-    SixDice Test Game
+    POST /players/{id}/games/six : un jugador específic realitza una tirada dels daus
+    amb el joc del sis daus.
+    Per poder jugar al joc de daus ara es necessiten sis daus.
+    En cas que el resultat de tots els daus sigui sis o cinc, la partida és guanyada,
+    sinó es perduda.
+    localhost:8080/players/662213d6-b576-4ec6-8b74-79f614606b05/games/six
      */
     @PostMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -367,13 +362,22 @@ public class PlayerRestController
             Optional<Player> playerToPlay = playerRepo.findById(id);
             //play and save the game
             GameMakerSixDice game = new GameMakerSixDice();
-//            return playerRepo.save(game.playGame(playerToPlay.get()));
-            return game.playGameSixDice(playerToPlay.get());
+            return game.playGame(playerToPlay.get());
         }
         catch (Exception e)
         {
             throw new NotFoundException(
                     "No fue posible localizar la ID del jugador indicada.");
         }
+    }
+
+    /*
+     **************************************************************************
+     TODO: delete //GET: TEST List all Players /* localhost:8080/getall
+     */
+    @GetMapping("/getall")
+    public Iterable<Player> testGetAllPlayer()
+    {
+        return playerRepo.findAll();
     }
 }

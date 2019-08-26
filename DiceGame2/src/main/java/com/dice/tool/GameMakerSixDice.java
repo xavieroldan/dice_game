@@ -19,7 +19,7 @@ public class GameMakerSixDice
         5, 6
     };
 
-    public Player playGameSixDice(Player player)
+    public Player playGame(Player player)
     {
         //create the dice game
         Game game = new Game();
@@ -36,39 +36,24 @@ public class GameMakerSixDice
             diceResult.setGame(game);
             game.getListDiceResult().add(diceResult);
             //verify winner game for diferents results
-            boolean winCheck = true;
+            boolean winDiceRoll = false;
             for (int j : WIN_RESULTS)
             {
-                boolean antWinCheck = winCheck;
                 if (result == j)
                 {
-                    //Is the first result true : winner
-                    winCheck = true;
-                    System.out.println(i + "-Jugada Winner-" + result);
+                    //Is one of the result is true : finaly winner
+                    winDiceRoll = true;
                 }
-                else
-                {
-                    if (antWinCheck)
-                    {
-                        System.out.println("Sigue en winner");
-                        /*
-                        Si el anterior es falso verifica este
-                        y si es true entonces es winner. No funciona porque siempre 
-                        me dice que es true aunque no sean los números...
-                         */
-                        winCheck = true;
-                    }
-                    else
-                    {
-                        winCheck = false;
-                    }
-                    System.out.println(i + "-Jugada Loser-" + result);
-                }
+                //Else is false: do nothing -> is loser
             }
+            if (!winDiceRoll)
+            {
+                //If one of the results is false: finaly loser
+                isWinner = false;
+            }
+            //Else is winner : do nothing -> is winner
         }
         //getting the result
-        System.out.println("Resultado Winner: " + isWinner);
-
         if (isWinner)
         {
             game.setIsWinner(true);
@@ -77,7 +62,6 @@ public class GameMakerSixDice
         {
             game.setIsWinner(false);
         }
-
         if (player.getListGame() == null)
         {
             player.setListGame(new ArrayList<>());
