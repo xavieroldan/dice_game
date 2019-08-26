@@ -5,6 +5,7 @@ import com.dice.model.Player;
 import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import com.dice.tool.GameMaker;
+import com.dice.tool.GameMakerSixDice;
 import com.dice.tool.NotFoundException;
 import com.dice.tool.RateDTO;
 import java.util.ArrayList;
@@ -346,5 +347,33 @@ public class PlayerRestController
     public Iterable<Player> testGetAllPlayer()
     {
         return playerRepo.findAll();
+    }
+
+    /*
+    SixDice Test Game
+     */
+    @PostMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Player playGameSixDice(@PathVariable UUID id)
+            throws ErrorValueException, NotFoundException
+    {
+        if (id == null)
+        {
+            throw new ErrorValueException("ID de jugador nula");
+        }
+        try
+        {
+            //Verify if player exists
+            Optional<Player> playerToPlay = playerRepo.findById(id);
+            //play and save the game
+            GameMakerSixDice game = new GameMakerSixDice();
+//            return playerRepo.save(game.playGame(playerToPlay.get()));
+            return game.playGameSixDice(playerToPlay.get());
+        }
+        catch (Exception e)
+        {
+            throw new NotFoundException(
+                    "No fue posible localizar la ID del jugador indicada.");
+        }
     }
 }
