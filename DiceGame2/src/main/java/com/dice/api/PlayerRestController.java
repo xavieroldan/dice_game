@@ -216,6 +216,31 @@ public class PlayerRestController
         return outputDTO;
     }
 
+    /*
+    GET /players/{id}/games: retorna el llistat de jugades per un jugador.
+    
+     */
+    @GetMapping(value = "/players/{id}/games", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List<Game> getPlayerGames(@PathVariable(value = "id") UUID idPlayer)
+            throws ErrorValueException, NotFoundException
+    {
+        List<Game> output = new ArrayList<>();
+        if (idPlayer == null)
+        {
+            throw new ErrorValueException("ID de jugador nula");
+        }
+        try
+        {
+            output = playerRepo.findById(idPlayer).get().getListGame();
+        }
+        catch (Exception e)
+        {
+            throw new NotFoundException("ID de jugador no válida.");
+        }
+        return output;
+    }
+
     /**
      * *************************************************************************
      * POST: create a player (Only needs the name) localhost:8080/new { "name":
@@ -238,5 +263,4 @@ public class PlayerRestController
     {
         return playerRepo.findAll();
     }
-
 }
