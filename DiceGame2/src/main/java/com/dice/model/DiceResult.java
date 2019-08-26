@@ -83,5 +83,4 @@ public class DiceResult
     {
         return "DiceResult{" + "idDiceResult=" + idDiceResult + ", result=" + result + ", game=" + game + '}';
     }
-
 }

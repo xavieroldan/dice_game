@@ -67,7 +67,7 @@ public class PlayerRestController
     "idPlayer" : "150db883-c08b-4a0d-aa0c-c8607f3f2c93",
     "name": "Martaaaa"
     } 
-    Keep the correct format to no have format JSON problems
+    Keep the correct format to don't have JSON format problems
      */
     @PutMapping("/players")
     @ResponseBody
