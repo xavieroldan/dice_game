@@ -5,6 +5,7 @@ import com.dice.model.Player;
 import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import com.dice.tool.GameMaker;
+import com.dice.tool.NotFoundException;
 import com.dice.tool.RateDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +35,19 @@ public class PlayerRestController
 
     /*
     POST: /players : crea un jugador
+    localhost:8080/players
     {    
     "name": "Foo"
     }    
      */
     @PostMapping("/players")
     @ResponseBody
-    public Player createPlayer(@RequestBody Player player) throws ErrorValueException
+    public Player createPlayer(@RequestBody Player player)
+            throws ErrorValueException, NotFoundException
     {
         if (player == null)
         {
-            throw new ErrorValueException();
+            throw new ErrorValueException("No hay datos para crear nuevo jugador.");
         }
         try
         {
@@ -52,12 +55,13 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorValueException();
+            throw new NotFoundException("No fue posible guardar los datos.");
         }
     }
 
     /*
     PUT /players : modifica el nom del jugador
+    localhost:8080/players
     {    
     "idPlayer" : "150db883-c08b-4a0d-aa0c-c8607f3f2c93",
     "name": "Martaaaa"
@@ -66,11 +70,14 @@ public class PlayerRestController
      */
     @PutMapping("/players")
     @ResponseBody
-    public Player editName(@RequestBody Player playerToEdit) throws ErrorValueException
+    public Player editName(@RequestBody Player playerToEdit)
+            throws ErrorValueException, NotFoundException
     {
-        if (playerToEdit == null)
+        if (playerToEdit == null || playerToEdit.getName().isEmpty()
+                || playerToEdit.getName() == null
+                || playerToEdit.getName().trim().length() < 1)
         {
-            throw new ErrorValueException();
+            throw new ErrorValueException("No hay datos para modificar el jugador.");
         }
         try
         {
@@ -80,7 +87,8 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorValueException();
+            throw new NotFoundException(
+                    "No fue posible localizar la ID del jugador indicada.");
         }
     }
 
@@ -90,11 +98,12 @@ public class PlayerRestController
      */
     @RequestMapping(value = "/players/{id}/games/", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Player playGame(@PathVariable UUID id) throws ErrorValueException
+    public Player playGame(@PathVariable UUID id)
+            throws ErrorValueException, NotFoundException
     {
         if (id == null)
         {
-            throw new ErrorValueException();
+            throw new ErrorValueException("ID de jugador nula");
         }
         try
         {
@@ -106,7 +115,8 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorValueException();
+            throw new NotFoundException(
+                    "No fue posible localizar la ID del jugador indicada.");
         }
     }
 
@@ -116,11 +126,12 @@ public class PlayerRestController
      */
     @DeleteMapping(value = "/players/{id}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") UUID idPlayer) throws ErrorValueException
+    public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") UUID idPlayer)
+            throws ErrorValueException, NotFoundException
     {
         if (idPlayer == null)
         {
-            throw new ErrorValueException();
+            throw new ErrorValueException("ID de jugador nula");
         }
         try
         {
@@ -130,7 +141,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorValueException();
+            throw new NotFoundException("ID de jugador no válida");
         }
     }
 
@@ -139,11 +150,12 @@ public class PlayerRestController
      */
     @DeleteMapping(value = "/players/{id}/games", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Player deleteGames(@PathVariable(value = "id") UUID idPlayer) throws ErrorValueException
+    public Player deleteGames(@PathVariable(value = "id") UUID idPlayer)
+            throws ErrorValueException, NotFoundException
     {
         if (idPlayer == null)
         {
-            throw new ErrorValueException();
+            throw new ErrorValueException("ID de jugador nula");
         }
         try
         {
@@ -154,7 +166,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorValueException();
+            throw new NotFoundException("ID de jugador no válida");
         }
     }
 
@@ -164,14 +176,14 @@ public class PlayerRestController
     localhost:8080/players/
      */
     @GetMapping("/players/")
-    public List<RateDTO> getListRatePlayers() throws ErrorValueException
+    public List<RateDTO> getListRatePlayers() throws NotFoundException
     {
         List<RateDTO> outputDTO = new ArrayList<>();
         //Select the players
-        Iterable<Player> listPlayer = playerRepo.findAll();
-        if (listPlayer == null)
+        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
+        if (listPlayer.isEmpty())
         {
-            throw new ErrorValueException();
+            throw new NotFoundException("No hay jugadores en el sistema");
         }
         for (Player player : listPlayer)
         {
