@@ -1,9 +1,13 @@
 package com.dice.api;
 
+import com.dice.model.Game;
 import com.dice.model.Player;
 import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import com.dice.tool.GameMaker;
+import com.dice.tool.RateDTO;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,6 +148,7 @@ public class PlayerRestController
         try
         {
             Optional<Player> player = playerRepo.findById(idPlayer);
+            //Delete the player's games
             player.get().getListGame().clear();
             return playerRepo.save(player.get());
         }
@@ -154,12 +159,55 @@ public class PlayerRestController
     }
 
     /*
-    POST: create a player    
-    (Only needs the name)
-    localhost:8080/new    
-    {    
-    "name": "Foo"
+    GET /players/: retorna el llistat de tots els jugadors del sistema
+    amb el seu percentatge mig d’èxits
+    localhost:8080/players/
+     */
+    @GetMapping("/players/")
+    public List<RateDTO> getListRatePlayers() throws ErrorValueException
+    {
+        List<RateDTO> outputDTO = new ArrayList<>();
+        //Select the players
+        Iterable<Player> listPlayer = playerRepo.findAll();
+        if (listPlayer == null)
+        {
+            throw new ErrorValueException();
+        }
+        for (Player player : listPlayer)
+        {
+            //Count the games
+            double games = player.getListGame().size();
+            //Count the wins
+            List<Game> listGame = player.getListGame();
+            double wins = 0;
+            if (listGame.size() != 0)
+            {
+                for (Game game : listGame)
+                {
+                    if (game.getIsWinner())
+                    {
+                        wins++;
+                    }
+                }
+                //Calculate and output the results
+                double result = (wins / games) * 100;
+                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
+                outputDTO.add(resultDTO);
+            }
+            else
+            {
+                //No games rate 0%
+                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
+                outputDTO.add(resultDTO);
+            }
+        }
+        return outputDTO;
     }
+
+    /**
+     * *************************************************************************
+     * POST: create a player (Only needs the name) localhost:8080/new { "name":
+     * "Foo" }
      */
     @PostMapping("/new")
     @ResponseBody
