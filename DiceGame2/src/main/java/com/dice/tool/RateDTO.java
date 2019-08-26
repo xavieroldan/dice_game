@@ -5,14 +5,14 @@
  */
 package com.dice.tool;
 
-import com.dice.model.Player;
+import java.util.Collection;
 import java.util.UUID;
 
 /**
  *
  * @author Xavier Roldán <info@xavierroldan.com>
  */
-public class RateDTO
+public class RateDTO implements Comparable<RateDTO>
 {
 
     private UUID player;
@@ -44,4 +44,15 @@ public class RateDTO
         this.rate = rate;
     }
 
+    @Override
+    public int compareTo(RateDTO o)
+    {
+        return this.rate > o.rate ? 1 : this.rate < o.rate ? -1 : 0;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "RateDTO{" + "player=" + player + ", rate=" + rate + '}';
+    }
 }

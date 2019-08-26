@@ -41,7 +41,7 @@ public class GameRestController
         }
         else
         {
-            throw new ErrorValueException("No hay jugadores en el sistema");
+            throw new ErrorValueException("No hay jugadas en el sistema");
         }
         return output;
     }

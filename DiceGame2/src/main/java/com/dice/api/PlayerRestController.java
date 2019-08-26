@@ -8,6 +8,7 @@ import com.dice.tool.GameMaker;
 import com.dice.tool.NotFoundException;
 import com.dice.tool.RateDTO;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -189,11 +190,11 @@ public class PlayerRestController
         {
             //Count the games
             double games = player.getListGame().size();
-            //Count the wins
-            List<Game> listGame = player.getListGame();
-            double wins = 0;
-            if (listGame.size() != 0)
+            if (games != 0)
             {
+                //Count the wins
+                List<Game> listGame = player.getListGame();
+                double wins = 0;
                 for (Game game : listGame)
                 {
                     if (game.getIsWinner())
@@ -218,7 +219,7 @@ public class PlayerRestController
 
     /*
     GET /players/{id}/games: retorna el llistat de jugades per un jugador.
-    
+    localhost:8080/players/2da626a9-cee0-47a8-9107-bd2961fc680f/games/
      */
     @GetMapping(value = "/players/{id}/games", produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -238,6 +239,54 @@ public class PlayerRestController
         {
             throw new NotFoundException("ID de jugador no válida.");
         }
+        return output;
+    }
+
+    /*
+    GET /players/ranking/loser: retorna el jugador amb pitjor percentatge d’èxit.
+    
+     */
+    @GetMapping("/players/ranking/loser")
+    public RateDTO getLoser() throws NotFoundException
+    {
+        List<RateDTO> listRateDTO = new ArrayList<>();
+        //Select the players
+        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
+        if (listPlayer.isEmpty())
+        {
+            throw new NotFoundException("No hay jugadores en el sistema");
+        }
+        for (Player player : listPlayer)
+        {
+            //Count the games
+            double games = player.getListGame().size();
+            if (games != 0)
+            {
+                List<Game> listGame = player.getListGame();
+                double wins = 0;
+                //Count the wins
+                for (Game game : listGame)
+                {
+                    if (game.getIsWinner())
+                    {
+                        wins++;
+                    }
+                }
+                //Calculate and output the results
+                double result = (wins / games) * 100;
+                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
+                listRateDTO.add(resultDTO);
+            }
+            else
+            {
+                //No games rate 0%
+                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
+                listRateDTO.add(resultDTO);
+            }
+        }
+        //Order and find the loser
+        Collections.sort(listRateDTO);
+        RateDTO output = listRateDTO.get(0);
         return output;
     }
 
