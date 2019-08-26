@@ -1,8 +1,8 @@
 package com.dice.api;
 
 import com.dice.model.Game;
-import com.dice.model.Player;
 import com.dice.repository.GameRepository;
+import com.dice.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +19,10 @@ public class GameRestController
 {
     @Autowired
     GameRepository gameRepo;
+    @Autowired
+    PlayerRepository playerRepo;
 
-    //POST: create a game
+//POST: create a game
     /*
     localhost:8080/newgame    
     {

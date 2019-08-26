@@ -2,6 +2,7 @@ package com.dice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,7 +52,7 @@ public class Game
 
     @ManyToOne(
             targetEntity = Player.class,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(
             name = "idplayer",
@@ -61,7 +62,7 @@ public class Game
 
     @OneToMany(
             targetEntity = DiceResult.class,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @Column(nullable = true)
     private List<DiceResult> listDiceResult;
@@ -142,5 +143,61 @@ public class Game
     public String toString()
     {
         return "Game{" + "idGame=" + idGame + ", isAnonim=" + isAnonim + ", isWinner=" + isWinner + ", isDeleted=" + isDeleted + ", player=" + player + ", listDiceResult=" + listDiceResult + '}';
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.idGame);
+        hash = 79 * hash + (this.isAnonim ? 1 : 0);
+        hash = 79 * hash + (this.isWinner ? 1 : 0);
+        hash = 79 * hash + (this.isDeleted ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.player);
+        hash = 79 * hash + Objects.hashCode(this.listDiceResult);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Game other = (Game) obj;
+        if (this.isAnonim != other.isAnonim)
+        {
+            return false;
+        }
+        if (this.isWinner != other.isWinner)
+        {
+            return false;
+        }
+        if (this.isDeleted != other.isDeleted)
+        {
+            return false;
+        }
+        if (!Objects.equals(this.idGame, other.idGame))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.player, other.player))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.listDiceResult, other.listDiceResult))
+        {
+            return false;
+        }
+        return true;
     }
 }

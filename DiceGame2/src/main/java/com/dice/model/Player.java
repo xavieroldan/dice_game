@@ -2,6 +2,7 @@ package com.dice.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,7 +44,8 @@ public class Player
     @OneToMany(
             targetEntity = Game.class,
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @Column(nullable = true)
     private List<Game> listGame;
 
@@ -104,4 +106,51 @@ public class Player
     {
         return "Player{" + "idPlayer=" + idPlayer + ", name=" + name + ", regDate=" + regDate + ", listGame=" + listGame + '}';
     }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.idPlayer);
+        hash = 11 * hash + Objects.hashCode(this.name);
+        hash = 11 * hash + Objects.hashCode(this.regDate);
+        hash = 11 * hash + Objects.hashCode(this.listGame);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Player other = (Player) obj;
+        if (!Objects.equals(this.name, other.name))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.idPlayer, other.idPlayer))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.regDate, other.regDate))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.listGame, other.listGame))
+        {
+            return false;
+        }
+        return true;
+    }
+
 }
