@@ -6,10 +6,7 @@ import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -48,21 +45,7 @@ public class GameRestController
 
     /*
     *******************************************************************************
-    POST: create a game
-    localhost:8080/newgame    
-    {
-        "isAnonim": "false",
-        "isWinner": "false",
-        "isDeleted": "false"
-    }
-     */
-    @PostMapping("/newgame")
-    @ResponseBody
-    public Game createPlayer(@RequestBody Game game)
-    {
-        return gameRepo.save(game);
-    }
-
+    TODO: DELETE
     //GET: List all Games
     /*
     localhost:8080/getallgame

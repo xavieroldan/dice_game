@@ -290,22 +290,57 @@ public class PlayerRestController
         return output;
     }
 
-    /**
-     * *************************************************************************
-     * POST: create a player (Only needs the name) localhost:8080/new { "name":
-     * "Foo" }
+    /*
+    GET /players/ranking/winner: retorna el jugador amb mijor percentatge d’èxit.
+    
      */
-    @PostMapping("/new")
-    @ResponseBody
-    public Player testCreatePlayer(@RequestBody Player player)
+    @GetMapping("/players/ranking/winner")
+    public RateDTO getWinner() throws NotFoundException
     {
-        return playerRepo.save(player);
+        List<RateDTO> listRateDTO = new ArrayList<>();
+        //Select the players
+        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
+        if (listPlayer.isEmpty())
+        {
+            throw new NotFoundException("No hay jugadores en el sistema");
+        }
+        for (Player player : listPlayer)
+        {
+            //Count the games
+            double games = player.getListGame().size();
+            if (games != 0)
+            {
+                List<Game> listGame = player.getListGame();
+                double wins = 0;
+                //Count the wins
+                for (Game game : listGame)
+                {
+                    if (game.getIsWinner())
+                    {
+                        wins++;
+                    }
+                }
+                //Calculate and output the results
+                double result = (wins / games) * 100;
+                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
+                listRateDTO.add(resultDTO);
+            }
+            else
+            {
+                //No games rate 0%
+                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
+                listRateDTO.add(resultDTO);
+            }
+        }
+        //Order and find the loser
+        Collections.sort(listRateDTO);
+        RateDTO output = listRateDTO.get(listRateDTO.size() - 1);
+        return output;
     }
 
-    //TODO: delete
-    //GET: TEST List all Players
     /*
-    localhost:8080/getall
+     **************************************************************************
+     TODO: delete //GET: TEST List all Players /* localhost:8080/getall
      */
     @GetMapping("/getall")
     public Iterable<Player> testGetAllPlayer()

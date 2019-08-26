@@ -43,13 +43,6 @@ public class Game
     )
     private boolean isWinner;
 
-    @Column(
-            name = "deleted", length = 1,
-            columnDefinition = "boolean default false",
-            nullable = false
-    )
-    private boolean isDeleted;
-
     @ManyToOne(
             targetEntity = Player.class,
             fetch = FetchType.EAGER
@@ -71,12 +64,11 @@ public class Game
     {
     }
 
-    public Game(UUID idGame, boolean isAnonim, boolean isWinner, boolean isDeleted)
+    public Game(UUID idGame, boolean isAnonim, boolean isWinner)
     {
         this.idGame = idGame;
         this.isAnonim = isAnonim;
         this.isWinner = isWinner;
-        this.isDeleted = isDeleted;
     }
 
     public UUID getIdGame()
@@ -109,16 +101,6 @@ public class Game
         this.isWinner = isWinner;
     }
 
-    public boolean getIsDeleted()
-    {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(boolean isDeleted)
-    {
-        this.isDeleted = isDeleted;
-    }
-
     public Player getPlayer()
     {
         return player;
@@ -142,7 +124,7 @@ public class Game
     @Override
     public String toString()
     {
-        return "Game{" + "idGame=" + idGame + ", isAnonim=" + isAnonim + ", isWinner=" + isWinner + ", isDeleted=" + isDeleted + ", player=" + player + ", listDiceResult=" + listDiceResult + '}';
+        return "Game{" + "idGame=" + idGame + ", isAnonim=" + isAnonim + ", isWinner=" + isWinner + ",  player=" + player + ", listDiceResult=" + listDiceResult + '}';
     }
 
     @Override
@@ -152,7 +134,6 @@ public class Game
         hash = 79 * hash + Objects.hashCode(this.idGame);
         hash = 79 * hash + (this.isAnonim ? 1 : 0);
         hash = 79 * hash + (this.isWinner ? 1 : 0);
-        hash = 79 * hash + (this.isDeleted ? 1 : 0);
         hash = 79 * hash + Objects.hashCode(this.player);
         hash = 79 * hash + Objects.hashCode(this.listDiceResult);
         return hash;
@@ -179,10 +160,6 @@ public class Game
             return false;
         }
         if (this.isWinner != other.isWinner)
-        {
-            return false;
-        }
-        if (this.isDeleted != other.isDeleted)
         {
             return false;
         }
