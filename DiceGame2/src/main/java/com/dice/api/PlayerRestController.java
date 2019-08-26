@@ -7,6 +7,8 @@ import com.dice.tool.GameMaker;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
-import static sun.audio.AudioPlayer.player;
 
 /**
  *
@@ -106,9 +107,53 @@ public class PlayerRestController
     }
 
     /*
-    TODO: delete
-    *******************************************************************************************
-    
+    DELETE /players/{id} elimina el jugador.   
+    localhost:8080/players/84cbe2c8-9ab6-466d-ab62-8d2a735d48ec
+     */
+    @DeleteMapping(value = "/players/{id}", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") UUID idPlayer) throws ErrorValueException
+    {
+        if (idPlayer == null)
+        {
+            throw new ErrorValueException();
+        }
+        try
+        {
+            Optional<Player> player = playerRepo.findById(idPlayer);
+            playerRepo.delete(player.get());
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception e)
+        {
+            throw new ErrorValueException();
+        }
+    }
+
+    /*
+    DELETE /players/{id}/games: elimina les tirades del jugador.
+     */
+    @DeleteMapping(value = "/players/{id}/games", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Player deleteGames(@PathVariable(value = "id") UUID idPlayer) throws ErrorValueException
+    {
+        if (idPlayer == null)
+        {
+            throw new ErrorValueException();
+        }
+        try
+        {
+            Optional<Player> player = playerRepo.findById(idPlayer);
+            player.get().getListGame().clear();
+            return playerRepo.save(player.get());
+        }
+        catch (Exception e)
+        {
+            throw new ErrorValueException();
+        }
+    }
+
+    /*
     POST: create a player    
     (Only needs the name)
     localhost:8080/new    
