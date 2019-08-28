@@ -32,8 +32,9 @@ public class Player
     @javax.persistence.Id
     private UUID idPlayer;
 
-    @Column(name = "name", length = 50)
-    @NotNull
+    @Column(name = "name",
+            length = 50,
+            nullable = false)
     private String name;
 
     @CreationTimestamp

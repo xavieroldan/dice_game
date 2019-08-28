@@ -47,7 +47,8 @@ public class PlayerRestController
     public Player createPlayer(@RequestBody Player player)
             throws ErrorValueException, ErrorTransactionException
     {
-        if (player == null)
+        if (player == null || player.getName().trim().isEmpty()
+                || player.getName() == null)
         {
             throw new ErrorValueException("No hay datos para crear nuevo jugador.");
         }
