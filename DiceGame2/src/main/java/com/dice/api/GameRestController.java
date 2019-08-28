@@ -2,7 +2,6 @@ package com.dice.api;
 
 import com.dice.model.Game;
 import com.dice.repository.GameRepository;
-import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +16,6 @@ public class GameRestController
 {
     @Autowired
     GameRepository gameRepo;
-    @Autowired
-    PlayerRepository playerRepo;
 
     /*
     GET /players/ranking: retorna el ranking mig de tots els jugadors del sistema. 
@@ -27,20 +24,15 @@ public class GameRestController
     @GetMapping("/players/ranking")
     public double getAvgRate() throws ErrorValueException
     {
-        double output = 0;
-        //Query count games
-        double countGames = gameRepo.countAllGames();
+        double countGames = gameRepo.count();
         if (countGames != 0)
         {
-            //Query count winner games
-            double countWinGames = gameRepo.countAllWinGames();
-            output = (countWinGames / countGames) * 100;
+            return (gameRepo.countByIsWinner(true) / countGames) * 100;
         }
         else
         {
             throw new ErrorValueException("No hay jugadas en el sistema");
         }
-        return output;
     }
 
     /*

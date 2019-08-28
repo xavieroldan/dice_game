@@ -85,9 +85,8 @@ public class PlayerRestController
     public Player editName(@RequestBody Player playerToEdit)
             throws ErrorValueException, ErrorTransactionException
     {
-        if (playerToEdit == null || playerToEdit.getName().isEmpty()
-                || playerToEdit.getName() == null
-                || playerToEdit.getName().trim().length() < 1)
+        if (playerToEdit == null || playerToEdit.getName().trim().isEmpty()
+                || playerToEdit.getName() == null)
         {
             throw new ErrorValueException("No hay datos para modificar el jugador.");
         }
@@ -203,7 +202,7 @@ public class PlayerRestController
         List<RateDTO> outputDTO = new ArrayList<>();
         //Select the players
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
-        if (listPlayer.isEmpty())
+        if (listPlayer.isEmpty() || listPlayer == null)
         {
             throw new ErrorTransactionException("No hay jugadores en el sistema");
         }
@@ -254,13 +253,12 @@ public class PlayerRestController
         }
         try
         {
-            output = playerRepo.findById(idPlayer).get().getListGame();
+            return playerRepo.findById(idPlayer).get().getListGame();
         }
         catch (Exception e)
         {
             throw new ErrorTransactionException("ID de jugador no válida.");
         }
-        return output;
     }
 
     /*
@@ -273,7 +271,7 @@ public class PlayerRestController
         List<RateDTO> listRateDTO = new ArrayList<>();
         //Select the players
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
-        if (listPlayer.isEmpty())
+        if (listPlayer.isEmpty() || listPlayer == null)
         {
             throw new ErrorTransactionException("No hay jugadores en el sistema");
         }
@@ -321,7 +319,7 @@ public class PlayerRestController
         List<RateDTO> listRateDTO = new ArrayList<>();
         //Select the players
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
-        if (listPlayer.isEmpty())
+        if (listPlayer.isEmpty() || listPlayer == null)
         {
             throw new ErrorTransactionException("No hay jugadores en el sistema");
         }
@@ -369,17 +367,17 @@ public class PlayerRestController
      */
     @PostMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Player playGameSixDice(@PathVariable UUID id)
+    public Player playGameSixDice(@PathVariable UUID idPlayer)
             throws ErrorValueException, ErrorTransactionException
     {
-        if (id == null)
+        if (idPlayer == null)
         {
             throw new ErrorValueException("ID de jugador nula");
         }
         try
         {
-            //Verify if player exists
-            Optional<Player> playerToPlay = playerRepo.findById(id);
+            //find the player 
+            Optional<Player> playerToPlay = playerRepo.findById(idPlayer);
             //play and save the game
             GameMakerSixDice game = new GameMakerSixDice();
             return game.playGame(playerToPlay.get());

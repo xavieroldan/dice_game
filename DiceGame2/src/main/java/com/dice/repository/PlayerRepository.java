@@ -10,5 +10,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface PlayerRepository extends CrudRepository<Player, UUID>
 {
-    Player findByName(String name);
+    Player findByName(String name); // find player by name
 }

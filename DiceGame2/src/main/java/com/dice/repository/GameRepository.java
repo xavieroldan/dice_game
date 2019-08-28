@@ -2,7 +2,6 @@ package com.dice.repository;
 
 import com.dice.model.Game;
 import java.util.UUID;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -11,9 +10,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface GameRepository extends CrudRepository<Game, UUID>
 {
-    @Query(value = "SELECT COUNT(idgame) FROM game", nativeQuery = true)
-    double countAllGames();
-
-    @Query(value = "SELECT COUNT(idgame) FROM game WHERE winner = true", nativeQuery = true)
-    double countAllWinGames();
+    Double countByIsWinner(boolean isWinner); // count all win games
 }
