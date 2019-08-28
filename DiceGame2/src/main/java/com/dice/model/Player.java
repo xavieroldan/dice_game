@@ -14,9 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 /**
  *
@@ -29,7 +28,6 @@ public class Player
     @Id
     @Column(name = "idplayer", length = 16)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @javax.persistence.Id
     private UUID idPlayer;
 
     @Column(name = "name",

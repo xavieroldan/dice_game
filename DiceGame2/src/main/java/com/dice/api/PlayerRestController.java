@@ -366,22 +366,22 @@ public class PlayerRestController
     sinó es perduda.
     localhost:8080/players/662213d6-b576-4ec6-8b74-79f614606b05/games/six
      */
-    @PostMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Player playGameSixDice(@PathVariable UUID idPlayer)
+    public Player playGameSixDice(@PathVariable UUID id)
             throws ErrorValueException, ErrorTransactionException
     {
-        if (idPlayer == null)
+        if (id == null)
         {
             throw new ErrorValueException("ID de jugador nula");
         }
         try
         {
             //find the player 
-            Optional<Player> playerToPlay = playerRepo.findById(idPlayer);
+            Optional<Player> playerToPlay = playerRepo.findById(id);
             //play and save the game
             GameMakerSixDice game = new GameMakerSixDice();
-            return game.playGame(playerToPlay.get());
+            return playerRepo.save(game.playGame(playerToPlay.get()));
         }
         catch (Exception e)
         {
