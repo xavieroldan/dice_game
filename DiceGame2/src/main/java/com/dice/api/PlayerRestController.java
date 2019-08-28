@@ -38,6 +38,7 @@ public class PlayerRestController
     @Autowired
     PlayerRepository playerRepo;
 
+    //Error sending to the client
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ErrorTransactionException.class)
     public String return409(ErrorTransactionException ex)
@@ -60,6 +61,7 @@ public class PlayerRestController
     }    
      */
     @PostMapping("/players")
+    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Player createPlayer(@RequestBody Player player)
             throws ErrorValueException, ErrorTransactionException
@@ -99,6 +101,7 @@ public class PlayerRestController
     Keep the correct format to don't have JSON format problems
      */
     @PutMapping("/players")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public Player editName(@RequestBody Player playerToEdit)
             throws ErrorValueException, ErrorTransactionException
@@ -136,6 +139,7 @@ public class PlayerRestController
     localhost:8080/players/150db883-c08b-4a0d-aa0c-c8607f3f2c93/games/
      */
     @RequestMapping(value = "/players/{id}/games/", produces = "application/json;charset=UTF-8")
+    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Player playGame(@PathVariable UUID id)
             throws ErrorValueException, ErrorTransactionException
@@ -164,6 +168,7 @@ public class PlayerRestController
     localhost:8080/players/84cbe2c8-9ab6-466d-ab62-8d2a735d48ec
      */
     @DeleteMapping(value = "/players/{id}", produces = "application/json;charset=UTF-8")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") UUID idPlayer)
             throws ErrorValueException, ErrorTransactionException
@@ -188,6 +193,7 @@ public class PlayerRestController
     DELETE /players/{id}/games: elimina les tirades del jugador.
      */
     @DeleteMapping(value = "/players/{id}/games", produces = "application/json;charset=UTF-8")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public Player deleteGames(@PathVariable(value = "id") UUID idPlayer)
             throws ErrorValueException, ErrorTransactionException
@@ -215,6 +221,7 @@ public class PlayerRestController
     localhost:8080/players/
      */
     @GetMapping("/players/")
+    @ResponseStatus(HttpStatus.OK)
     public List<RateDTO> getListRatePlayers() throws ErrorTransactionException
     {
         List<RateDTO> outputDTO = new ArrayList<>();
@@ -260,6 +267,7 @@ public class PlayerRestController
     localhost:8080/players/2da626a9-cee0-47a8-9107-bd2961fc680f/games/
      */
     @GetMapping(value = "/players/{id}/games", produces = "application/json;charset=UTF-8")
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<Game> getPlayerGames(@PathVariable(value = "id") UUID idPlayer)
             throws ErrorValueException, ErrorTransactionException
@@ -284,6 +292,7 @@ public class PlayerRestController
     
      */
     @GetMapping("/players/ranking/loser")
+    @ResponseStatus(HttpStatus.OK)
     public RateDTO getLoser() throws ErrorTransactionException
     {
         List<RateDTO> listRateDTO = new ArrayList<>();
@@ -332,6 +341,7 @@ public class PlayerRestController
     
      */
     @GetMapping("/players/ranking/winner")
+    @ResponseStatus(HttpStatus.OK)
     public RateDTO getWinner() throws ErrorTransactionException
     {
         List<RateDTO> listRateDTO = new ArrayList<>();
@@ -384,7 +394,7 @@ public class PlayerRestController
     localhost:8080/players/662213d6-b576-4ec6-8b74-79f614606b05/games/six
      */
     @RequestMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     public Player playGameSixDice(@PathVariable UUID id)
             throws ErrorValueException, ErrorTransactionException
     {

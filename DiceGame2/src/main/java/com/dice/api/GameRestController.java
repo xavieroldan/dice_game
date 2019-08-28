@@ -21,6 +21,7 @@ public class GameRestController
     @Autowired
     GameRepository gameRepo;
 
+    //Error sending to the client
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ErrorValueException.class)
     public String return401(ErrorValueException ex)
@@ -33,6 +34,7 @@ public class GameRestController
     És a dir, el percentatge mig d’èxits.
      */
     @GetMapping("/players/ranking")
+    @ResponseStatus(HttpStatus.OK)
     public double getAvgRate() throws ErrorValueException
     {
         double countGames = gameRepo.count();
