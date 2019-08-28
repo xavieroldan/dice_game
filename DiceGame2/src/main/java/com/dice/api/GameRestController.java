@@ -2,9 +2,13 @@ package com.dice.api;
 
 import com.dice.model.Game;
 import com.dice.repository.GameRepository;
+import com.dice.tool.ErrorTransactionException;
 import com.dice.tool.ErrorValueException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,6 +20,13 @@ public class GameRestController
 {
     @Autowired
     GameRepository gameRepo;
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ErrorValueException.class)
+    public String return401(ErrorValueException ex)
+    {
+        return ex.getMessage();
+    }
 
     /*
     GET /players/ranking: retorna el ranking mig de tots els jugadors del sistema. 

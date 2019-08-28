@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  *
@@ -34,6 +37,20 @@ public class PlayerRestController
 {
     @Autowired
     PlayerRepository playerRepo;
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ErrorTransactionException.class)
+    public String return409(ErrorTransactionException ex)
+    {
+        return ex.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ErrorValueException.class)
+    public String return401(ErrorValueException ex)
+    {
+        return ex.getMessage();
+    }
 
     /*
     POST: /players : crea un jugador
@@ -188,7 +205,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorTransactionException("ID de jugador no válida");
+            throw new ErrorTransactionException("No es posible borar esta ID de jugador.");
         }
     }
 
@@ -205,7 +222,7 @@ public class PlayerRestController
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
         if (listPlayer.isEmpty() || listPlayer == null)
         {
-            throw new ErrorTransactionException("No hay jugadores en el sistema");
+            throw new ErrorTransactionException("No hay jugadores en el sistema.");
         }
         for (Player player : listPlayer)
         {
@@ -250,7 +267,7 @@ public class PlayerRestController
         List<Game> output = new ArrayList<>();
         if (idPlayer == null)
         {
-            throw new ErrorValueException("ID de jugador nula");
+            throw new ErrorValueException("ID de jugador nula.");
         }
         try
         {
@@ -258,7 +275,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorTransactionException("ID de jugador no válida.");
+            throw new ErrorTransactionException("ID de jugador sin juegos.");
         }
     }
 
@@ -274,7 +291,7 @@ public class PlayerRestController
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
         if (listPlayer.isEmpty() || listPlayer == null)
         {
-            throw new ErrorTransactionException("No hay jugadores en el sistema");
+            throw new ErrorTransactionException("No hay jugadores en el sistema.");
         }
         for (Player player : listPlayer)
         {
@@ -322,7 +339,7 @@ public class PlayerRestController
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
         if (listPlayer.isEmpty() || listPlayer == null)
         {
-            throw new ErrorTransactionException("No hay jugadores en el sistema");
+            throw new ErrorTransactionException("No hay jugadores en el sistema.");
         }
         for (Player player : listPlayer)
         {
@@ -373,7 +390,7 @@ public class PlayerRestController
     {
         if (id == null)
         {
-            throw new ErrorValueException("ID de jugador nula");
+            throw new ErrorValueException("ID de jugador nula.");
         }
         try
         {
