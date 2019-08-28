@@ -6,7 +6,7 @@ import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import com.dice.tool.GameMaker;
 import com.dice.tool.GameMakerSixDice;
-import com.dice.tool.NotFoundException;
+import com.dice.tool.ErrorTransactionException;
 import com.dice.tool.RateDTO;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,19 +45,29 @@ public class PlayerRestController
     @PostMapping("/players")
     @ResponseBody
     public Player createPlayer(@RequestBody Player player)
-            throws ErrorValueException, NotFoundException
+            throws ErrorValueException, ErrorTransactionException
     {
         if (player == null)
         {
             throw new ErrorValueException("No hay datos para crear nuevo jugador.");
         }
+
         try
         {
-            return playerRepo.save(player);
+            //verify no duplicate name
+            if (playerRepo.findByName(player.getName().trim()) == null)
+            {
+                //no duplicate: save it
+                return playerRepo.save(player);
+            }
+            else
+            {
+                throw new ErrorValueException("El nombre ya existe.");
+            }
         }
         catch (Exception e)
         {
-            throw new NotFoundException("No fue posible guardar los datos.");
+            throw new ErrorTransactionException("No fue posible crear el jugador." + e);
         }
     }
 
@@ -73,7 +83,7 @@ public class PlayerRestController
     @PutMapping("/players")
     @ResponseBody
     public Player editName(@RequestBody Player playerToEdit)
-            throws ErrorValueException, NotFoundException
+            throws ErrorValueException, ErrorTransactionException
     {
         if (playerToEdit == null || playerToEdit.getName().isEmpty()
                 || playerToEdit.getName() == null
@@ -83,14 +93,24 @@ public class PlayerRestController
         }
         try
         {
-            Optional<Player> player = playerRepo.findById(playerToEdit.getIdPlayer());
-            player.get().setName(playerToEdit.getName());
-            return playerRepo.save(player.get());
+            //Verify if already exists the new name
+            String nameToCheck = playerToEdit.getName().trim(); //The name to find
+            if (playerRepo.findByName(nameToCheck) == null)
+            {
+                //Correct name: change it
+                Optional<Player> player = playerRepo.findById(playerToEdit.getIdPlayer());
+                player.get().setName(playerToEdit.getName());
+                return playerRepo.save(player.get());
+            }
+            else
+            {
+                throw new ErrorValueException("El nombre ya existe.");
+            }
         }
         catch (Exception e)
         {
-            throw new NotFoundException(
-                    "No fue posible localizar la ID del jugador indicada.");
+            throw new ErrorTransactionException(
+                    "No fue posible modificar el jugador indicado." + e);
         }
     }
 
@@ -101,7 +121,7 @@ public class PlayerRestController
     @RequestMapping(value = "/players/{id}/games/", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Player playGame(@PathVariable UUID id)
-            throws ErrorValueException, NotFoundException
+            throws ErrorValueException, ErrorTransactionException
     {
         if (id == null)
         {
@@ -117,7 +137,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new NotFoundException(
+            throw new ErrorTransactionException(
                     "No fue posible localizar la ID del jugador indicada.");
         }
     }
@@ -129,7 +149,7 @@ public class PlayerRestController
     @DeleteMapping(value = "/players/{id}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") UUID idPlayer)
-            throws ErrorValueException, NotFoundException
+            throws ErrorValueException, ErrorTransactionException
     {
         if (idPlayer == null)
         {
@@ -143,7 +163,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new NotFoundException("ID de jugador no válida");
+            throw new ErrorTransactionException("ID de jugador no válida");
         }
     }
 
@@ -153,7 +173,7 @@ public class PlayerRestController
     @DeleteMapping(value = "/players/{id}/games", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Player deleteGames(@PathVariable(value = "id") UUID idPlayer)
-            throws ErrorValueException, NotFoundException
+            throws ErrorValueException, ErrorTransactionException
     {
         if (idPlayer == null)
         {
@@ -168,7 +188,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new NotFoundException("ID de jugador no válida");
+            throw new ErrorTransactionException("ID de jugador no válida");
         }
     }
 
@@ -178,14 +198,14 @@ public class PlayerRestController
     localhost:8080/players/
      */
     @GetMapping("/players/")
-    public List<RateDTO> getListRatePlayers() throws NotFoundException
+    public List<RateDTO> getListRatePlayers() throws ErrorTransactionException
     {
         List<RateDTO> outputDTO = new ArrayList<>();
         //Select the players
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
         if (listPlayer.isEmpty())
         {
-            throw new NotFoundException("No hay jugadores en el sistema");
+            throw new ErrorTransactionException("No hay jugadores en el sistema");
         }
         for (Player player : listPlayer)
         {
@@ -225,7 +245,7 @@ public class PlayerRestController
     @GetMapping(value = "/players/{id}/games", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<Game> getPlayerGames(@PathVariable(value = "id") UUID idPlayer)
-            throws ErrorValueException, NotFoundException
+            throws ErrorValueException, ErrorTransactionException
     {
         List<Game> output = new ArrayList<>();
         if (idPlayer == null)
@@ -238,7 +258,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new NotFoundException("ID de jugador no válida.");
+            throw new ErrorTransactionException("ID de jugador no válida.");
         }
         return output;
     }
@@ -248,14 +268,14 @@ public class PlayerRestController
     
      */
     @GetMapping("/players/ranking/loser")
-    public RateDTO getLoser() throws NotFoundException
+    public RateDTO getLoser() throws ErrorTransactionException
     {
         List<RateDTO> listRateDTO = new ArrayList<>();
         //Select the players
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
         if (listPlayer.isEmpty())
         {
-            throw new NotFoundException("No hay jugadores en el sistema");
+            throw new ErrorTransactionException("No hay jugadores en el sistema");
         }
         for (Player player : listPlayer)
         {
@@ -296,14 +316,14 @@ public class PlayerRestController
     
      */
     @GetMapping("/players/ranking/winner")
-    public RateDTO getWinner() throws NotFoundException
+    public RateDTO getWinner() throws ErrorTransactionException
     {
         List<RateDTO> listRateDTO = new ArrayList<>();
         //Select the players
         List<Player> listPlayer = (List<Player>) playerRepo.findAll();
         if (listPlayer.isEmpty())
         {
-            throw new NotFoundException("No hay jugadores en el sistema");
+            throw new ErrorTransactionException("No hay jugadores en el sistema");
         }
         for (Player player : listPlayer)
         {
@@ -350,7 +370,7 @@ public class PlayerRestController
     @PostMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Player playGameSixDice(@PathVariable UUID id)
-            throws ErrorValueException, NotFoundException
+            throws ErrorValueException, ErrorTransactionException
     {
         if (id == null)
         {
@@ -366,7 +386,7 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new NotFoundException(
+            throw new ErrorTransactionException(
                     "No fue posible localizar la ID del jugador indicada.");
         }
     }
