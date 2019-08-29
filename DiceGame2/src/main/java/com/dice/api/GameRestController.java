@@ -2,7 +2,6 @@ package com.dice.api;
 
 import com.dice.model.Game;
 import com.dice.repository.GameRepository;
-import com.dice.tool.ErrorTransactionException;
 import com.dice.tool.ErrorValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

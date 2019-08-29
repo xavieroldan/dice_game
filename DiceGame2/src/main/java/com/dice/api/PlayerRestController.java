@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -53,6 +52,26 @@ public class PlayerRestController
         return ex.getMessage();
     }
 
+    private Player verifyName(Player player) throws ErrorValueException
+    {
+        try
+        {
+            if (player == null || player.getName().trim().isEmpty()
+                    || player.getName() == null)
+            {
+                throw new ErrorValueException("Nombre de jugador incorrecto.");
+            }
+            //Trim the name
+            String name = player.getName();
+            player.setName(name.trim());
+            return player;
+        }
+        catch (Exception e)
+        {
+            throw new ErrorValueException(e + " El parámetro es null.");
+        }
+    }
+
     /*
     POST: /players : crea un jugador
     localhost:8080/players
@@ -66,19 +85,21 @@ public class PlayerRestController
     public Player createPlayer(@RequestBody Player player)
             throws ErrorValueException, ErrorTransactionException
     {
-        if (player == null || player.getName().trim().isEmpty()
-                || player.getName() == null)
-        {
-            throw new ErrorValueException("No hay datos para crear nuevo jugador.");
-        }
+//        if (player == null || player.getName().trim().isEmpty()
+//                || player.getName() == null)
+//        {
+//            throw new ErrorValueException("No hay datos para crear nuevo jugador.");
+//        }
+
+        Player playerChecked = verifyName(player);
 
         try
         {
             //verify no duplicate name
-            if (playerRepo.findByName(player.getName().trim()) == null)
+            if (playerRepo.findByName(playerChecked.getName().trim()) == null)
             {
                 //no duplicate: save it
-                return playerRepo.save(player);
+                return playerRepo.save(playerChecked);
             }
             else
             {
@@ -106,20 +127,22 @@ public class PlayerRestController
     public Player editName(@RequestBody Player playerToEdit)
             throws ErrorValueException, ErrorTransactionException
     {
-        if (playerToEdit == null || playerToEdit.getName().trim().isEmpty()
-                || playerToEdit.getName() == null)
-        {
-            throw new ErrorValueException("No hay datos para modificar el jugador.");
-        }
+//        if (playerToEdit == null || playerToEdit.getName().trim().isEmpty()
+//                || playerToEdit.getName() == null)
+//        {
+//            throw new ErrorValueException("No hay datos para modificar el jugador.");
+//        }
+
+        Player playerChecked = verifyName(playerToEdit);
         try
         {
             //Verify if already exists the new name
-            String nameToCheck = playerToEdit.getName().trim(); //The name to find
+            String nameToCheck = playerChecked.getName().trim(); //The name to find
             if (playerRepo.findByName(nameToCheck) == null)
             {
                 //Correct name: change it
-                Optional<Player> player = playerRepo.findById(playerToEdit.getIdPlayer());
-                player.get().setName(playerToEdit.getName());
+                Optional<Player> player = playerRepo.findById(playerChecked.getIdPlayer());
+                player.get().setName(playerChecked.getName());
                 return playerRepo.save(player.get());
             }
             else
@@ -138,7 +161,7 @@ public class PlayerRestController
     POST /players/{id}/games/ : un jugador específic realitza una tirada dels daus.
     localhost:8080/players/150db883-c08b-4a0d-aa0c-c8607f3f2c93/games/
      */
-    @RequestMapping(value = "/players/{id}/games/", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/players/{id}/games/", produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Player playGame(@PathVariable UUID id)
@@ -393,7 +416,7 @@ public class PlayerRestController
     sinó es perduda.
     localhost:8080/players/662213d6-b576-4ec6-8b74-79f614606b05/games/six
      */
-    @RequestMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/players/{id}/games/six", produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.CREATED)
     public Player playGameSixDice(@PathVariable UUID id)
             throws ErrorValueException, ErrorTransactionException
