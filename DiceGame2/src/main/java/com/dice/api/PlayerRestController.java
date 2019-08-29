@@ -72,6 +72,16 @@ public class PlayerRestController
         }
     }
 
+    private List<Player> verifyListPlayers(List<Player> listPlayer) throws ErrorTransactionException
+    {
+        if (listPlayer.isEmpty() || listPlayer == null)
+        {
+            throw new ErrorTransactionException("No hay jugadores en el sistema.");
+        }
+
+        return listPlayer;
+    }
+
     /*
     POST: /players : crea un jugador
     localhost:8080/players
@@ -85,12 +95,6 @@ public class PlayerRestController
     public Player createPlayer(@RequestBody Player player)
             throws ErrorValueException, ErrorTransactionException
     {
-//        if (player == null || player.getName().trim().isEmpty()
-//                || player.getName() == null)
-//        {
-//            throw new ErrorValueException("No hay datos para crear nuevo jugador.");
-//        }
-
         Player playerChecked = verifyName(player);
 
         try
@@ -127,12 +131,6 @@ public class PlayerRestController
     public Player editName(@RequestBody Player playerToEdit)
             throws ErrorValueException, ErrorTransactionException
     {
-//        if (playerToEdit == null || playerToEdit.getName().trim().isEmpty()
-//                || playerToEdit.getName() == null)
-//        {
-//            throw new ErrorValueException("No hay datos para modificar el jugador.");
-//        }
-
         Player playerChecked = verifyName(playerToEdit);
         try
         {
@@ -165,12 +163,8 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Player playGame(@PathVariable UUID id)
-            throws ErrorValueException, ErrorTransactionException
+            throws ErrorTransactionException
     {
-        if (id == null)
-        {
-            throw new ErrorValueException("ID de jugador nula");
-        }
         try
         {
             //Verify if player exists
@@ -182,7 +176,8 @@ public class PlayerRestController
         catch (Exception e)
         {
             throw new ErrorTransactionException(
-                    "No fue posible localizar la ID del jugador indicada.");
+                    "No fue posible localizar el jugador con ID: "
+                    + id);
         }
     }
 
@@ -194,12 +189,8 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public ResponseEntity<?> deletePlayer(@PathVariable(value = "id") UUID idPlayer)
-            throws ErrorValueException, ErrorTransactionException
+            throws ErrorTransactionException
     {
-        if (idPlayer == null)
-        {
-            throw new ErrorValueException("ID de jugador nula");
-        }
         try
         {
             Optional<Player> player = playerRepo.findById(idPlayer);
@@ -208,7 +199,9 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorTransactionException("ID de jugador no válida");
+            throw new ErrorTransactionException(
+                    "No fue posible localizar el jugador con ID: "
+                    + idPlayer);
         }
     }
 
@@ -219,12 +212,8 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public Player deleteGames(@PathVariable(value = "id") UUID idPlayer)
-            throws ErrorValueException, ErrorTransactionException
+            throws ErrorTransactionException
     {
-        if (idPlayer == null)
-        {
-            throw new ErrorValueException("ID de jugador nula");
-        }
         try
         {
             Optional<Player> player = playerRepo.findById(idPlayer);
@@ -234,7 +223,9 @@ public class PlayerRestController
         }
         catch (Exception e)
         {
-            throw new ErrorTransactionException("No es posible borar esta ID de jugador.");
+            throw new ErrorTransactionException(
+                    "No es posible borrar jugadas del jugador con ID: "
+                    + idPlayer);
         }
     }
 
@@ -247,14 +238,11 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     public List<RateDTO> getListRatePlayers() throws ErrorTransactionException
     {
-        List<RateDTO> outputDTO = new ArrayList<>();
+
         //Select the players
-        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
-        if (listPlayer.isEmpty() || listPlayer == null)
-        {
-            throw new ErrorTransactionException("No hay jugadores en el sistema.");
-        }
-        for (Player player : listPlayer)
+        List<Player> listPlayerChecked = verifyListPlayers((List<Player>) playerRepo.findAll());
+        List<RateDTO> listRateDTO = new ArrayList<>();
+        for (Player player : listPlayerChecked)
         {
             //Count the games
             double games = player.getListGame().size();
@@ -273,16 +261,16 @@ public class PlayerRestController
                 //Calculate and output the results
                 double result = (wins / games) * 100;
                 RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
-                outputDTO.add(resultDTO);
+                listRateDTO.add(resultDTO);
             }
             else
             {
                 //No games rate 0%
                 RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
-                outputDTO.add(resultDTO);
+                listRateDTO.add(resultDTO);
             }
         }
-        return outputDTO;
+        return listRateDTO;
     }
 
     /*
@@ -293,20 +281,16 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<Game> getPlayerGames(@PathVariable(value = "id") UUID idPlayer)
-            throws ErrorValueException, ErrorTransactionException
+            throws ErrorTransactionException
     {
-        List<Game> output = new ArrayList<>();
-        if (idPlayer == null)
-        {
-            throw new ErrorValueException("ID de jugador nula.");
-        }
         try
         {
             return playerRepo.findById(idPlayer).get().getListGame();
         }
         catch (Exception e)
         {
-            throw new ErrorTransactionException("ID de jugador sin juegos.");
+            throw new ErrorTransactionException(
+                    "Jugador con ID: " + idPlayer + " sin juegos.");
         }
     }
 
@@ -318,9 +302,9 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     public RateDTO getLoser() throws ErrorTransactionException
     {
-        List<RateDTO> listRateDTO = new ArrayList<>();
         //Select the players
-        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
+        List<Player> listPlayer = verifyListPlayers((List<Player>) playerRepo.findAll());
+        List<RateDTO> listRateDTO = new ArrayList<>();
         if (listPlayer.isEmpty() || listPlayer == null)
         {
             throw new ErrorTransactionException("No hay jugadores en el sistema.");
@@ -367,9 +351,9 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     public RateDTO getWinner() throws ErrorTransactionException
     {
-        List<RateDTO> listRateDTO = new ArrayList<>();
         //Select the players
-        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
+        List<Player> listPlayer = verifyListPlayers((List<Player>) playerRepo.findAll());
+        List<RateDTO> listRateDTO = new ArrayList<>();
         if (listPlayer.isEmpty() || listPlayer == null)
         {
             throw new ErrorTransactionException("No hay jugadores en el sistema.");
@@ -421,10 +405,6 @@ public class PlayerRestController
     public Player playGameSixDice(@PathVariable UUID id)
             throws ErrorValueException, ErrorTransactionException
     {
-        if (id == null)
-        {
-            throw new ErrorValueException("ID de jugador nula.");
-        }
         try
         {
             //find the player 
@@ -436,7 +416,8 @@ public class PlayerRestController
         catch (Exception e)
         {
             throw new ErrorTransactionException(
-                    "No fue posible localizar la ID del jugador indicada.");
+                    "No fue posible localizar el jugador con ID: "
+                    + id);
         }
     }
 
