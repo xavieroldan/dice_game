@@ -5,7 +5,7 @@
  */
 package com.dice.tool;
 
-import java.util.Collection;
+import com.dice.model.Player;
 import java.util.UUID;
 
 /**
@@ -15,21 +15,21 @@ import java.util.UUID;
 public class RateDTO implements Comparable<RateDTO>
 {
 
-    private UUID player;
+    private Player player;
     private double rate;
 
-    public RateDTO(UUID player, double rate)
+    public RateDTO(Player player, double rate)
     {
         this.setPlayer(player);
         this.setRate(rate);
     }
 
-    public UUID getPlayer()
+    public Player getPlayer()
     {
         return player;
     }
 
-    public void setPlayer(UUID player)
+    public void setPlayer(Player player)
     {
         this.player = player;
     }

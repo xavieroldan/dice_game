@@ -104,13 +104,13 @@ public class PlayerRestController
                 }
                 //Calculate and output the results
                 double result = (wins / games) * 100;
-                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
+                RateDTO resultDTO = new RateDTO(player, result);
                 listRateDTO.add(resultDTO);
             }
             else
             {
                 //No games rate 0%
-                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
+                RateDTO resultDTO = new RateDTO(player, 0);
                 listRateDTO.add(resultDTO);
             }
         }
@@ -297,13 +297,13 @@ public class PlayerRestController
                 }
                 //Calculate and output the results
                 double result = (wins / games) * 100;
-                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
+                RateDTO resultDTO = new RateDTO(player, result);
                 listRateDTO.add(resultDTO);
             }
             else
             {
                 //No games rate 0%
-                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
+                RateDTO resultDTO = new RateDTO(player, 0);
                 listRateDTO.add(resultDTO);
             }
         }
@@ -339,7 +339,80 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     public RateDTO getLoser() throws ErrorTransactionException
     {
-        //Find the loser
+
+        //find the minim rate
+        List<RateDTO> listDTO = sortPlayersByWins();
+        double minRate = listDTO.get(0).getRate();
+
+        //find duplicate players with equals loser ratio
+        List<Player> listLoserRate = new ArrayList<>();
+        int countLoserRatio = 0;
+        for (RateDTO rateDTO : listDTO)
+        {
+            if (rateDTO.getRate() == minRate)
+            {
+                //More than one rate loser
+                countLoserRatio++;
+                listLoserRate.add(rateDTO.getPlayer());
+            }
+        }
+        System.out.println("Perdedores con el mismo ratio: " + countLoserRatio);
+        listLoserRate.forEach(player -> System.out.print(player.getIdPlayer() + "\n"));
+        if (countLoserRatio != 1)
+        {
+            //check the player who has more games played
+            int countMaxGames = 0;
+            int countLoserGames = 0;
+            Player loser = listLoserRate.get(0);
+            List<Player> listLoserGame = new ArrayList<>();
+            for (Player player : listLoserRate)
+            {
+                int playerGames = player.getListGame().size();
+                if (playerGames > countMaxGames)
+                {
+                    //Identify the max number of games loser
+                    countMaxGames = playerGames;
+                    loser = player;
+                    countLoserGames++; // add +1 to the number of lost games
+                    System.out.println(">>>>>>>>>>>>>" + player.getIdPlayer()
+                            + "/" + countLoserGames);
+                }
+            }
+            if (countLoserGames > 1)
+            {
+                //Fix the players on equals number of games
+                for (Player player : listLoserRate)
+                {
+
+                    if (player.getListGame().size() == countMaxGames)
+                    {
+                        listLoserGame.add(player);
+                    }
+                }
+                //More than one loser equals game numbers
+                System.out.println("Perdedores con las mismas " + countMaxGames + " jugadas: "
+                        + countLoserGames);
+                listLoserGame.forEach(player -> System.out.println(player.getIdPlayer()));
+                //TODO: search the oldest player 
+
+            }
+            else
+            {
+                //Only one loser max games
+                System.out.println("Un único loser con " + countMaxGames + " juegos");
+                RateDTO output = new RateDTO(loser, minRate);
+                return output;
+            }
+        }
+        else
+        {
+            //Unique loser: the first on the list
+            RateDTO output = sortPlayersByWins().get(0);
+            return output;
+        }
+
+        //Test version ^^^^^^^^
+        //Find the loser 
         RateDTO output = sortPlayersByWins().get(0);
         return output;
     }
