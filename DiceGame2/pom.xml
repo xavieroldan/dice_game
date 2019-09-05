@@ -12,7 +12,7 @@
 	<artifactId>DiceGame</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>DiceGame</name>
-	<description>Spring Boot dice project It Academy</description>
+	<description>Spring Boot Dice Game project/It Academy</description>
 
 	<properties>
 		<java.version>1.8</java.version>
