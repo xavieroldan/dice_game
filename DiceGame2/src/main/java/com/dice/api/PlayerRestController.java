@@ -82,6 +82,43 @@ public class PlayerRestController
         return listPlayer;
     }
 
+    private List<RateDTO> sortPlayersByWins()
+    {
+        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
+        List<RateDTO> listRateDTO = new ArrayList<>();
+        for (Player player : listPlayer)
+        {
+            //Count the games
+            double games = player.getListGame().size();
+            if (games != 0)
+            {
+                List<Game> listGame = player.getListGame();
+                double wins = 0;
+                //Count the wins
+                for (Game game : listGame)
+                {
+                    if (game.getIsWinner())
+                    {
+                        wins++;
+                    }
+                }
+                //Calculate and output the results
+                double result = (wins / games) * 100;
+                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
+                listRateDTO.add(resultDTO);
+            }
+            else
+            {
+                //No games rate 0%
+                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
+                listRateDTO.add(resultDTO);
+            }
+        }
+        //Order the list
+        Collections.sort(listRateDTO);
+        return listRateDTO;
+    }
+
     /*
     POST: /players : crea un jugador
     localhost:8080/players
@@ -302,44 +339,8 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     public RateDTO getLoser() throws ErrorTransactionException
     {
-        //Select the players
-        List<Player> listPlayer = verifyListPlayers((List<Player>) playerRepo.findAll());
-        List<RateDTO> listRateDTO = new ArrayList<>();
-        if (listPlayer.isEmpty() || listPlayer == null)
-        {
-            throw new ErrorTransactionException("No hay jugadores en el sistema.");
-        }
-        for (Player player : listPlayer)
-        {
-            //Count the games
-            double games = player.getListGame().size();
-            if (games != 0)
-            {
-                List<Game> listGame = player.getListGame();
-                double wins = 0;
-                //Count the wins
-                for (Game game : listGame)
-                {
-                    if (game.getIsWinner())
-                    {
-                        wins++;
-                    }
-                }
-                //Calculate and output the results
-                double result = (wins / games) * 100;
-                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
-                listRateDTO.add(resultDTO);
-            }
-            else
-            {
-                //No games rate 0%
-                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
-                listRateDTO.add(resultDTO);
-            }
-        }
-        //Order and find the loser
-        Collections.sort(listRateDTO);
-        RateDTO output = listRateDTO.get(0);
+        //Find the loser
+        RateDTO output = sortPlayersByWins().get(0);
         return output;
     }
 
@@ -351,44 +352,8 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     public RateDTO getWinner() throws ErrorTransactionException
     {
-        //Select the players
-        List<Player> listPlayer = verifyListPlayers((List<Player>) playerRepo.findAll());
-        List<RateDTO> listRateDTO = new ArrayList<>();
-        if (listPlayer.isEmpty() || listPlayer == null)
-        {
-            throw new ErrorTransactionException("No hay jugadores en el sistema.");
-        }
-        for (Player player : listPlayer)
-        {
-            //Count the games
-            double games = player.getListGame().size();
-            if (games != 0)
-            {
-                List<Game> listGame = player.getListGame();
-                double wins = 0;
-                //Count the wins
-                for (Game game : listGame)
-                {
-                    if (game.getIsWinner())
-                    {
-                        wins++;
-                    }
-                }
-                //Calculate and output the results
-                double result = (wins / games) * 100;
-                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), result);
-                listRateDTO.add(resultDTO);
-            }
-            else
-            {
-                //No games rate 0%
-                RateDTO resultDTO = new RateDTO(player.getIdPlayer(), 0);
-                listRateDTO.add(resultDTO);
-            }
-        }
-        //Order and find the loser
-        Collections.sort(listRateDTO);
-        RateDTO output = listRateDTO.get(listRateDTO.size() - 1);
+        //Find the loser
+        RateDTO output = sortPlayersByWins().get(sortPlayersByWins().size() - 1);
         return output;
     }
 
