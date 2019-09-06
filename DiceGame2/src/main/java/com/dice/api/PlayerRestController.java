@@ -9,7 +9,6 @@ import com.dice.tool.GameMakerSixDice;
 import com.dice.tool.ErrorTransactionException;
 import com.dice.tool.RateDTO;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,8 +35,10 @@ public class PlayerRestController
 {
     @Autowired
     PlayerRepository playerRepo;
+    @Autowired
+    HelperRestController helper;
 
-    //Error sending to the client
+    //Fix the error sending to send to the client for the personalized exceptions
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ErrorTransactionException.class)
     public String return409(ErrorTransactionException ex)
@@ -50,73 +51,6 @@ public class PlayerRestController
     public String return401(ErrorValueException ex)
     {
         return ex.getMessage();
-    }
-
-    private Player verifyName(Player player) throws ErrorValueException
-    {
-        try
-        {
-            if (player == null || player.getName().trim().isEmpty()
-                    || player.getName() == null)
-            {
-                throw new ErrorValueException("Nombre de jugador incorrecto.");
-            }
-            //Trim the name
-            String name = player.getName();
-            player.setName(name.trim());
-            return player;
-        }
-        catch (Exception e)
-        {
-            throw new ErrorValueException(e + " El parámetro es null.");
-        }
-    }
-
-    private List<Player> verifyListPlayers(List<Player> listPlayer) throws ErrorTransactionException
-    {
-        if (listPlayer.isEmpty() || listPlayer == null)
-        {
-            throw new ErrorTransactionException("No hay jugadores en el sistema.");
-        }
-
-        return listPlayer;
-    }
-
-    private List<RateDTO> sortPlayersByWins()
-    {
-        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
-        List<RateDTO> listRateDTO = new ArrayList<>();
-        for (Player player : listPlayer)
-        {
-            //Count the games
-            double games = player.getListGame().size();
-            if (games != 0)
-            {
-                List<Game> listGame = player.getListGame();
-                double wins = 0;
-                //Count the wins
-                for (Game game : listGame)
-                {
-                    if (game.getIsWinner())
-                    {
-                        wins++;
-                    }
-                }
-                //Calculate and output the results
-                double result = (wins / games) * 100;
-                RateDTO resultDTO = new RateDTO(player, result);
-                listRateDTO.add(resultDTO);
-            }
-            else
-            {
-                //No games rate 0%
-                RateDTO resultDTO = new RateDTO(player, 0);
-                listRateDTO.add(resultDTO);
-            }
-        }
-        //Order the list
-        Collections.sort(listRateDTO);
-        return listRateDTO;
     }
 
     /*
@@ -132,7 +66,7 @@ public class PlayerRestController
     public Player createPlayer(@RequestBody Player player)
             throws ErrorValueException, ErrorTransactionException
     {
-        Player playerChecked = verifyName(player);
+        Player playerChecked = helper.verifyName(player);
 
         try
         {
@@ -168,7 +102,7 @@ public class PlayerRestController
     public Player editName(@RequestBody Player playerToEdit)
             throws ErrorValueException, ErrorTransactionException
     {
-        Player playerChecked = verifyName(playerToEdit);
+        Player playerChecked = helper.verifyName(playerToEdit);
         try
         {
             //Verify if already exists the new name
@@ -275,39 +209,10 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     public List<RateDTO> getListRatePlayers() throws ErrorTransactionException
     {
-
         //Select the players
-        List<Player> listPlayerChecked = verifyListPlayers((List<Player>) playerRepo.findAll());
-        List<RateDTO> listRateDTO = new ArrayList<>();
-        for (Player player : listPlayerChecked)
-        {
-            //Count the games
-            double games = player.getListGame().size();
-            if (games != 0)
-            {
-                //Count the wins
-                List<Game> listGame = player.getListGame();
-                double wins = 0;
-                for (Game game : listGame)
-                {
-                    if (game.getIsWinner())
-                    {
-                        wins++;
-                    }
-                }
-                //Calculate and output the results
-                double result = (wins / games) * 100;
-                RateDTO resultDTO = new RateDTO(player, result);
-                listRateDTO.add(resultDTO);
-            }
-            else
-            {
-                //No games rate 0%
-                RateDTO resultDTO = new RateDTO(player, 0);
-                listRateDTO.add(resultDTO);
-            }
-        }
-        return listRateDTO;
+        List<Player> listPlayerChecked = helper.verifyListPlayers((List<Player>) playerRepo.findAll());
+        //Get the list throw the helper class
+        return helper.getListPlayersRateDTO(listPlayerChecked);
     }
 
     /*
@@ -341,7 +246,7 @@ public class PlayerRestController
     {
 
         //find the minim rate
-        List<RateDTO> listDTO = sortPlayersByWins();
+        List<RateDTO> listDTO = helper.sortPlayersByRate();
         double minRate = listDTO.get(0).getRate();
 
         //find duplicate players with equals loser ratio
@@ -407,13 +312,13 @@ public class PlayerRestController
         else
         {
             //Unique loser: the first on the list
-            RateDTO output = sortPlayersByWins().get(0);
+            RateDTO output = helper.sortPlayersByRate().get(0);
             return output;
         }
 
         //Test version ^^^^^^^^
         //Find the loser 
-        RateDTO output = sortPlayersByWins().get(0);
+        RateDTO output = helper.sortPlayersByRate().get(0);
         return output;
     }
 
@@ -426,7 +331,7 @@ public class PlayerRestController
     public RateDTO getWinner() throws ErrorTransactionException
     {
         //Find the loser
-        RateDTO output = sortPlayersByWins().get(sortPlayersByWins().size() - 1);
+        RateDTO output = helper.sortPlayersByRate().get(helper.sortPlayersByRate().size() - 1);
         return output;
     }
 
@@ -454,8 +359,7 @@ public class PlayerRestController
         catch (Exception e)
         {
             throw new ErrorTransactionException(
-                    "No fue posible localizar el jugador con ID: "
-                    + id);
+                    "No fue posible localizar el jugador con ID: " + id);
         }
     }
 
