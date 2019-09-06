@@ -248,56 +248,61 @@ public class PlayerRestController
         //find the minim rate
         List<RateDTO> listDTO = helper.sortPlayersByRate();
         double minRate = listDTO.get(0).getRate();
-
         //find duplicate players with equals loser ratio
-        List<Player> listLoserRate = new ArrayList<>();
-        int countLoserRatio = 0;
-        for (RateDTO rateDTO : listDTO)
+        for (int i = 0; i < listDTO.size(); i++)
         {
-            if (rateDTO.getRate() == minRate)
+            if (listDTO.get(i).getRate() != minRate)
             {
-                //More than one rate loser
-                countLoserRatio++;
-                listLoserRate.add(rateDTO.getPlayer());
+                //delete from the list not min rate
+                listDTO.remove(i);
             }
+
         }
-        System.out.println("Perdedores con el mismo ratio: " + countLoserRatio);
-        listLoserRate.forEach(player -> System.out.print(player.getIdPlayer() + "\n"));
-        if (countLoserRatio != 1)
+//        for (RateDTO rateDTO : listDTO)
+//        {
+//
+//            if (rateDTO.getRate() != minRate)
+//            {
+//                //delete from the list not min rate
+//                listDTO.remove(rateDTO);
+//            }
+//        }
+        System.out.println("Perdedores con el mismo ratio: " + listDTO.size());
+        listDTO.forEach(player -> System.out.print(player.getPlayer().getIdPlayer() + "\n"));
+        if (listDTO.size() > 1)
         {
             //check the player who has more games played
             int countMaxGames = 0;
             int countLoserGames = 0;
-            Player loser = listLoserRate.get(0);
-            List<Player> listLoserGame = new ArrayList<>();
-            for (Player player : listLoserRate)
+//            Player loser = listDTO.get(0).getPlayer();
+            for (RateDTO rateDTO : listDTO)
             {
-                int playerGames = player.getListGame().size();
+                int playerGames = rateDTO.getPlayer().getListGame().size();
                 if (playerGames > countMaxGames)
                 {
                     //Identify the max number of games loser
                     countMaxGames = playerGames;
-                    loser = player;
-                    countLoserGames++; // add +1 to the number of lost games
-                    System.out.println(">>>>>>>>>>>>>" + player.getIdPlayer()
+//                    loser = rateDTO.getPlayer();
+                    countLoserGames++; // add +1 to the number of losers
+                    System.out.println(">>>>>>>>>>>>>" + rateDTO.getPlayer().getIdPlayer()
                             + "/" + countLoserGames);
                 }
             }
             if (countLoserGames > 1)
             {
                 //Fix the players on equals number of games
-                for (Player player : listLoserRate)
+                for (int i = 0; i < listDTO.size(); i++)
                 {
-
-                    if (player.getListGame().size() == countMaxGames)
+                    if (!(listDTO.get(i).getPlayer().getListGame().size() == countMaxGames))
                     {
-                        listLoserGame.add(player);
+                        listDTO.remove(i);
                     }
+
                 }
                 //More than one loser equals game numbers
-                System.out.println("Perdedores con las mismas " + countMaxGames + " jugadas: "
+                System.out.println("Perdedores con las mismas " + listDTO.size() + " jugadas: "
                         + countLoserGames);
-                listLoserGame.forEach(player -> System.out.println(player.getIdPlayer()));
+                listDTO.forEach(rateDTO -> System.out.println(rateDTO.getPlayer().getIdPlayer()));
                 //TODO: search the oldest player 
 
             }
@@ -305,7 +310,8 @@ public class PlayerRestController
             {
                 //Only one loser max games
                 System.out.println("Un único loser con " + countMaxGames + " juegos");
-                RateDTO output = new RateDTO(loser, minRate);
+//                RateDTO output = new RateDTO(loser, minRate);
+                RateDTO output = listDTO.get(0);
                 return output;
             }
         }

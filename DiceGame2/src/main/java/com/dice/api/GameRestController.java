@@ -74,5 +74,4 @@ public class GameRestController
     {
         return gameRepo.countPlayerWinGames(idPlayer);
     }
-
 }

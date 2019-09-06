@@ -43,9 +43,9 @@ public class HelperRestController
     }
 
     //Transform a List of Players in an sort List by the Rate (worst the first)
-    protected List<RateDTO> sortPlayersByRate()
+    protected List<RateDTO> sortPlayersByRate() throws ErrorTransactionException
     {
-        List<Player> listPlayer = (List<Player>) playerRepo.findAll();
+        List<Player> listPlayer = verifyListPlayers((List<Player>) playerRepo.findAll());
         List<RateDTO> listRateDTO = new ArrayList<>();
         for (Player player : listPlayer)
         {
