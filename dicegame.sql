@@ -168,7 +168,6 @@ INSERT INTO `diceresult` (`idresult`, `result`, `idgame`) VALUES
 CREATE TABLE `game` (
   `idgame` binary(16) NOT NULL,
   `anonim` tinyint(1) NOT NULL DEFAULT '0',
-  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   `winner` tinyint(1) NOT NULL DEFAULT '0',
   `idplayer` binary(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
