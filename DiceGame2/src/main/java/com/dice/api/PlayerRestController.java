@@ -332,9 +332,81 @@ public class PlayerRestController
     @ResponseStatus(HttpStatus.OK)
     public RateDTO getWinner() throws ErrorTransactionException
     {
-        //Find the loser
-        RateDTO output = helper.sortPlayersByRate().get(helper.sortPlayersByRate().size() - 1);
-        return output;
+        //find the max rate
+        List<RateDTO> listDTO = helper.sortPlayersByRate();
+        double maxRate = listDTO.get((listDTO.size()) - 1).getRate();
+        //find duplicate players with equals winner ratio  
+        Iterator<RateDTO> iteratedDTO = listDTO.iterator();
+        while (iteratedDTO.hasNext())
+        {
+            if (iteratedDTO.next().getRate() != maxRate)
+            {
+                //delete from the list not max rate
+                iteratedDTO.remove();
+            }
+        }
+        if (listDTO.size() > 1)
+        {
+            //More than one player with the same winner rate...
+            //...then, check the player who has less games played
+            int countMinGames = 2147483647; // max value of an integer
+            int countWinnerGames = 0;
+            for (RateDTO rateDTO : listDTO)
+            {
+                int playerGames = rateDTO.getPlayer().getListGame().size();
+                if (playerGames < countMinGames)
+                {
+                    //Identify the max number of games loser
+                    countMinGames = playerGames;
+                    countWinnerGames++; // add +1 to the number of winners
+                }
+            }
+            if (countWinnerGames > 1)
+            {
+                //Fix the players on equals number of games
+                while (iteratedDTO.hasNext())
+                {
+                    if (!(iteratedDTO.next().getPlayer().getListGame().size() == countMinGames))
+                    {
+                        iteratedDTO.remove();
+                    }
+                }
+                //More than one player with the same game numbers: then...
+                //...the winner is the newest: looking for it :)
+                Date newestDate = new Date(1700, 1, 1);
+                for (RateDTO rateDTO : listDTO)
+                {
+                    if (rateDTO.getPlayer().getRegDate().after(newestDate))
+                    {
+                        //Is newer
+                        newestDate = rateDTO.getPlayer().getRegDate();
+                    }
+                }
+                while (iteratedDTO.hasNext())
+                {
+                    if (iteratedDTO.next().getPlayer().getRegDate().compareTo(newestDate) != 0)
+                    {
+                        //Delete the youngers players
+                        iteratedDTO.remove();
+                    }
+                }
+                //unique winner newest regDate
+                RateDTO output = listDTO.get(0);
+                return output;
+            }
+            else
+            {
+                //Only one winner min games 
+                RateDTO output = listDTO.get(0);
+                return output;
+            }
+        }
+        else
+        {
+            //One unique winner: the first of the list
+            RateDTO output = listDTO.get(listDTO.size() - 1);
+            return output;
+        }
     }
 
     /*
