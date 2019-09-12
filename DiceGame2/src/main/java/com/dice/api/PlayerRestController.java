@@ -7,7 +7,7 @@ import com.dice.tool.ErrorValueException;
 import com.dice.tool.GameMaker;
 import com.dice.tool.GameMakerSixDice;
 import com.dice.tool.ErrorTransactionException;
-import com.dice.tool.RateDTO;
+import com.dice.model.RateDTO;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -39,8 +39,9 @@ public class PlayerRestController
     PlayerRepository playerRepo;
     @Autowired
     HelperRestController helper;
-
+// 
     //Fix the error sending to send to the client for the personalized exceptions
+
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ErrorTransactionException.class)
     public String return409(ErrorTransactionException ex)

@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dice.tool;
+package com.dice.model;
 
 import com.dice.model.Player;
-import java.util.UUID;
 
 /**
  *

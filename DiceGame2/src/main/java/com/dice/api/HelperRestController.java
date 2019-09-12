@@ -11,7 +11,7 @@ import com.dice.repository.GameRepository;
 import com.dice.repository.PlayerRepository;
 import com.dice.tool.ErrorTransactionException;
 import com.dice.tool.ErrorValueException;
-import com.dice.tool.RateDTO;
+import com.dice.model.RateDTO;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,12 +34,20 @@ public class HelperRestController
     //Check a List of Players is OK
     protected List<Player> verifyListPlayers(List<Player> listPlayer) throws ErrorTransactionException
     {
-        if (listPlayer.isEmpty() || listPlayer == null)
+        try
+        {
+            if (listPlayer.isEmpty())
+            {
+                throw new ErrorTransactionException("No hay jugadores en el sistema.");
+            }
+
+            return listPlayer;
+        }
+        catch (Exception e)
         {
             throw new ErrorTransactionException("No hay jugadores en el sistema.");
         }
 
-        return listPlayer;
     }
 
     //Transform a List of Players in an sort List by the Rate (worst the first)
