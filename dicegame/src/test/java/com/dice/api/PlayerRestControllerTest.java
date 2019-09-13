@@ -5,17 +5,22 @@
  */
 package com.dice.api;
 
+import com.dice.model.Player;
+import com.dice.repository.PlayerRepository;
+import com.dice.tool.ErrorValueException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessResourceFailureException;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
 /**
  *
@@ -23,6 +28,11 @@ import org.junit.Test;
  */
 public class PlayerRestControllerTest
 {
+
+    @Autowired
+    PlayerRepository playerRepo;
+    @Autowired
+    HelperRestController helper;
 
     public PlayerRestControllerTest()
     {
@@ -41,6 +51,7 @@ public class PlayerRestControllerTest
     @Before
     public void setUp()
     {
+
     }
 
     @After
@@ -61,12 +72,53 @@ public class PlayerRestControllerTest
         boolean exit = false;
         int expect = 405;
         int response = httpResponse.getStatusLine().getStatusCode();
-        if (expect == response)
+        if (expect != response)
         {
-            exit = true;
+            fail("The test case is a prototype. Status code:" + response + exit);
         }
-        assertTrue(expect == expect);
-        fail("The test case is a prototype.Status code:" + response + exit);
+    }
+
+    @Test(expected = ErrorValueException.class)
+    public void testCreatePlayerObjectNull() throws Exception
+    {
+        //Return status: ErrorValueException - 401
+        System.out.println("createPlayer/Object null");
+        //Given
+        Player player = null;
+        PlayerRestController instance = new PlayerRestController();
+        // When
+        instance.createPlayer(player);
+        //Then        
+        //ErrorValueException - 401
+    }
+
+    @Test(expected = ErrorValueException.class)
+    public void testCreatePlayerNameVoid() throws Exception
+    {
+        //Return status: ErrorValueException - 401
+        System.out.println("createPlayer/Object name void");
+        //Given
+        Player player = new Player();
+        player.setName("");
+        PlayerRestController instance = new PlayerRestController();
+        // When
+        instance.createPlayer(player);
+        //Then        
+        //ErrorValueException - 401
+    }
+
+    @Test(expected = DataAccessResourceFailureException.class)
+    public void testCreatePlayerDataAccessFail() throws Exception
+    {
+        //Return status: ErrorValueException - 401
+        System.out.println("createPlayer/Data Access broken");
+        //Given
+        Player player = null;
+        PlayerRestController instance = new PlayerRestController();
+        // When
+        instance.createPlayer(player);
+        //Then        
+        //ErrorValueException - 401
     }
 
 //    @Test

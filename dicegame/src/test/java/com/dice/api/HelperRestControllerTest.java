@@ -5,7 +5,6 @@
  */
 package com.dice.api;
 
-import com.dice.model.Game;
 import com.dice.model.Player;
 import com.dice.repository.GameRepository;
 import com.dice.repository.PlayerRepository;
@@ -16,7 +15,6 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *

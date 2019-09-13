@@ -3,9 +3,9 @@ JUnit to test
 PlayerRestController
 
 Crear un jugador
-	1/No llega objeto
-	2/Llega objeto NULL
-	3/Llega objeto sin nombre
+	1/No llega objeto X
+	2/Llega objeto NULL X
+	3/Llega objeto sin nombre X
 	4/Fallo al guardar
 
 Modifica nombre jugador

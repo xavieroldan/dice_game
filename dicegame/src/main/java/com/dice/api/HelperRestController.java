@@ -90,22 +90,14 @@ public class HelperRestController
 
     protected Player verifyName(Player player) throws ErrorValueException
     {
-        try
+        if (player.getName().trim().isEmpty())
         {
-            if (player == null || player.getName().trim().isEmpty()
-                    || player.getName() == null)
-            {
-                throw new ErrorValueException("Nombre de jugador incorrecto.");
-            }
-            //Trim the name
-            String name = player.getName();
-            player.setName(name.trim());
-            return player;
+            throw new ErrorValueException("Nombre de jugador vacío.");
         }
-        catch (Exception e)
-        {
-            throw new ErrorValueException(e + " El parámetro es null.");
-        }
+        //Trim the name
+        String name = player.getName();
+        player.setName(name.trim());
+        return player;
     }
 
     protected List<RateDTO> getListPlayersRateDTO(List<Player> listPlayers)

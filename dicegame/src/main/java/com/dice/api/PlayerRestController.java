@@ -17,7 +17,6 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,9 +39,8 @@ public class PlayerRestController
     PlayerRepository playerRepo;
     @Autowired
     HelperRestController helper;
-// 
-    //Fix the error sending to send to the client for the personalized exceptions
 
+    //Fix the error to send to the client for the personalized exceptions
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ErrorTransactionException.class)
     public String return409(ErrorTransactionException ex)
@@ -70,7 +68,15 @@ public class PlayerRestController
     public Player createPlayer(@RequestBody Player player)
             throws ErrorValueException, ErrorTransactionException
     {
-        Player playerChecked = helper.verifyName(player);
+        Player playerChecked = null;
+        try
+        {
+            playerChecked = helper.verifyName(player);
+        }
+        catch (NullPointerException e)
+        {
+            throw new ErrorValueException("Se envió información nula: no se creó el jugador");
+        }
 
         try
         {
@@ -106,7 +112,15 @@ public class PlayerRestController
     public Player editName(@RequestBody Player playerToEdit)
             throws ErrorValueException, ErrorTransactionException
     {
-        Player playerChecked = helper.verifyName(playerToEdit);
+        Player playerChecked = null;
+        try
+        {
+            playerChecked = helper.verifyName(playerToEdit);
+        }
+        catch (NullPointerException e)
+        {
+            throw new ErrorValueException("Se envió información nula: no se creó el jugador");
+        }
         try
         {
             //Verify if already exists the new name
