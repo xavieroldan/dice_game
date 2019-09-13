@@ -1,5 +1,7 @@
 JUnit to test
 
+PlayerRestController
+
 Crear un jugador
 	1/No llega objeto
 	2/Llega objeto NULL
@@ -37,11 +39,6 @@ Listado jugadores / porcentaje medio
 	2/Hay jugadores sin jugadas
 	3/Fallo al conectar a al BD
 	
-Ranking medio
-	1/No hay jugadores
-	2/Hay jugadores sin jugadas
-	3/Fallo al conectar a al BD
-	
 Lista de jugadas de un jugador
 	1/No llega la ID
 	2/La ID no existe
@@ -62,3 +59,10 @@ Jugador loser
 	3/Más de 1 jugador mismo ratio
 	4/Más de 1 jugador mismo ratio y nº jugadas
 	5/Fallo al leer	
+
+GameRestController
+	
+Ranking medio
+	1/No hay jugadores
+	2/Hay jugadores sin jugadas
+	3/Fallo al conectar a al BD
