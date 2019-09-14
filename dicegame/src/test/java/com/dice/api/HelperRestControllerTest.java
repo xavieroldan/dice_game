@@ -30,7 +30,6 @@ public class HelperRestControllerTest
     PlayerRepository playerRepo;
     @Autowired
     GameRepository gameRepo;
-    /*
 
     @Test(expected = ErrorTransactionException.class)
     public void testVerifyListPlayersListVoid() throws Exception
@@ -81,6 +80,6 @@ public class HelperRestControllerTest
         HelperRestController instance = new HelperRestController();
         instance.verifyName(player);
         fail("The test case is a prototype.");
-    }*/
+    }
 
 }
