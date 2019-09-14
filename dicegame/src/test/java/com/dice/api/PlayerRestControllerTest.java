@@ -59,68 +59,9 @@ public class PlayerRestControllerTest
     {
     }
 
-    @Test
-    public void testCreatePlayerNoObject() throws Exception
-    {
-        //Return status: Method Not Allowed - 405
-        System.out.println("createPlayer/No Object");
-        //Given
-        HttpUriRequest request = new HttpGet("http://localhost:8080/players");
-        // When
-        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-        //Then 
-        boolean exit = false;
-        int expect = 405;
-        int response = httpResponse.getStatusLine().getStatusCode();
-        if (expect != response)
-        {
-            fail("The test case is a prototype. Status code:" + response + exit);
-        }
-    }
 
-    @Test(expected = ErrorValueException.class)
-    public void testCreatePlayerObjectNull() throws Exception
-    {
-        //Return status: ErrorValueException - 401
-        System.out.println("createPlayer/Object null");
-        //Given
-        Player player = null;
-        PlayerRestController instance = new PlayerRestController();
-        // When
-        instance.createPlayer(player);
-        //Then        
-        //ErrorValueException - 401
-    }
 
-    @Test(expected = ErrorValueException.class)
-    public void testCreatePlayerNameVoid() throws Exception
-    {
-        //Return status: ErrorValueException - 401
-        System.out.println("createPlayer/Object name void");
-        //Given
-        Player player = new Player();
-        player.setName("");
-        PlayerRestController instance = new PlayerRestController();
-        // When
-        instance.createPlayer(player);
-        //Then        
-        //ErrorValueException - 401
-    }
-
-    @Test(expected = DataAccessResourceFailureException.class)
-    public void testCreatePlayerDataAccessFail() throws Exception
-    {
-        //Return status: ErrorValueException - 401
-        System.out.println("createPlayer/Data Access broken");
-        //Given
-        Player player = null;
-        PlayerRestController instance = new PlayerRestController();
-        // When
-        instance.createPlayer(player);
-        //Then        
-        //ErrorValueException - 401
-    }
-
+//    TODO
 //    @Test
 //    public void testEditName() throws Exception
 //    {
