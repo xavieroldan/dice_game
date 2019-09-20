@@ -21,5 +21,4 @@ public interface GameRepository extends CrudRepository<Game, UUID>
 
     @Query(value = "SELECT COUNT(idGame) from Game where idplayer=?1")
     double countPlayerGames(UUID Player);
-
 }

@@ -13,5 +13,4 @@ com\dice\model\DiceResult.class
 com\dice\model\Player.class
 com\dice\api\PlayerRestController.class
 com\dice\tool\RandomRollGen.class
-.netbeans_automatic_build
 com\dice\tool\ErrorTransactionException.class
