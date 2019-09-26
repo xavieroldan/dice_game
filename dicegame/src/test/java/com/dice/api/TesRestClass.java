@@ -5,6 +5,7 @@
  */
 package com.dice.api;
 
+import com.dice.apis.PlayerRestController;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;

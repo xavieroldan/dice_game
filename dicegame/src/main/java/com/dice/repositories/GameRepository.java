@@ -1,6 +1,6 @@
-package com.dice.repository;
+package com.dice.repositories;
 
-import com.dice.model.Game;
+import com.dice.models.Game;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

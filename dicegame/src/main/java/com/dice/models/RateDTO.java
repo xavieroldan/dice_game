@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dice.model;
+package com.dice.models;
 
-import com.dice.model.Player;
+import com.dice.models.Player;
 
 /**
  *

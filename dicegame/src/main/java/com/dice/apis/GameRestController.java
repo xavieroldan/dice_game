@@ -1,7 +1,7 @@
-package com.dice.api;
+package com.dice.apis;
 
-import com.dice.model.Game;
-import com.dice.repository.GameRepository;
+import com.dice.models.Game;
+import com.dice.repositories.GameRepository;
 import com.dice.tool.ErrorValueException;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;

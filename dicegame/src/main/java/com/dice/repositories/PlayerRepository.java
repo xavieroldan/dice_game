@@ -1,6 +1,6 @@
-package com.dice.repository;
+package com.dice.repositories;
 
-import com.dice.model.Player;
+import com.dice.models.Player;
 import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 

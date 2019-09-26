@@ -5,8 +5,10 @@
  */
 package com.dice.api;
 
-import com.dice.model.Player;
-import com.dice.repository.PlayerRepository;
+import com.dice.apis.PlayerRestController;
+import com.dice.apis.HelperRestController;
+import com.dice.models.Player;
+import com.dice.repositories.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;

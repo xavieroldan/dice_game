@@ -1,4 +1,4 @@
-package com.dice.model;
+package com.dice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.UUID;

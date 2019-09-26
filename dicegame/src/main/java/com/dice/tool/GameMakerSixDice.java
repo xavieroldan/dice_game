@@ -1,8 +1,8 @@
 package com.dice.tool;
 
-import com.dice.model.DiceResult;
-import com.dice.model.Game;
-import com.dice.model.Player;
+import com.dice.models.DiceResult;
+import com.dice.models.Game;
+import com.dice.models.Player;
 import java.util.ArrayList;
 import java.util.UUID;
 

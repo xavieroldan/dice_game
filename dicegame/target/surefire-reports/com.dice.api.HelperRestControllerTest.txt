@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.dice.api.HelperRestControllerTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.056 s <<< FAILURE! - in com.dice.api.HelperRestControllerTest
-testVerifyNameNameNull(com.dice.api.HelperRestControllerTest)  Time elapsed: 0.006 s  <<< ERROR!
+Tests run: 5, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.074 s <<< FAILURE! - in com.dice.api.HelperRestControllerTest
+testVerifyNameNameNull(com.dice.api.HelperRestControllerTest)  Time elapsed: 0.011 s  <<< ERROR!
 java.lang.Exception: Unexpected exception, expected<com.dice.tool.ErrorValueException> but was<java.lang.NullPointerException>
 	at com.dice.api.HelperRestControllerTest.testVerifyNameNameNull(HelperRestControllerTest.java:81)
 

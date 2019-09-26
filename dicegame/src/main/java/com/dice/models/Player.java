@@ -1,4 +1,4 @@
-package com.dice.model;
+package com.dice.models;
 
 import java.util.Date;
 import java.util.List;

@@ -1,13 +1,13 @@
-package com.dice.api;
+package com.dice.apis;
 
-import com.dice.model.Game;
-import com.dice.model.Player;
-import com.dice.repository.PlayerRepository;
+import com.dice.models.Game;
+import com.dice.models.Player;
+import com.dice.repositories.PlayerRepository;
 import com.dice.tool.ErrorValueException;
 import com.dice.tool.GameMaker;
 import com.dice.tool.GameMakerSixDice;
 import com.dice.tool.ErrorTransactionException;
-import com.dice.model.RateDTO;
+import com.dice.models.RateDTO;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dice.api;
+package com.dice.apis;
 
-import com.dice.model.Game;
-import com.dice.model.Player;
-import com.dice.repository.GameRepository;
-import com.dice.repository.PlayerRepository;
+import com.dice.models.Game;
+import com.dice.models.Player;
+import com.dice.repositories.GameRepository;
+import com.dice.repositories.PlayerRepository;
 import com.dice.tool.ErrorTransactionException;
 import com.dice.tool.ErrorValueException;
-import com.dice.model.RateDTO;
+import com.dice.models.RateDTO;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +32,7 @@ public class HelperRestController
     GameRepository gameRepo;
 
     //Check a List of Players is OK
-    protected List<Player> verifyListPlayers(List<Player> listPlayer) throws ErrorTransactionException
+    public List<Player> verifyListPlayers(List<Player> listPlayer) throws ErrorTransactionException
     {
         try
         {
