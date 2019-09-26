@@ -9,7 +9,7 @@ import com.dice.apis.PlayerRestController;
 import com.dice.apis.HelperRestController;
 import com.dice.models.Player;
 import com.dice.repositories.PlayerRepository;
-import com.dice.tool.ErrorValueException;
+import com.dice.tools.ErrorValueException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;

@@ -1,4 +1,4 @@
-package com.dice.tool;
+package com.dice.tools;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

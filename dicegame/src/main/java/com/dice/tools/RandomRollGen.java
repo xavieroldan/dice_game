@@ -1,4 +1,4 @@
-package com.dice.tool;
+package com.dice.tools;
 
 import java.util.Random;
 
