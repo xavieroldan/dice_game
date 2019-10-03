@@ -1,7 +1,2 @@
-com\dice\tool\ErrorValueException.class
 com\dice\SpringConfig.class
-com\dice\tool\GameMakerSixDice.class
-com\dice\tool\GameMaker.class
 com\dice\DiceApplication.class
-com\dice\tool\RandomRollGen.class
-com\dice\tool\ErrorTransactionException.class

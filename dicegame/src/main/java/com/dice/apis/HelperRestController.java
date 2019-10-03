@@ -102,7 +102,7 @@ public class HelperRestController
 
     protected List<RateDTO> getListPlayersRateDTO(List<Player> listPlayers)
     {
-        List<RateDTO> output = new ArrayList<>();
+        List<RateDTO> output = new ArrayList<>(); //TODO: Put here the sortRanking method
         //Get player Ratio
         for (Player player : listPlayers)
         {
