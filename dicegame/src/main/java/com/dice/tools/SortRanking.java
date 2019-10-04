@@ -15,8 +15,6 @@ import java.util.List;
  */
 public class SortRanking
 {
-//https://stackoverflow.com/questions/27530332/compareto-method-with-doublesdouble-cannot-be-dereferenced
-
     public List<RateDTO> orderListRateDTO(List<RateDTO> players)
     {
         Collections.sort(players);

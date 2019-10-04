@@ -12,6 +12,9 @@ import com.dice.repositories.PlayerRepository;
 import com.dice.tools.ErrorTransactionException;
 import com.dice.tools.ErrorValueException;
 import com.dice.models.RateDTO;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -111,12 +114,15 @@ public class HelperRestController
             double ratio = 0;
             if (!player.getListGame().isEmpty())
             {
-                ratio = (gameRepo.countPlayerWinGames(idPlayer)
+                Double ratioFull = (gameRepo.countPlayerWinGames(idPlayer)
                         / gameRepo.countPlayerGames(idPlayer)) * 100;
+                BigDecimal bd = new BigDecimal(ratioFull).setScale(2, RoundingMode.HALF_UP);
+                ratio = bd.doubleValue();
             }
             RateDTO rateDTO = new RateDTO(player, ratio);
             output.add(rateDTO);
         }
+        Collections.sort(output);
         return output;
     }
 
