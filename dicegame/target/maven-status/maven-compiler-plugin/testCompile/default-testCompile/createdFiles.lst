@@ -1,3 +1,4 @@
 com\dice\api\TestHTTP1.class
 com\dice\api\PlayerRestControllerTest.class
 com\dice\api\TesRestClass.class
+com\dice\tools\SortRankingTest.class

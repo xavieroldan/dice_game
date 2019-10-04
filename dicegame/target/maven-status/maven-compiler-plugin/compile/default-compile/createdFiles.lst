@@ -1,2 +1,17 @@
+com\dice\tools\SortRanking.class
+com\dice\apis\HelperRestController.class
 com\dice\SpringConfig.class
+com\dice\apis\GameRestController.class
 com\dice\DiceApplication.class
+com\dice\tools\GameMakerSixDice.class
+com\dice\repositories\PlayerRepository.class
+com\dice\tools\ErrorValueException.class
+com\dice\repositories\GameRepository.class
+com\dice\models\Player.class
+com\dice\models\Game.class
+com\dice\apis\PlayerRestController.class
+com\dice\models\DiceResult.class
+com\dice\tools\ErrorTransactionException.class
+com\dice\tools\GameMaker.class
+com\dice\models\RateDTO.class
+com\dice\tools\RandomRollGen.class
